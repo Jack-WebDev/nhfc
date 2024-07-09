@@ -43,25 +43,23 @@ const LoginPage = (props: Props) => {
             width={200}
             height={200}
             alt="logo image"
-            src={LogoImg}
+            src={"/s-logo.png"}
             className="mb-2 rounded-lg w-20 h-20"
           />
           <h1 className="text-2xl font-semibold text-black">Sign In</h1>
           <p className="text-sm text-center md:text-left text-gray-500 font-normal">
-            Sign in to your account to start using Traffic Book system
+            Sign in to your NHFC account
           </p>
         </div>
 
         <LoginForm />
-        <div className="w-fit self-end h-fit">
+        {/* <div className="w-fit self-end h-fit">
           <ForgotPassword />
-        </div>
+        </div> */}
       </div>
 
       <div className="flex-1 flex flex-col w-full lg-w-auto gap-2 bg-white items-center p-4  h-64 lg:h-full  justify-center rounded-lg">
-        <h1 className="w-full flex items-end justify-center text-md md:text-lg lg:text-2xl font-semibold text-blue-500 text-center">
-          LDMS  <p className="text-green-600 text-sm pb-1">Plus</p>
-        </h1>
+
         <Image
           width={1920}
           height={1080}
