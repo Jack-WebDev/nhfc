@@ -45,77 +45,84 @@ import { Plus } from 'lucide-react';
 
 const data: Payment[] = [
   {
-    loanType: "Home Purchase Loan",
-    applicationID: "NHFC-34de",
-    submittedDate: "2022-10-09",
-    loanAmount: 10000000,
-    status: "pending",
+    referenceNumber: "NHFC-34de",
+    fullName: "John Doe",
+    queryType: "Home Purchase Loan",
+    queryDate: "2022-10-09",
+    status: "Open",
   },
   {
-    loanType: "Home Purchase Loan",
-    applicationID: "NHFC-34de",
-    submittedDate: "2022-10-09",
-    loanAmount: 10000000,
-    status: "pending",
+    referenceNumber: "NHFC-34de",
+    fullName: "John Doe",
+    queryType: "Home Purchase Loan",
+    queryDate: "2022-10-09",
+    status: "Open",
   },
   {
-    loanType: "Home Purchase Loan",
-    applicationID: "NHFC-34de",
-    submittedDate: "2022-10-09",
-    loanAmount: 10000000,
-    status: "pending",
+    referenceNumber: "NHFC-34de",
+    fullName: "John Doe",
+    queryType: "Home Purchase Loan",
+    queryDate: "2022-10-09",
+    status: "Open",
   },
   {
-    loanType: "Home Purchase Loan",
-    applicationID: "NHFC-34de",
-    submittedDate: "2022-10-09",
-    loanAmount: 10000000,
-    status: "pending",
-  }
+    referenceNumber: "NHFC-34de",
+    fullName: "John Doe",
+    queryType: "Home Purchase Loan",
+    queryDate: "2022-10-09",
+    status: "Open",
+  },
+  {
+    referenceNumber: "NHFC-34de",
+    fullName: "John Doe",
+    queryType: "Home Purchase Loan",
+    queryDate: "2022-10-09",
+    status: "Open",
+  },
+  
 
 ]
 
 export type Payment = {
-  status: string
-  loanAmount: number,
-  submittedDate: string
-  loanType: string
-  applicationID: string
+  status: string;
+  referenceNumber: string;
+  fullName: string;
+  queryType: string;
+  queryDate: string;
 }
 
 const columns: ColumnDef<Payment>[] = [
 
 
   {
-    accessorKey: "loanType",
-    header: "Loan Type",
+    accessorKey: "referenceNumber",
+    header: "Reference Number",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("loanType")}</div>
+      <div className="capitalize">{row.getValue("referenceNumber")}</div>
     ),
   },
   {
-    accessorKey: "applicationID",
-    header: "Application ID",
+    accessorKey: "queryType",
+    header: "Query Type",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("applicationID")}</div>
+      <div className="capitalize">{row.getValue("queryType")}</div>
     ),
   },
   {
-    accessorKey: "submittedDate",
-    header: "Submitted Date",
+    accessorKey: "queryDate",
+    header: "Query Date",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("submittedDate")}</div>
+      <div className="capitalize">{row.getValue("queryDate")}</div>
     ),
   },
   {
-    accessorKey: "loanAmount",
-    header: () => <div className="text-right">Loan Amount</div>,
-    cell: ({ row }) => {
-      const loanAmount = parseFloat(row.getValue("loanAmount"))
+    accessorKey: "fullName",
+    header: "Full Name",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("fullName")}</div>
+    ),
+  },
 
-      return <div className="text-right font-medium">{`R${loanAmount}`}</div>
-    },
-  },
   {
     accessorKey: "status",
     header: "Status",
@@ -142,9 +149,8 @@ const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
 
-            <DropdownMenuItem>View Details</DropdownMenuItem>
-            <DropdownMenuItem>Edit Application</DropdownMenuItem>
-            <DropdownMenuItem>Generate PDF</DropdownMenuItem>
+            <DropdownMenuItem>View Query</DropdownMenuItem>
+            <DropdownMenuItem>Close Query</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -183,9 +189,8 @@ export default function DataTableDemo() {
   return (
     <div className="w-full">
       <h1 className='text-3xl font-semibold'>My Queries</h1>
-      <div className="flex justify-between items-baseline mb-8">
+      <div className="flex justify-between items-baseline my-8">
         <h2>Queries List</h2>
-        <button className='flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg'><Plus/> Open Query</button>
       </div>
       <div className="rounded-xl border">
         <Table className='bg-white rounded-xl'>
