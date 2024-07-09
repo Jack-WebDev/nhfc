@@ -43,9 +43,11 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Plus } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components';
 
 const data: Payment[] = [
   {
+    id: "1",
     loanType: "Home Purchase Loan",
     applicationID: "NHFC-34de",
     submittedDate: "2022-10-09",
@@ -53,20 +55,23 @@ const data: Payment[] = [
     status: "pending",
   },
   {
-    loanType: "Home Purchase Loan",
+    id: "2",
+    loanType: "Car Purchase Loan",
     applicationID: "NHFC-34de",
     submittedDate: "2022-10-09",
     loanAmount: 10000000,
     status: "pending",
   },
   {
-    loanType: "Home Purchase Loan",
+    id: "3",
+    loanType: "House Purchase Loan",
     applicationID: "NHFC-34de",
     submittedDate: "2022-10-09",
     loanAmount: 10000000,
     status: "pending",
   },
   {
+    id: "4",
     loanType: "Home Purchase Loan",
     applicationID: "NHFC-34de",
     submittedDate: "2022-10-09",
@@ -77,6 +82,7 @@ const data: Payment[] = [
 ]
 
 export type Payment = {
+  id: string
   status: string
   loanAmount: number,
   submittedDate: string
@@ -84,74 +90,7 @@ export type Payment = {
   applicationID: string
 }
 
-const columns: ColumnDef<Payment>[] = [
 
-
-  {
-    accessorKey: "loanType",
-    header: "Loan Type",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("loanType")}</div>
-    ),
-  },
-  {
-    accessorKey: "applicationID",
-    header: "Application ID",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("applicationID")}</div>
-    ),
-  },
-  {
-    accessorKey: "submittedDate",
-    header: "Submitted Date",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("submittedDate")}</div>
-    ),
-  },
-  {
-    accessorKey: "loanAmount",
-    header: () => <div className="text-right">Loan Amount</div>,
-    cell: ({ row }) => {
-      const loanAmount = parseFloat(row.getValue("loanAmount"))
-
-      return <div className="text-right font-medium">{`R${loanAmount}`}</div>
-    },
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-
-
-  {
-    id: "actions",
-    header: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-
-            <DropdownMenuItem>View Details</DropdownMenuItem>
-            <DropdownMenuItem>Edit Application</DropdownMenuItem>
-            <DropdownMenuItem>Generate PDF</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
-]
 
 export default function Applications() {
   const router = useRouter();
@@ -162,6 +101,113 @@ export default function Applications() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const [isDialogOpen, setDialogOpen] = React.useState(false);
+  const [selectedLoan, setSelectedLoan] =
+    React.useState<any | null>(null);
+
+  const handleViewLoan = (loan: any) => {
+    setSelectedLoan(loan);
+    setDialogOpen(true);
+  };
+
+  const LoanModal = ({ loan,closeDialog }: any) => {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Dialog open={true} onOpenChange={closeDialog}>
+            <DialogTrigger asChild>
+              <span className="cursor-pointer">
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </span>
+            </DialogTrigger>
+            <DialogContent className="w-[70%] text-black">
+              <DialogHeader className="flex flex-row items-baseline justify-around">
+                <DialogTitle>Loan Details</DialogTitle>
+
+              </DialogHeader>
+              <div>
+                <h2>Loan Type: {loan.loanType}</h2>
+                <h2>Application ID: {loan.applicationID}</h2>
+                <h2>Submitted Date: {loan.submittedDate}</h2>
+                <h2>Loan Amount: {loan.loanAmount}</h2>
+                <h2>Status: {loan.status}</h2>
+ 
+              </div>
+            </DialogContent>
+          </Dialog>
+        </DropdownMenuTrigger>
+      </DropdownMenu>
+    );
+  }
+
+  const columns: ColumnDef<Payment>[] = [
+
+
+    {
+      accessorKey: "loanType",
+      header: "Loan Type",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("loanType")}</div>
+      ),
+    },
+    {
+      accessorKey: "applicationID",
+      header: "Application ID",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("applicationID")}</div>
+      ),
+    },
+    {
+      accessorKey: "submittedDate",
+      header: "Submitted Date",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("submittedDate")}</div>
+      ),
+    },
+    {
+      accessorKey: "loanAmount",
+      header: () => <div className="text-right">Loan Amount</div>,
+      cell: ({ row }) => {
+        const loanAmount = parseFloat(row.getValue("loanAmount"))
+  
+        return <div className="text-right font-medium">{`R${loanAmount}`}</div>
+      },
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("status")}</div>
+      ),
+    },
+  
+  
+    {
+      id: "actions",
+      header: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const loan = row.original
+  
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <DotsHorizontalIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+  
+              <DropdownMenuItem onClick={() => handleViewLoan(loan)}>View Details</DropdownMenuItem>
+              <DropdownMenuItem>Edit Application</DropdownMenuItem>
+              <DropdownMenuItem>Generate PDF</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      },
+    },
+  ]
 
   const table = useReactTable({
     data,
@@ -260,6 +306,12 @@ export default function Applications() {
           </Button>
         </div>
       </div>
+      {isDialogOpen && selectedLoan && (
+        <LoanModal
+          loan={selectedLoan}
+          closeDialog={() => setDialogOpen(false)}
+        />
+      )}
     </div>
   )
 }

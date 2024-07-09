@@ -55,6 +55,7 @@ const Staff = () => {
       {data?.role === "Data_Capture" ? (
         <>
         <NavLink url="/frontend" title="My Applications" Icon={FileText} />
+        <NavLink url="/frontend/queries" title="Queries" Icon={HelpCircle} />
         <NavLink url="/dashboard/products" title="Our Products" Icon={ShoppingBag} />
         <NavLink url="/dashboard/impact" title="Impact" Icon={MoveUpRightIcon} />
         <NavLink url="/dashboard/news" title="News and Media" Icon={Newspaper} />
