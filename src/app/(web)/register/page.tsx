@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -74,14 +75,14 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-1 bg-[#F5F5F5] flex-col justify-center px-6 py-12 lg:px-8 h-screen">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Register your account with us
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[40rem] bg-white p-8 rounded-xl">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="flex items-center gap-x-4">
             <select
@@ -103,7 +104,7 @@ export default function Register() {
               value={formData.firstName}
               onChange={handleChange}
               placeholder="First Name"
-              className="border border-gray-400 rounded-xl p-2"
+              className="border border-gray-400 rounded-xl p-2 w-full"
             />
             <input
               type="text"
@@ -111,7 +112,7 @@ export default function Register() {
               value={formData.lastName}
               onChange={handleChange}
               placeholder="Last Name"
-              className="border border-gray-400 rounded-xl p-2"
+              className="border border-gray-400 rounded-xl p-2 w-full"
             />
           </div>
           <div className="flex items-center gap-x-4">
@@ -145,7 +146,7 @@ export default function Register() {
               value={formData.idNumber}
               onChange={handleChange}
               placeholder="Id Number"
-              className="border border-gray-400 rounded-xl p-2"
+              className="border border-gray-400 rounded-xl p-2 w-full"
               autoComplete="off"
             />
           </div>
@@ -156,7 +157,7 @@ export default function Register() {
               value={formData.email}
               onChange={handleChange}
               placeholder="Email"
-              className="border border-gray-400 rounded-xl p-2"
+              className="border border-gray-400 rounded-xl p-2 w-full"
             />
             <input
               type="text"
@@ -164,7 +165,7 @@ export default function Register() {
               value={formData.phone}
               onChange={handleChange}
               placeholder="Phone"
-              className="border border-gray-400 rounded-xl p-2"
+              className="border border-gray-400 rounded-xl p-2 w-full"
             />
           </div>
           <div className="flex items-center gap-x-4">
@@ -174,7 +175,7 @@ export default function Register() {
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter Password"
-              className="border border-gray-400 rounded-xl p-2"
+              className="border border-gray-400 rounded-xl p-2 w-full"
             />
             <input
               type="password"
@@ -182,7 +183,7 @@ export default function Register() {
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="Confirm Password"
-              className="border border-gray-400 rounded-xl p-2"
+              className="border border-gray-400 rounded-xl p-2 w-full"
             />
           </div>
           <div>
@@ -195,6 +196,7 @@ export default function Register() {
             </button>
           </div>
         </form>
+        <p className="mt-12 text-center">Already have an account? <Link href="/login" className="text-blue-500 underline">Login</Link></p>
       </div>
     </div>
   );
