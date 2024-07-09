@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
+
+import { EllipsisVerticalIcon } from "lucide-react";
 import Modal from "../_components/Modal";
 import NewQueryForm from "../_components/NewQueryForm";
 import ViewQuery from "../_components/ViewQuery";
-import { EllipsisVerticalIcon } from "lucide-react";
 
 type Query = {
   referenceNo: string;

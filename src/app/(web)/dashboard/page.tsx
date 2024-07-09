@@ -1,9 +1,7 @@
 
 import { fetchAllBooks, fetchAllBooksByStatus, fetchAllNotices, fetchAllNoticesByStatus } from "@/apiCalls/batch";
 import { Button } from "@/components";
-import { GrandTotal } from "@/modules/accidentReports";
 import { Widget } from "@/modules/dashboard";
-import { AccidentDashboard } from "@/modules/dashboard/accidentDashboard";
 import { BookStatus } from "@prisma/client";
 import { BookOpen, FileLineChart, FileText } from "lucide-react";
 import Link from "next/link";
