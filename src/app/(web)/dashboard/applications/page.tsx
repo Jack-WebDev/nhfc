@@ -182,10 +182,9 @@ export default function DataTableDemo() {
 
   return (
     <div className="w-full">
-      <h1 className='text-3xl font-semibold'>My Loan Applications</h1>
+      <h1 className='text-3xl font-semibold'>Loan Applications</h1>
       <div className="flex justify-between items-baseline mb-8">
         <h2>Applications List</h2>
-        <button className='flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg'><Plus/> Start New Application</button>
       </div>
       <div className="rounded-xl border">
         <Table className='bg-white rounded-xl'>
