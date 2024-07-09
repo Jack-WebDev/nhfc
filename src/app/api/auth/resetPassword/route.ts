@@ -46,8 +46,6 @@ export const POST = async (request: Request) => {
             where: {id: userId},
          
             data: {
-                passwordChangedAt: new Date(Date.now()),
-                nextPasswordChangedAt: new Date(Date.now()  + sessionDays * 24 * 60 * 60 * 1000),
                 password: hashedPassword
             }
         })
