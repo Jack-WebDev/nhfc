@@ -54,12 +54,11 @@ const Staff = () => {
     <div className="flex flex-col items-center md:items-start  px-0 md:px-0 pt-12 gap-2 w-full overflow-y-scroll scrollbar-hide  sticky top-0">
       {data?.role === "Data_Capture" ? (
         <>
-        <NavLink url="/frontend" title="Dashboard" Icon={LayoutDashboard} />
-        <NavLink url="/frontend/applications" title="My Applications" Icon={FileText} />
-        <NavLink url="/dashboard/capturing" title="Our Products" Icon={ShoppingBag} />
-        <NavLink url="/dashboard/capturing" title="Impact" Icon={MoveUpRightIcon} />
-        <NavLink url="/dashboard/capturing" title="News and Media" Icon={Newspaper} />
-        <NavLink url="/dashboard/capturing" title="Support" Icon={HelpCircle} />
+        <NavLink url="/frontend" title="My Applications" Icon={FileText} />
+        <NavLink url="/dashboard/products" title="Our Products" Icon={ShoppingBag} />
+        <NavLink url="/dashboard/impact" title="Impact" Icon={MoveUpRightIcon} />
+        <NavLink url="/dashboard/news" title="News and Media" Icon={Newspaper} />
+        <NavLink url="/dashboard/support" title="Support" Icon={HelpCircle} />
         </>
       ) : null}
       {/* <NavLinkGroup links={capturing} title="Capturing" TitleIcon={PenSquare}/> */}

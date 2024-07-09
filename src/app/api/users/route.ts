@@ -8,12 +8,10 @@ import { userSchema } from "@/schema"
 import { IdNumberExists, emailExists, phoneExists } from "@/validation"
 import { UserActivity, UserActivityAction } from "@prisma/client"
 import { createUserTemplate, email, transporter } from "@/notifications"
-import { knexDb } from "../../../../knex"
 
 
 export const POST = async (request: Request) => {
 
-    const sessionDays = Number(process.env.NEXT_PUBLIC_USER_SESSION_Days as string);
 
     const auth = await getAuth();
     //@ts-ignore
@@ -66,7 +64,6 @@ export const POST = async (request: Request) => {
         const user = await db.user.create({
             data: {
                 ...data,
-                nextPasswordChangedAt: new Date(Date.now()  + sessionDays * 24 * 60 * 60 * 1000),
                 password: hashedPassword,
                 
             }

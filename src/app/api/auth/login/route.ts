@@ -62,8 +62,6 @@ export const POST = async (request: Request) => {
       userId: user.id,
       role: user.role,
       token: sessionToken,
-      lastPasswordChanged: user.passwordChangedAt,
-      expiresAt: user.nextPasswordChangedAt,
       status: user.status,
     },
     authSecret,

@@ -83,7 +83,7 @@ export type Payment = {
   applicationID: string
 }
 
-export const columns: ColumnDef<Payment>[] = [
+const columns: ColumnDef<Payment>[] = [
 
 
   {

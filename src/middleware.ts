@@ -9,7 +9,6 @@ export async function middleware(request: NextRequest) {
   const data = await getAuth();
   const token = await getAuthCookie();
   //@ts-ignore
-  const sessionDuration = data && new Date(data.expiresAt) - new Date(data.lastPasswordChanged)
   //@ts-ignore
   const expiry = new Date(data?.expiresAt)
   const now = new Date(Date.now());
