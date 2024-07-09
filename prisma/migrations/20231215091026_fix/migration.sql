@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Accident" ALTER COLUMN "hitAndRun" SET DATA TYPE TEXT,
+ALTER COLUMN "builtUpArea" SET DATA TYPE TEXT;
