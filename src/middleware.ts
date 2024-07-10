@@ -122,7 +122,7 @@ export async function middleware(request: NextRequest) {
     
   }
   if (request.nextUrl.pathname === "/") {
-    return NextResponse.redirect(new URL(`/dashboard/capturing`, request.url));
+    return NextResponse.redirect(new URL(`/home`, request.url));
   }
   
   if (request.nextUrl.pathname.startsWith("/profile")) {

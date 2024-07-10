@@ -143,7 +143,7 @@ const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
 
             <DropdownMenuItem>View Details</DropdownMenuItem>
-            <DropdownMenuItem>Edit Application</DropdownMenuItem>
+            <DropdownMenuItem>Eligibility Check</DropdownMenuItem>
             <DropdownMenuItem>Generate PDF</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

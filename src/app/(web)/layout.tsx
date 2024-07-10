@@ -12,8 +12,10 @@ import { Toaster } from '@/components'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'NHFC',
-  description: 'Alfred Duma Municipality Book management system',
+  title: 'NHFC - National Housing Finance Corporation',
+  icons: {
+    icon: '/s-logo.png',
+  }
 }
 
 
