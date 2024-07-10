@@ -6,8 +6,6 @@ import { randomGenerator } from "@/lib/methods"
 import { getAuth } from "@/context";
 import { userSchema } from "@/schema"
 import { IdNumberExists, emailExists, phoneExists } from "@/validation"
-import { UserActivity, UserActivityAction } from "@prisma/client"
-import { createUserTemplate, email, transporter } from "@/notifications"
 
 
 export const POST = async (request: Request) => {
@@ -54,7 +52,7 @@ export const POST = async (request: Request) => {
     if(duplicateIdNumber) return new NextResponse(JSON.stringify({message: "ID number already exist"}), {status: 409})
 
     //Generate password
-    const password = randomGenerator(4);
+    const password = "12345";
     // hash the passWord
     const saltRounds = 10;
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
@@ -69,28 +67,28 @@ export const POST = async (request: Request) => {
             }
         })
 
-        try {
-            await db.report.create({
-                data: {
-                    adminId: admin.id,
-                    activity: UserActivity.User_Management,
-                    userId: user.id,
-                    activityAction: UserActivityAction.Create, 
-                    message: `User  ${user.firstName} ${user.lastName} has been created by 
-                      ${admin.firstName} ${admin.lastName} with the role of ${user.role.split("_").join(" ")}
-                    `
-                }
-            })
-        } catch (error) {
-            await db.user.delete({
-                where: {
-                    id: user.id
-                }
-            })
+        // try {
+        //     await db.report.create({
+        //         data: {
+        //             adminId: admin.id,
+        //             activity: UserActivity.User_Management,
+        //             userId: user.id,
+        //             activityAction: UserActivityAction.Create, 
+        //             message: `User  ${user.firstName} ${user.lastName} has been created by 
+        //               ${admin.firstName} ${admin.lastName} with the role of ${user.role.split("_").join(" ")}
+        //             `
+        //         }
+        //     })
+        // } catch (error) {
+        //     await db.user.delete({
+        //         where: {
+        //             id: user.id
+        //         }
+        //     })
             
-            return new NextResponse( JSON.stringify({message: "Failed to create report, Try again later"}) , {status: 403})
+        //     return new NextResponse( JSON.stringify({message: "Failed to create report, Try again later"}) , {status: 403})
    
-        }
+        // }
 
         const accountDetails = {
             email: user.email,
@@ -99,24 +97,24 @@ export const POST = async (request: Request) => {
             status: user.status
         }
 
-        try {
-            await transporter.sendMail({
-                from: email,
-                to: accountDetails.email,
-                subject: "New account created",
-                text: "We have created an account for you in the book management system",
-                html: createUserTemplate(accountDetails)
-            })
-        } catch (error) {
-            await db.user.delete({
-                where: {
-                    id: user.id
-                }
-            })
-            console.log(error)
-            return new NextResponse( JSON.stringify({error, message: "Failed to send mail"}) , {status: 403})
+        // try {
+        //     await transporter.sendMail({
+        //         from: email,
+        //         to: accountDetails.email,
+        //         subject: "New account created",
+        //         text: "We have created an account for you in the book management system",
+        //         html: createUserTemplate(accountDetails)
+        //     })
+        // } catch (error) {
+        //     await db.user.delete({
+        //         where: {
+        //             id: user.id
+        //         }
+        //     })
+        //     console.log(error)
+        //     return new NextResponse( JSON.stringify({error, message: "Failed to send mail"}) , {status: 403})
         
-        }
+        // }
         return new NextResponse( JSON.stringify({message: "User created successfully", accountDetails}) , {status: 201})
     } catch (error) {
         return new NextResponse( JSON.stringify({error, message: "Failed to create user"}) , {status: 500})

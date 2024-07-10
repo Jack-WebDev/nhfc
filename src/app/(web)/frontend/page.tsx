@@ -1,14 +1,13 @@
 "use client";
 
-import React from 'react'
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
 
 import {
   CaretSortIcon,
   ChevronDownIcon,
   DotsHorizontalIcon,
-} from "@radix-ui/react-icons"
+} from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -20,10 +19,10 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -32,8 +31,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -41,76 +40,62 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Plus } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components';
+} from "@/components/ui/table";
+import { Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components";
+import axios from "axios";
 
-const data: Payment[] = [
-  {
-    id: "1",
-    loanType: "Home Purchase Loan",
-    applicationID: "NHFC-34de",
-    submittedDate: "2022-10-09",
-    loanAmount: 10000000,
-    status: "pending",
-  },
-  {
-    id: "2",
-    loanType: "Car Purchase Loan",
-    applicationID: "NHFC-34de",
-    submittedDate: "2022-10-09",
-    loanAmount: 10000000,
-    status: "pending",
-  },
-  {
-    id: "3",
-    loanType: "House Purchase Loan",
-    applicationID: "NHFC-34de",
-    submittedDate: "2022-10-09",
-    loanAmount: 10000000,
-    status: "pending",
-  },
-  {
-    id: "4",
-    loanType: "Home Purchase Loan",
-    applicationID: "NHFC-34de",
-    submittedDate: "2022-10-09",
-    loanAmount: 10000000,
-    status: "pending",
-  }
-
-]
-
-export type Payment = {
-  id: string
-  status: string
-  loanAmount: number,
-  submittedDate: string
-  loanType: string
-  applicationID: string
-}
-
-
+type LoanApplication = {
+  id: string;
+  NameOfCompany: string;
+  ContactPerson: string;
+  Email: string;
+  PhoneNumber: string;
+  Address: string;
+  City: string;
+  Province: string;
+  PostalCode: string;
+  Country: string;
+  LoanType: string;
+  LoanAmount: string;
+  LoanStatus: string;
+  createdAt: any;
+};
 
 export default function Applications() {
   const router = useRouter();
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
   const [isDialogOpen, setDialogOpen] = React.useState(false);
-  const [selectedLoan, setSelectedLoan] =
-    React.useState<any | null>(null);
+  const [selectedLoan, setSelectedLoan] = React.useState<any | null>(null);
+  const [data, setData] = React.useState<LoanApplication[]>([]);
 
-  const handleViewLoan = (loan: any) => {
-    setSelectedLoan(loan);
-    setDialogOpen(true);
-  };
+  useEffect(() => {
+    const fetchApplications = async () => {
+      const res = await axios.get("/api/applications");
+      // console.log(res.data)
+      setData(res.data);
+    };
 
-  const LoanModal = ({ loan,closeDialog }: any) => {
+    fetchApplications();
+  }, []);
+
+  const handleViewApplication = (loan: LoanApplication) => {
+    router.push(`/frontend/${loan.id}`);
+  }
+
+  const LoanModal = ({ loan, closeDialog }: any) => {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -120,75 +105,103 @@ export default function Applications() {
                 <DotsHorizontalIcon className="h-4 w-4" />
               </span>
             </DialogTrigger>
-            <DialogContent className="w-[70%] text-black">
+            <DialogContent className="w-[100%] text-black">
               <DialogHeader className="flex flex-row items-baseline justify-around">
-                <DialogTitle>Loan Details</DialogTitle>
-
+                <DialogTitle>Financing Details</DialogTitle>
               </DialogHeader>
               <div>
-                <h2>Loan Type: {loan.loanType}</h2>
-                <h2>Application ID: {loan.applicationID}</h2>
-                <h2>Submitted Date: {loan.submittedDate}</h2>
-                <h2>Loan Amount: {loan.loanAmount}</h2>
-                <h2>Status: {loan.status}</h2>
- 
+                <div className="flex justify-between items-center">
+                  <p>Loan Type: {loan.LoanType}</p>
+                  <p>Application ID: {loan.id}</p>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <p>Submitted Date: {loan.submittedDate}</p>
+                  <p>Loan Amount: {loan.LoanAmount}</p>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <p>Status: {loan.LoanStatus}</p>
+                  <p>Contact Person: {loan.ContactPerson}</p>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <p>Email: {loan.Email}</p>
+                  <p>Phone Number: {loan.PhoneNumber}</p>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <p>Address: {loan.Address}</p>
+                  <p>City: {loan.City}</p>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <p>Province: {loan.Province}</p>
+                  <p>Postal Code: {loan.PostalCode}</p>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <p>Country: {loan.Country}</p>
+                  <p>Name of Company: {loan.NameOfCompany}</p>
+                </div>
               </div>
             </DialogContent>
           </Dialog>
         </DropdownMenuTrigger>
       </DropdownMenu>
     );
-  }
+  };
 
-  const columns: ColumnDef<Payment>[] = [
-
-
+  const columns: ColumnDef<LoanApplication>[] = [
     {
-      accessorKey: "loanType",
+      accessorKey: "LoanType",
       header: "Loan Type",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("loanType")}</div>
+        <div className="capitalize">{row.getValue("LoanType")}</div>
       ),
     },
     {
-      accessorKey: "applicationID",
+      accessorKey: "id",
       header: "Application ID",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("applicationID")}</div>
-      ),
+      cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
     },
     {
-      accessorKey: "submittedDate",
+      accessorKey: "createdAt",
       header: "Submitted Date",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("submittedDate")}</div>
-      ),
-    },
-    {
-      accessorKey: "loanAmount",
-      header: () => <div className="text-right">Loan Amount</div>,
       cell: ({ row }) => {
-        const loanAmount = parseFloat(row.getValue("loanAmount"))
-  
-        return <div className="text-right font-medium">{`R${loanAmount}`}</div>
+        const submissionDate = row.original.createdAt;
+        const formattedDate = new Date(submissionDate)
+          .toISOString()
+          .split("T")[0];
+
+        return <div>{formattedDate}</div>;
+      },
+    },
+
+    {
+      accessorKey: "LoanAmount",
+      header: () => <div>Loan Amount</div>,
+      cell: ({ row }) => {
+        const loanAmount = row.getValue("LoanAmount");
+
+        return <div className="font-medium">{`R ${loanAmount}`}</div>;
       },
     },
     {
-      accessorKey: "status",
+      accessorKey: "LoanStatus",
       header: "Status",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("status")}</div>
+        <div className="capitalize">{row.getValue("LoanStatus")}</div>
       ),
     },
-  
-  
+
     {
       id: "actions",
       header: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const loan = row.original
-  
+        const loan = row.original;
+
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -198,16 +211,17 @@ export default function Applications() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-  
-              <DropdownMenuItem onClick={() => handleViewLoan(loan)}>View Details</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleViewApplication(loan)}>
+                View Details
+              </DropdownMenuItem>
               <DropdownMenuItem>Edit Application</DropdownMenuItem>
               <DropdownMenuItem>Generate PDF</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        )
+        );
       },
     },
-  ]
+  ];
 
   const table = useReactTable({
     data,
@@ -226,17 +240,22 @@ export default function Applications() {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
   return (
     <div className="w-full">
-      <h1 className='text-3xl font-semibold'>My Loan Applications</h1>
+      <h1 className="text-3xl font-semibold">My Loan Applications</h1>
       <div className="flex justify-between items-baseline mb-8">
         <h2>Applications List</h2>
-        <button className='flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg' onClick={() => router.push('/frontend/apply')}><Plus/> Start New Application</button>
+        <button
+          className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg"
+          onClick={() => router.push("/frontend/apply")}
+        >
+          <Plus /> Start New Application
+        </button>
       </div>
       <div className="rounded-xl border">
-        <Table className='bg-white rounded-xl'>
+        <Table className="bg-white rounded-xl">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -250,7 +269,7 @@ export default function Applications() {
                             header.getContext()
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -286,7 +305,6 @@ export default function Applications() {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
- 
         <div className="space-x-2">
           <Button
             variant="outline"
@@ -313,5 +331,5 @@ export default function Applications() {
         />
       )}
     </div>
-  )
+  );
 }

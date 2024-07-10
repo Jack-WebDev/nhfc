@@ -1,7 +1,2 @@
 export * from "./users"
-export * from "./accident"
-export * from "./reportsByAccidentType"
-export * from "./stats"
-export * from "./file"
-export * from "./perVehicleType"
-export * from "./reportsPerRoad"
+
