@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { SideNav, TopNav } from '@/components'
-import { EdgeStoreProvider, UiContextProvider, UserContextProvider, getAuth } from '@/context'
+import { UiContextProvider, UserContextProvider, getAuth } from '@/context'
 import { redirect, useRouter } from 'next/navigation'
 import { Toaster } from '@/components'
 
@@ -12,8 +12,10 @@ import { Toaster } from '@/components'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Alfred Duma Municipality',
-  description: 'Alfred Duma Municipality Book management system',
+  title: 'NHFC - National Housing Finance Corporation',
+  icons: {
+    icon: '/s-logo.png',
+  }
 }
 
 
@@ -68,7 +70,6 @@ async function Content({children}: any) {
     
 
     <UserContextProvider>  
-      <EdgeStoreProvider>
         <UiContextProvider>
 
           <div className='flex p min-w-screen overflow-clip bg-black'>
@@ -82,7 +83,6 @@ async function Content({children}: any) {
               </div>
           </div>
         </UiContextProvider>
-        </EdgeStoreProvider>
       </UserContextProvider> 
    
       

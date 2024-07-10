@@ -80,6 +80,7 @@ export function LoginForm() {
     
         <FormInput placeholder="example@mail.com" label="Email" name="email" fullWidth={true} />
         <FormInput placeholder="*******" label="Password" name="password" fullWidth={true} type="password"/>
+        <ForgotPassword />
 
         
         
@@ -95,6 +96,7 @@ export function LoginForm() {
           successMessage={successMessage}
         />
       </form>
+      <p className="text-gray-500">Don&apos;t have an account? <Link href="/register" className="text-blue-500 underline">Register</Link></p>
     </Form>
   );
 }

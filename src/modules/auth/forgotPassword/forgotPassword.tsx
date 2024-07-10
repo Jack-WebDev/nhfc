@@ -31,7 +31,7 @@ export function ForgotPassword() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <p className="text-blue-500 text-xs cursor-pointer ">Forgot password</p>
+        <p className="text-blue-500 text-xs cursor-pointer text-end">Forgot password</p>
       </DialogTrigger>
       <DialogContent className="overflow-y-auto max-h-full min-w-max  ">
         <ForgotPasswordForm />

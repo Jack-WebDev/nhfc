@@ -15,19 +15,6 @@ model Session {
   user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Report {
-  id             String             @id @default(cuid())
-  adminId        String
-  userId         String?
-  batchId        Int?
-  bookNumber     Int?
-  activity       UserActivity
-  activityAction UserActivityAction
-  message        String
-  date           DateTime           @default(now())
-  user           User               @relation(fields: [adminId], references: [id], onDelete: Cascade)
-}
-
 model Otp {
   id     String   @id @default(cuid())
   userId String   @unique
@@ -37,307 +24,44 @@ model Otp {
 }
 
 model User {
-  id                    String        @id @default(cuid())
-  email                 String        @unique
-  title                 UserTitle
-  firstName             String
-  lastName              String
-  IdNumber              String        @unique
-  phone                 String        @unique
-  password              String
-  ethnicity             UserEthnicity
-  role                  UserRole
-  gender                String?
-  status                UserStatus    @default(Active)
-  createdAt             DateTime      @default(now())
-  batch                 Batch[]
-  books                 Book[]
-  otp                   Otp?
-  reports               Report[]
-  session               Session?
+  id        String        @id @default(cuid())
+  email     String        @unique
+  title     UserTitle
+  firstName String
+  lastName  String
+  IdNumber  String        @unique
+  phone     String        @unique
+  password  String
+  ethnicity UserEthnicity
+  role      UserRole
+  gender    String?
+  status    UserStatus    @default(Active)
+  createdAt DateTime      @default(now())
+  otp     Otp?
+  session Session?
 }
 
-model Batch {
-  batchId     Int      @id @unique @default(autoincrement())
-  batchType   Int
-  firstNotice Int
-  lastNotice  Int
-  capturedBy  String
-  date        DateTime @default(now())
-  user        User     @relation(fields: [capturedBy], references: [id], onDelete: Cascade)
-  books       Book[]
+
+model Applications {
+  id        String @id @default(cuid())
+  NameOfCompany String 
+  ContactPerson String
+  Email String @unique
+  PhoneNumber String @unique
+  Address String
+  City String
+  Province String
+  PostalCode String
+  Country String
+  LoanType String
+  LoanAmount String
+  LoanStatus String @default("Pending")
+  createdAt    DateTime @default(now())
+
 }
 
-model Book {
-  id          String     @id @default(cuid())
-  batchId     Int
-  bookType    Int
-  bookNumber  Int        @unique
-  firstNotice Int        @unique
-  lastNotice  Int        @unique
-  total       Int
-  complete    Int
-  officerId   String?
-  status      BookStatus
-  createdAt   DateTime   @default(now())
-  date        DateTime?
-  batch       Batch      @relation(fields: [batchId], references: [batchId], onDelete: Cascade)
-  user        User?      @relation(fields: [officerId], references: [id], onDelete: Cascade)
-  notices     Notice[]
-}
 
-model Notice {
-  id           String @id @default(cuid())
-  bookNumber   Int
-  noticeNumber Int    @unique
-  check        Int
-  status       String @default("New")
-  book         Book   @relation(fields: [bookNumber], references: [bookNumber], onDelete: Cascade)
-}
 
-model Accident {
-  id                          String              @id @default(cuid())
-  policeStation               String
-  accidentType                String
-  hitAndRun                   String
-  AR_number                   String   @unique
-  caseNumber                  String?
-  serialNumber                String?
-  capturingNumber             String?
-  date                        String
-  day                         String
-  roadSpeedLimit              Int
-  time                        String
-  builtUpArea                 String
-  province                    String              @default("KZN")
-  roadName                    String?
-  roadNumber                  String?
-  street                      String?
-  roadType                    String
-  junctionType                String?
-  numberOfDead                Int
-  numberOfSlightlyInjured     Int
-  numberOfSeriouslyInjured    Int
-  numberOfNotInjured          Int
-  descriptionD1               String
-  descriptionD2               String
-  courtData                   String?
-  discontinueUseOfVehicle     String?
-  observationColorOfClothing  String?
-  observationLocation         String?
-  observationManoeuvre        String?
-  observationPedestrianAction String?
-  observationPersonRef        String?
-  observationPosition         String?
-  numberOfVehicles            Int
-  xCoordinate                 String?
-  yCoordinate                 String?
-  status                      AccidentStatus @default(Incomplete)
-  visibility                  AccidentVisibility  @default(Vissible)
-  areas                       Area[]
-  drivers                     Driver[]
-  generalDetails              GeneralDetail[]
-  offices                     Office[]
-  passengers                  Passenger[]
-  personObservations          PersonObservation[]
-  vehicles                    Vehicle[]
-  witnesses                   Witness[]
-  files                       AccidentFile[]
-}
-
-enum AccidentVisibility {
-  Vissible
-  Invissible
-}
-
-model AccidentFile {
-  id                  String   @id @default(cuid())
-  accidentId          String @unique
-  fileType            String
-  file                String
-  accident            Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-enum AccidentStatus {
-  Complete
-  Incomplete
-}
-
-model Area {
-  id                  String   @id @default(cuid())
-  accidentId          String
-  areaType            String
-  intersection        String?
-  between             String?
-  and                 String?
-  suburb              String?
-  townName            String?
-  approximateDistance String?
-  direction           String?
-  from                String?
-  kmMarker            String?
-  kmMarkerDistance    String?
-  accident            Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-model Driver {
-  id                       String   @id @default(cuid())
-  accidentId               String
-  idType                   Int
-  idNumber                 String
-  age                      Int
-  country                  String
-  surname                  String
-  fullNames                String
-  initials                 String
-  homeAddress              String
-  telephoneNumber          String
-  telephoneNumberType      String
-  workAddress              String
-  cellphoneNumber          String
-  race                     String
-  gender                   String
-  injury                   String
-  safetyPresent            String
-  safetyUsed               String
-  influenceSuspected       String
-  influenceTested          String
-  anyPassengerOrPedestrian String
-  licenceDateOfIssue       String?
-  licenceNumber            String?
-  licenceType              String
-  licenceCode              String?
-  driverRef                String
-  accident                 Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-model Vehicle {
-  id                       String   @id @default(cuid())
-  accidentId               String
-  travelDirection          String
-  plateNumber              String
-  color                    String
-  make                     String
-  model                    String
-  trailer1Plate            String?
-  trailer2Plate            String?
-  carryPassengersForReward String
-  breakdownCompanyName     String?
-  breakdownTelephoneNumber String?
-  breakdowndriverName      String?
-  chevronQuality           String?
-  codeSin                  String?
-  damage                   String[]
-  dangerousGoodPlacard     String?
-  dangerousGoodsCarried    String
-  gasEmmissionOccured      String?
-  lengthOfSkidMarks        String?
-  lights                   String
-  manoeuvre                String
-  otherComment             String?
-  position                 String
-  reflectorQuality         String?
-  slope                    String
-  splillageOccured         String?
-  tiresBurst               String
-  type                     String
-  vehicleRef               String
-  accident                 Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-model GeneralDetail {
-  id                             String   @id @default(cuid())
-  accidentId                     String
-  lightCondition                 String?
-  weatherConditionsAndVisibility String?
-  roadSurfaceType                String?
-  qualityOfRoadSurface           String?
-  roadSurface                    String?
-  roadMarkingVisibility          String?
-  obstructions                   String?
-  overtakingControl              String?
-  traficControlType              String?
-  roadSignsClearlyVisible        String?
-  conditionOfRoadSigns           String?
-  vehicleDagame                  String[]
-  directionOfRoad                String?
-  accident                       Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-model Passenger {
-  id                  String   @id @default(cuid())
-  surname             String
-  initials            String
-  accidentId          String
-  passengerNumber     String
-  vehicleNumber       String
-  idNumber            String
-  telephoneNumber     String
-  telephoneNumberType String
-  pedestrian          String?
-  country             String?
-  cellphoneNumber     String?
-  race                String?
-  gender              String?
-  safetyPresent       String?
-  safetyUsed          String?
-  influenceSuspected  String?
-  influenceTested     String?
-  address             String?
-  age                 Int?
-  cellphoneNumberType String?
-  idType              String?
-  injury              String?
-  accident            Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-model Witness {
-  id            String   @id @default(cuid())
-  accidentId    String
-  surname       String
-  initials      String
-  contactNumber String
-  address       String
-  type          String
-  accident      Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-model PersonObservation {
-  id            String   @id @default(cuid())
-  accidentId    String
-  instrument    String
-  otherInfo     String?
-  personNumber  String
-  trapped       String
-  vehicleNumber String
-  accident      Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-model Office {
-  id                     String   @id @default(cuid())
-  accidentId             String
-  officeType             String
-  occurenceBookNumber    String
-  department             String
-  completedBy            String?
-  surname                String
-  initials               String
-  rank                   String
-  serviceNumber          String
-  date                   String?
-  time                   String?
-  accidentRegisterNumber String?
-  sapsCaseNumber         String?
-  capturingNumber        String?
-  accident               Accident @relation(fields: [accidentId], references: [id], onDelete: Cascade)
-}
-
-enum UserActivity {
-  User_Management
-  Batch_Management
-  Book_Management
-  Notice_Management
-}
 
 enum BookStatus {
   Issued

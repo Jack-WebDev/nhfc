@@ -1,46 +1,51 @@
-
-import { fetchAllBooks, fetchAllBooksByStatus, fetchAllNotices, fetchAllNoticesByStatus } from "@/apiCalls/batch";
-import { Button } from "@/components";
-import { GrandTotal } from "@/modules/accidentReports";
-import { Widget } from "@/modules/dashboard";
-import { AccidentDashboard } from "@/modules/dashboard/accidentDashboard";
-import { BookStatus } from "@prisma/client";
-import { BookOpen, FileLineChart, FileText } from "lucide-react";
-import Link from "next/link";
-import React, { useEffect } from "react";
+import { Component } from "./_components/Charts";
 import DashboardCard from "./_components/DashboardCard";
-import { FaFile, FaFileInvoice } from "react-icons/fa";
 
-type Props = {};
+import db from "@/utils/connect";
 
-
-const Page = async (props: Props) => {
-
+const Page = async () => {
+  const totalApplications = await db.applications.count();
+  const totalApprovedApplications = await db.applications.count({
+    where: {
+      LoanStatus: "Approved",
+    },
+  });
+  const totalDeclinedApplications = await db.applications.count({
+    where: {
+      LoanStatus: "Declined",
+    },
+  });
 
   return (
     <div>
       <>
-      <h2>Loan Applications</h2>
-    <div className="grid grid-cols-4 grid-rows-2 gap-8">
+        <h2 className="text-3xl font-semibold my-12">Dashboard Overview</h2>
+        <div className="grid grid-cols-4 grid-rows-2 gap-8">
+          <DashboardCard total={totalApplications} title="Applications" />
 
-        <DashboardCard icon={FaFileInvoice} total={2134} title="Applications"/>
-        <DashboardCard icon={FaFile} total={874} title="Financially Vialble Applications"/>
-        <DashboardCard icon={FileLineChart} total={633} title="Approved Applications"/>
-        <DashboardCard icon={FileText} total={383} title="Declined Applications"/>
-        <DashboardCard icon={BookOpen} total={123} title="Appealed Applications"/>
-        <DashboardCard icon={BookOpen} total={123} title="Applications Declined Due to Misrepresentation of information"/>
-        <DashboardCard icon={BookOpen} total={123} title="Value of approved applications"/>
-        <DashboardCard icon={BookOpen} total={123} title="Value of home loans"/>
-    </div>
+          <DashboardCard
+            total={totalApprovedApplications}
+            title="Approved Applications"
+          />
+          <DashboardCard
+            total={totalDeclinedApplications}
+            title="Declined Applications"
+          />
+          <DashboardCard total={123} title="Appealed Applications" />
+
+          <DashboardCard total={123} title="Value of approved applications" />
+          <DashboardCard total={123} title="Value of home loans" />
+        </div>
       </>
       <>
-      <h2>Queries</h2>
-      <div className="grid grid-cols-4 gap-x-8">
-      <DashboardCard icon={FaFileInvoice} total={2134} title="Total Queries"/>
-        <DashboardCard icon={FaFile} total={874} title="Closed Queries"/>
-        <DashboardCard icon={FileText} total={383} title="Cases"/>
-        <DashboardCard icon={BookOpen} total={123} title="Complaints"/>
-      </div>
+        <h2 className="text-3xl font-semibold my-12">Queries</h2>
+        <div className="grid grid-cols-4 gap-x-8">
+          <DashboardCard total={2134} title="Total Queries" />
+          <DashboardCard total={874} title="Closed Queries" />
+          <DashboardCard total={383} title="Cases" />
+          <DashboardCard total={123} title="Complaints" />
+        </div>
+        <Component/>
       </>
     </div>
   );

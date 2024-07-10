@@ -7,7 +7,7 @@ import {
   useUiStateContext,
   useUserContext,
 } from "@/context";
-import { BookOpen, CarFront, FileText, HelpCircle, LayoutDashboard, MoveUpRightIcon, Newspaper, PenSquare, ShoppingBag, User, Users } from "lucide-react";
+import { BookOpen, CarFront, FileBarChart, FileText, HelpCircle, LayoutDashboard, MoveUpRightIcon, Newspaper, PenSquare, Settings, ShoppingBag, User, Users } from "lucide-react";
 import { LinkType, NavLinkGroup } from "./navLinkGroup";
 
 const Staff = () => {
@@ -55,6 +55,7 @@ const Staff = () => {
       {data?.role === "Data_Capture" ? (
         <>
         <NavLink url="/frontend" title="My Applications" Icon={FileText} />
+        <NavLink url="/frontend/queries" title="Queries" Icon={HelpCircle} />
         <NavLink url="/dashboard/products" title="Our Products" Icon={ShoppingBag} />
         <NavLink url="/dashboard/impact" title="Impact" Icon={MoveUpRightIcon} />
         <NavLink url="/dashboard/news" title="News and Media" Icon={Newspaper} />
@@ -67,7 +68,11 @@ const Staff = () => {
                 <NavLink url="/dashboard" title="Dashboard" Icon={LayoutDashboard} />
                 <NavLink url="/dashboard/applications" title="Applications" Icon={FileText} />
                 <NavLink url="/dashboard/queries" title="Queries" Icon={HelpCircle} />
+                <NavLink url="/dashboard/queries" title="Reports" Icon={FileBarChart} />
+
                 <NavLink url="/dashboard/users" title="Users" Icon={Users} />
+                <NavLink url="/dashboard/queries" title="Settings" Icon={Settings} />
+
                 </>
       ) : null}
       {/* <NavLinkGroup links={reports} title="Reports" TitleIcon={FileText}/> */}
