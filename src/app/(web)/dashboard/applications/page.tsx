@@ -50,6 +50,7 @@ import {
   DialogTrigger,
 } from "@/components";
 import axios from "axios";
+import ViewApplication from "../_components/ViewApplication";
 
 type LoanApplication = {
   id: string;
@@ -95,6 +96,10 @@ export default function Applications() {
     setSelectedLoan(loan);
     setDialogOpen(true);
   };
+
+  const handleViewApplication = (loan: LoanApplication) => {
+    router.push(`/dashboard/applications/${loan.id}`);
+  }
 
   const LoanModal = ({ loan, closeDialog }: any) => {
     return (
@@ -212,7 +217,7 @@ export default function Applications() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleViewLoan(loan)}>
+              <DropdownMenuItem onClick={() => handleViewApplication(loan)}>
                 View Details
               </DropdownMenuItem>
               <DropdownMenuItem>Eligibility Check</DropdownMenuItem>
