@@ -79,8 +79,6 @@
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
-  color: #008000;
-  color: #6495ed;
 }
 
 /* For IE, Edge and Firefox */
