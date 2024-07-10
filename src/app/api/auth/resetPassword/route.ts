@@ -2,7 +2,6 @@ import {NextResponse} from "next/server"
 import db from "@/utils/connect"
 import bcrypt from "bcrypt"
 import { cookies } from "next/headers";
-import { UserActivity, UserActivityAction } from "@prisma/client";
 
 
 export const POST = async (request: Request) => {

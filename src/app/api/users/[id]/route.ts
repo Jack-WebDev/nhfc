@@ -2,7 +2,6 @@ import {NextResponse} from "next/server"
 import db from "@/utils/connect"
 import { getAuth } from "@/context";
 import { userUpdateSchema } from "@/schema";
-import { UserActivity, UserActivityAction } from "@prisma/client";
 import { deactivateUserTemplate, email, transporter } from "@/notifications";
 
 export const PATCH = async (request: Request, {params}: {params: {id: string}}) => {
@@ -51,23 +50,7 @@ export const PATCH = async (request: Request, {params}: {params: {id: string}}) 
             }
         })
 
-        try {
-            await db.report.create({
-                data: {
-                    adminId: admin.id,
-                    activity: UserActivity.User_Management,
-                    userId: user.id,
-                    activityAction: UserActivityAction.Update, 
-                    message: `User  ${user.firstName} ${user.lastName} has been ${
-                        data.status === "Active" ? "Activated" : data.status === "Inactive" ? "Deactivated" : "Removed"
-                    } by 
-                      ${admin.firstName} ${admin.lastName}
-                    `
-                }
-            })
-        } catch (error) {
-            return new NextResponse( JSON.stringify({message: "User updated successfully, but failed to create a report"}) , {status: 200})
-        }
+
         try {
             await transporter.sendMail({
                 from: email,
