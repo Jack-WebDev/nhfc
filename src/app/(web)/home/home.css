@@ -12,11 +12,11 @@
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* * {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-} */
+}
 
 body {
   font-family: "Poppins", sans-serif;
@@ -24,12 +24,6 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
 }
-
-/* .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-} */
 
 header {
   background-color: var(--background-color);
@@ -307,7 +301,7 @@ nav ul li a:hover {
 
 footer {
   background-color: var(--dark-gray);
-  color: var(--background-color);
+  color: var (--background-color);
   padding: 80px 0 20px;
 }
 

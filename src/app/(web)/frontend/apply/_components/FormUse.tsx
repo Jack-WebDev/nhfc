@@ -1,118 +1,477 @@
 "use client";
 
-import React, { useState } from 'react'
-import FormSections from './FormSections';
+import React, { useState } from "react";
+import FormSections from "./FormSections";
+import axios, { AxiosError } from "axios";
 
 type FormData = {
-    [key: string]: any;
+  [key: string]: any;
+};
+
+type TitleProp = {
+  selectedOption: string;
+};
+
+export default function FormUse({ selectedOption }: TitleProp) {
+  const [formData, setFormData] = useState<FormData>({});
+  const [currentSection, setCurrentSection] = useState<number>(0);
+
+  const sections = [
+    {
+      title: "Social Housing Finance",
+      fields: [
+        {
+          name: "applicantType",
+          label: "Applicant Type",
+          type: "select",
+          options: ["Organization/Business", "Individual"],
+        },
+        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "nameOfCompany", label: "Name of Company", type: "text" },
+        { name: "fullName", label: "Contact Person", type: "text" },
+        {
+          name: "province",
+          label: "Province",
+          type: "select",
+          options: [
+            "Gauteng",
+            "Western Cape",
+            "KwaZulu-Natal",
+            "Eastern Cape",
+            "Mpumalanga",
+            "Limpopo",
+            "North West",
+            "Northern Cape",
+            "Free State",
+            "Eastern Province",
+            "Western Province",
+          ],
+        },
+        {
+          name: "investmentType",
+          label: "Investment Type",
+          type: "select",
+          options: ["Quasi Equity", "Equity", "Loan"],
+        },
+
+        { name: "loanAmount", label: "Investment Amount", type: "text" },
+        {
+          name: "rate",
+          label: "Rate",
+          type: "select",
+          options: [
+            "8.5%",
+            "7.2%",
+            "6.8%",
+            "9.0%",
+            "7.5%",
+            "8.1%",
+            "7.9%",
+            "8.7%",
+            "9.3%",
+            "8.9%",
+          ],
+        },
+        { name: "email", label: "Email", type: "email" },
+        { name: "phone", label: "Phone", type: "tel" },
+        { name: "address", label: "Address of Development", type: "textarea" },
+        { name: "city", label: "City", type: "text" },
+        { name: "postalCode", label: "Postal Code", type: "text" },
+        {
+          name: "country",
+          label: "Country",
+          type: "select",
+          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+        },
+        { name: "docs", label: "Attach Documents", type: "file" },
+      ],
+    },
+    {
+      title: "Private Rental Housing Finance",
+      fields: [
+        {
+          name: "applicantType",
+          label: "Applicant Type",
+          type: "select",
+          options: ["Organization/Business", "Individual"],
+        },
+        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "nameOfCompany", label: "Name of Company", type: "text" },
+        { name: "fullName", label: "Contact Person", type: "text" },
+        {
+          name: "province",
+          label: "Province",
+          type: "select",
+          options: [
+            "Gauteng",
+            "Western Cape",
+            "KwaZulu-Natal",
+            "Eastern Cape",
+            "Mpumalanga",
+            "Limpopo",
+            "North West",
+            "Northern Cape",
+            "Free State",
+            "Eastern Province",
+            "Western Province",
+          ],
+        },
+        {
+          name: "investmentType",
+          label: "Investment Type",
+          type: "select",
+          options: ["Quasi Equity", "Equity", "Loan"],
+        },
+
+        { name: "loanAmount", label: "Investment Amount", type: "text" },
+        {
+          name: "rate",
+          label: "Rate",
+          type: "select",
+          options: [
+            "8.5%",
+            "7.2%",
+            "6.8%",
+            "9.0%",
+            "7.5%",
+            "8.1%",
+            "7.9%",
+            "8.7%",
+            "9.3%",
+            "8.9%",
+          ],
+        },
+        { name: "email", label: "Email", type: "email" },
+        { name: "phone", label: "Phone", type: "tel" },
+        { name: "address", label: "Address of Development", type: "textarea" },
+        { name: "city", label: "City", type: "text" },
+        { name: "postalCode", label: "Postal Code", type: "text" },
+        {
+          name: "country",
+          label: "Country",
+          type: "select",
+          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+        },
+        { name: "docs", label: "Attach Documents", type: "file" },
+      ],
+    },
+    {
+      title: "Incremental Housing Finance",
+      fields: [
+        {
+          name: "applicantType",
+          label: "Applicant Type",
+          type: "select",
+          options: ["Organization/Business", "Individual"],
+        },
+        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "nameOfCompany", label: "Name of Company", type: "text" },
+        { name: "fullName", label: "Contact Person", type: "text" },
+        {
+          name: "province",
+          label: "Province",
+          type: "select",
+          options: [
+            "Gauteng",
+            "Western Cape",
+            "KwaZulu-Natal",
+            "Eastern Cape",
+            "Mpumalanga",
+            "Limpopo",
+            "North West",
+            "Northern Cape",
+            "Free State",
+            "Eastern Province",
+            "Western Province",
+          ],
+        },
+        {
+          name: "investmentType",
+          label: "Investment Type",
+          type: "select",
+          options: ["Quasi Equity", "Equity", "Loan"],
+        },
+
+        { name: "loanAmount", label: "Investment Amount", type: "text" },
+        {
+          name: "rate",
+          label: "Rate",
+          type: "select",
+          options: [
+            "8.5%",
+            "7.2%",
+            "6.8%",
+            "9.0%",
+            "7.5%",
+            "8.1%",
+            "7.9%",
+            "8.7%",
+            "9.3%",
+            "8.9%",
+          ],
+        },
+        { name: "email", label: "Email", type: "email" },
+        { name: "phone", label: "Phone", type: "tel" },
+        { name: "address", label: "Address of Development", type: "textarea" },
+        { name: "city", label: "City", type: "text" },
+        { name: "postalCode", label: "Postal Code", type: "text" },
+        {
+          name: "country",
+          label: "Country",
+          type: "select",
+          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+        },
+        { name: "docs", label: "Attach Documents", type: "file" },
+      ],
+    },
+    {
+      title: "Affordable Housing Bridging Finance",
+      fields: [
+        {
+          name: "applicantType",
+          label: "Applicant Type",
+          type: "select",
+          options: ["Organization/Business", "Individual"],
+        },
+        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "nameOfCompany", label: "Name of Company", type: "text" },
+        { name: "fullName", label: "Contact Person", type: "text" },
+        {
+          name: "province",
+          label: "Province",
+          type: "select",
+          options: [
+            "Gauteng",
+            "Western Cape",
+            "KwaZulu-Natal",
+            "Eastern Cape",
+            "Mpumalanga",
+            "Limpopo",
+            "North West",
+            "Northern Cape",
+            "Free State",
+            "Eastern Province",
+            "Western Province",
+          ],
+        },
+        {
+          name: "investmentType",
+          label: "Investment Type",
+          type: "select",
+          options: ["Quasi Equity", "Equity", "Loan"],
+        },
+
+        { name: "loanAmount", label: "Investment Amount", type: "text" },
+        {
+          name: "rate",
+          label: "Rate",
+          type: "select",
+          options: [
+            "8.5%",
+            "7.2%",
+            "6.8%",
+            "9.0%",
+            "7.5%",
+            "8.1%",
+            "7.9%",
+            "8.7%",
+            "9.3%",
+            "8.9%",
+          ],
+        },
+        { name: "email", label: "Email", type: "email" },
+        { name: "phone", label: "Phone", type: "tel" },
+        { name: "address", label: "Address of Development", type: "textarea" },
+        { name: "city", label: "City", type: "text" },
+        { name: "postalCode", label: "Postal Code", type: "text" },
+        {
+          name: "country",
+          label: "Country",
+          type: "select",
+          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+        },
+        { name: "docs", label: "Attach Documents", type: "file" },
+      ],
+    },
+    {
+      title: "Contract Bridging Finance",
+      fields: [
+        {
+          name: "applicantType",
+          label: "Applicant Type",
+          type: "select",
+          options: ["Organization/Business", "Individual"],
+        },
+        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "nameOfCompany", label: "Name of Company", type: "text" },
+        { name: "fullName", label: "Contact Person", type: "text" },
+        {
+          name: "province",
+          label: "Province",
+          type: "select",
+          options: [
+            "Gauteng",
+            "Western Cape",
+            "KwaZulu-Natal",
+            "Eastern Cape",
+            "Mpumalanga",
+            "Limpopo",
+            "North West",
+            "Northern Cape",
+            "Free State",
+            "Eastern Province",
+            "Western Province",
+          ],
+        },
+        {
+          name: "investmentType",
+          label: "Investment Type",
+          type: "select",
+          options: ["Quasi Equity", "Equity", "Loan"],
+        },
+
+        { name: "loanAmount", label: "Investment Amount", type: "text" },
+        {
+          name: "rate",
+          label: "Rate",
+          type: "select",
+          options: [
+            "8.5%",
+            "7.2%",
+            "6.8%",
+            "9.0%",
+            "7.5%",
+            "8.1%",
+            "7.9%",
+            "8.7%",
+            "9.3%",
+            "8.9%",
+          ],
+        },
+        { name: "email", label: "Email", type: "email" },
+        { name: "phone", label: "Phone", type: "tel" },
+        { name: "address", label: "Address of Development", type: "textarea" },
+        { name: "city", label: "City", type: "text" },
+        { name: "postalCode", label: "Postal Code", type: "text" },
+        {
+          name: "country",
+          label: "Country",
+          type: "select",
+          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+        },
+        { name: "docs", label: "Attach Documents", type: "file" },
+      ],
+    },
+    {
+      title: "Incremental Housing Finance",
+      fields: [
+        {
+          name: "applicantType",
+          label: "Applicant Type",
+          type: "select",
+          options: ["Organization/Business", "Individual"],
+        },
+        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "nameOfCompany", label: "Name of Company", type: "text" },
+        { name: "fullName", label: "Contact Person", type: "text" },
+        {
+          name: "province",
+          label: "Province",
+          type: "select",
+          options: [
+            "Gauteng",
+            "Western Cape",
+            "KwaZulu-Natal",
+            "Eastern Cape",
+            "Mpumalanga",
+            "Limpopo",
+            "North West",
+            "Northern Cape",
+            "Free State",
+            "Eastern Province",
+            "Western Province",
+          ],
+        },
+        {
+          name: "investmentType",
+          label: "Investment Type",
+          type: "select",
+          options: ["Quasi Equity", "Equity", "Loan"],
+        },
+
+        { name: "loanAmount", label: "Investment Amount", type: "text" },
+        {
+          name: "rate",
+          label: "Rate",
+          type: "select",
+          options: [
+            "8.5%",
+            "7.2%",
+            "6.8%",
+            "9.0%",
+            "7.5%",
+            "8.1%",
+            "7.9%",
+            "8.7%",
+            "9.3%",
+            "8.9%",
+          ],
+        },
+        { name: "email", label: "Email", type: "email" },
+        { name: "phone", label: "Phone", type: "tel" },
+        { name: "address", label: "Address of Development", type: "textarea" },
+        { name: "city", label: "City", type: "text" },
+        { name: "postalCode", label: "Postal Code", type: "text" },
+        {
+          name: "country",
+          label: "Country",
+          type: "select",
+          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+        },
+        { name: "docs", label: "Attach Documents", type: "file" },
+      ],
+    },
+  ];
+
+  const handleChange = (e: any) => {
+    const { name, value, type, files } = e.target;
+
+    if (type === "file") {
+      setFormData((prevData) => ({ ...prevData, [name]: files?.[0] }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
-export default function FormUse() {
-    const [formData, setFormData] = useState<FormData>({});
-    const [currentSection, setCurrentSection] = useState<number>(0);
-  
-    const sections = [
-      {
-        title: 'Social Housing Finance',
-        fields: [
-          { name: 'nameOfCompany', label: 'Name of Company', type: 'text' },
-          { name: 'fullName', label: 'Contact Person', type: 'text' },
-          { name: 'email', label: 'Email', type: 'email' },
-          { name: 'phone', label: 'Phone', type: 'tel' },
-          { name: 'addressOfDevelopment', label: 'Address of Development', type: 'textarea' },
-          { name: 'city', label: 'City', type: 'text' },
-          { name: 'province', label: 'Province', type: 'text' },
-          { name: 'postalCode', label: 'Postal Code', type: 'text' },
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log("Form Data:", { ...formData, loanType: selectedOption });
+    try {
+      const res = await axios.post("/api/applications", {
+        ...formData,
+        loanType: selectedOption,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error as AxiosError);
+    }
+  };
 
-        ],
-      },
-      {
-        title: 'Private Rental Housing Finance',
-        fields: [
-            { name: 'nameOfCompany', label: 'Name of Company', type: 'text' },
-            { name: 'fullName', label: 'Contact Person', type: 'text' },
-            { name: 'email', label: 'Email', type: 'email' },
-            { name: 'phone', label: 'Phone', type: 'tel' },
-            { name: 'addressOfDevelopment', label: 'Address of Development', type: 'textarea' },
-            { name: 'city', label: 'City', type: 'text' },
-            { name: 'province', label: 'Province', type: 'text' },
-            { name: 'postalCode', label: 'Postal Code', type: 'text' },
-        ],
-      },
-      {
-        title: 'Incremental Housing Finance',
-        fields: [
-            { name: 'nameOfCompany', label: 'Name of Company', type: 'text' },
-            { name: 'fullName', label: 'Contact Person', type: 'text' },
-            { name: 'email', label: 'Email', type: 'email' },
-            { name: 'phone', label: 'Phone', type: 'tel' },
-        ],
-      },
-      {
-        title: 'Affordable Housing Bridging Finance',
-        fields: [
-            { name: 'nameOfCompany', label: 'Name of Company', type: 'text' },
-            { name: 'fullName', label: 'Contact Person', type: 'text' },
-            { name: 'email', label: 'Email', type: 'email' },
-            { name: 'phone', label: 'Phone', type: 'tel' },
-            { name: 'addressOfDevelopment', label: 'Address of Development', type: 'textarea' },
-            { name: 'city', label: 'City', type: 'text' },
-            { name: 'province', label: 'Province', type: 'text' },
-            { name: 'postalCode', label: 'Postal Code', type: 'text' },
-        ],
-      },
-      {
-        title: 'Contract Bridging Finance',
-        fields: [
-            { name: 'nameOfCompany', label: 'Name of Company', type: 'text' },
-            { name: 'fullName', label: 'Contact Person', type: 'text' },
-            { name: 'email', label: 'Email', type: 'email' },
-            { name: 'phone', label: 'Phone', type: 'tel' },
-            { name: 'addressOfDevelopment', label: 'Address of Development', type: 'textarea' },
-            { name: 'city', label: 'City', type: 'text' },
-            { name: 'province', label: 'Province', type: 'text' },
-            { name: 'postalCode', label: 'Postal Code', type: 'text' },
-        ],
-      },
-      // Add more sections as needed
-    ];
-  
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setFormData((prevData:any) => ({ ...prevData, [name]: value }));
-    };
-  
-    const handleNext = () => {
-      if (currentSection < sections.length - 1) {
-        setCurrentSection(currentSection + 1);
-      }
-    };
-  
-    const handlePrevious = () => {
-      if (currentSection > 0) {
-        setCurrentSection(currentSection - 1);
-      }
-    };
-  
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      console.log('Form Data:', formData);
-      // Handle form submission logic here
-    };
-  
-    return (
-      <form onSubmit={handleSubmit}>
-        <FormSections
-          sectionTitle={sections[currentSection].title}
-          fields={sections[currentSection].fields}
-          values={formData}
-          handleChange={handleChange}
-        />
-        <div>
-          {currentSection > 0 && <button type="button" onClick={handlePrevious}>Previous</button>}
-          {currentSection < sections.length - 1 && <button type="button" onClick={handleNext}>Next</button>}
-          {currentSection === sections.length - 1 && <button type="submit">Submit</button>}
-        </div>
-      </form>
-    );
+  return (
+    <form>
+      <FormSections
+        sectionTitle={selectedOption}
+        fields={sections[currentSection].fields}
+        values={formData}
+        handleChange={handleChange}
+      />
+
+      <button
+        onClick={handleSubmit}
+        className="bg-blue-500 text-white py-2 px-8 rounded-lg"
+      >
+        Submit
+      </button>
+    </form>
+  );
 }
