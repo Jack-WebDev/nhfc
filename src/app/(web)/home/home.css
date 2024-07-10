@@ -18,11 +18,17 @@
   padding: 0;
 }
 
+html, body {
+  height: 100%;
+  overflow: auto;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--background-color);
+  padding-top: 80px; /* Adjust based on the actual header height */
 }
 
 header {
@@ -100,7 +106,6 @@ nav ul li a:hover {
   justify-content: center;
   text-align: center;
   color: var(--background-color);
-  margin-top: 80px;
 }
 
 .hero-content {
@@ -138,7 +143,7 @@ nav ul li a:hover {
 }
 
 .section {
-  padding: 100px 0;
+  padding: 100px 20px; /* Added padding to ensure space around sections */
 }
 
 .section h2 {
@@ -202,7 +207,7 @@ nav ul li a:hover {
 
 .mission-values {
   background-color: var(--light-gray);
-  padding: 100px 0;
+  padding: 100px 20px; /* Added padding to ensure space around sections */
 }
 
 .mission-values h2 {
@@ -243,7 +248,7 @@ nav ul li a:hover {
 }
 
 .mandate {
-  padding: 100px 0;
+  padding: 100px 20px; /* Added padding to ensure space around sections */
   background-color: var(--background-color);
 }
 
@@ -271,7 +276,7 @@ nav ul li a:hover {
 
 .testimonials {
   background-color: var(--light-gray);
-  padding: 100px 0;
+  padding: 100px 20px; /* Added padding to ensure space around sections */
 }
 
 .testimonial-card {
@@ -301,7 +306,7 @@ nav ul li a:hover {
 
 footer {
   background-color: var(--dark-gray);
-  color: var (--background-color);
+  color: var(--background-color);
   padding: 80px 0 20px;
 }
 
