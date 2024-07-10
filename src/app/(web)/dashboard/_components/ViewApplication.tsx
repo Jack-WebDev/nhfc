@@ -29,13 +29,13 @@ export default function ViewApplication() {
 
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchApplicationData = async () => {
       const res = await axios.get(`/api/applications/${applicationID}`);
       const usersData = await res.data;
       setLoanData(usersData);
     };
 
-    fetchUserData();
+    fetchApplicationData();
   }, [applicationID]);
 
   return (

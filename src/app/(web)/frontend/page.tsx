@@ -91,10 +91,9 @@ export default function Applications() {
     fetchApplications();
   }, []);
 
-  const handleViewLoan = (loan: any) => {
-    setSelectedLoan(loan);
-    setDialogOpen(true);
-  };
+  const handleViewApplication = (loan: LoanApplication) => {
+    router.push(`/frontend/${loan.id}`);
+  }
 
   const LoanModal = ({ loan, closeDialog }: any) => {
     return (
@@ -212,7 +211,7 @@ export default function Applications() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleViewLoan(loan)}>
+              <DropdownMenuItem onClick={() => handleViewApplication(loan)}>
                 View Details
               </DropdownMenuItem>
               <DropdownMenuItem>Edit Application</DropdownMenuItem>
