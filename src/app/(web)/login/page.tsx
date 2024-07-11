@@ -29,7 +29,7 @@ const LoginPage = (props: Props) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${url}/auth/login`, { email, password });
+      const res = await axios.post(`/api/auth/login`, { email, password });
 
       setTracker((prev) => prev + 1);
       location.reload();
