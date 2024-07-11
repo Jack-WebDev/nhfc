@@ -30,7 +30,7 @@ export default function FormSections({
             ))}
           </select>
         ) : field.type === 'file' ? (
-          <input type="file" name={field.name} onChange={handleChange} className="border border-gray-200 rounded-lg p-2 w-full" multiple={true} />
+          <input type="file" name={field.name} onChange={handleChange} className="border border-gray-200 rounded-lg p-2 w-full" multiple />
         ) : (
           <input
             type={field.type}
