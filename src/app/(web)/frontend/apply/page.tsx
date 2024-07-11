@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import Criteria from "./_components/Criteria";
 import FormUse from "./_components/FormUse";
+import axios, { AxiosError } from "axios";
 
 export default function ApplicationProcess() {
   const [selectedOption, setSelectedOption] = useState<string>("");
@@ -114,24 +115,32 @@ export default function ApplicationProcess() {
         return "dependentsData";
       case 6:
         return "currentEmployerData";
-      case 7:
+      case 8:
         return "previousEmploymentData";
       default:
-        return "";
+        return "personalData";
     }
   };
 
   const handleNext = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 7));
   };
 
   const handlePrevious = () => {
-    setCurrentStep((prevStep) => prevStep - 1);
+    setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    try {
+      const res = await axios.post("/api/applications/first-home", {
+        ...formData,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error as AxiosError);
+    }
   };
   return (
     <div>
@@ -877,7 +886,7 @@ export default function ApplicationProcess() {
                         </div>
                       )} */}
                       {currentStep === 1 && (
-                        <div>
+                        <div className="bg-green-400">
                           <h2 className="text-2xl font-semibold">
                             Applicant Identification
                           </h2>
@@ -1391,7 +1400,9 @@ export default function ApplicationProcess() {
                           </label>
                         </div>
                       )}
-
+                      {currentStep === 8 && (
+                        <h1>Thank you for applying for a first home loan</h1>
+                      )}
                       <div>
                         {currentStep > 1 && (
                           <button

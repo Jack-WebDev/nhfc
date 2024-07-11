@@ -68,6 +68,64 @@ model Applications {
 
 
 
+model FirstHomeLoan {
+  id        String   @id @default(cuid())
+  idNumber  String @unique
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  gender    String
+  race      String
+  address   String
+  suburb    String
+  city      String
+  province  String
+  postalCode String
+  supportType String
+  projectProvince String
+  municipalityMetro String
+  projectName String
+  product String
+  isCitizenOrResident String
+  isOver18 String
+  isFirstTimeBuyer String
+  hasDependents String
+  monthlyIncomeApplicant String
+  monthlyIncomeSpouse String
+  combinedMonthlyIncome String
+  femaleChildrenUnder18 String
+  maleChildrenUnder18 String
+  femaleChildren18To24 String
+  maleChildren18To24 String
+  otherDependents String
+  currentCompanyName String
+  currentCompanyAddress String
+  currentCompanySuburb String
+  currentCompanyCity String
+  currentCompanyProvince String
+  currentCompanyPostalCode String
+  currentCompanyEmploymentDate String
+  currentCompanyContactPersonName String
+  currentCompanyContactPersonPhone String
+  currentCompanyContactPersonEmail String
+  previousCompanyName String
+  previousCompanyAddress String
+  previousCompanySuburb String
+  previousCompanyCity String
+  previousCompanyProvince String
+  previousCompanyPostalCode String
+  previousCompanyEmploymentStartDate String
+  previousCompanyEmploymentEndDate String
+  previousCompanyContactPersonName String
+  previousCompanyContactPersonPhone String
+  previousCompanyContactPersonEmail String
+  termsAgreement String
+  createdAt    DateTime @default(now())
+}
+
+
+
 
 enum BookStatus {
   Issued
