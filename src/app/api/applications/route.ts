@@ -15,8 +15,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
 
     const data = await req.json();
-    const {nameOfCompany, fullName, email, phone, address, city, province, postalCode,country, loanAmount,loanType} = data;
-    console.log(nameOfCompany, fullName, email, phone, address, city, province, postalCode,country, loanAmount,loanType)
+    const {nameOfCompany, fullName, email, phone, address, city, province, postalCode,loanAmount,loanType,country, rate, docs, applicantType,investmentType, projectName,  idNumber} = data;
+    console.log(nameOfCompany, fullName, email, phone, address, city, province, postalCode, loanAmount,loanType,country, rate, docs, applicantType,investmentType, projectName,  idNumber)
 
     const applicationData = await db.applications.create({
       data: {
@@ -26,11 +26,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
         PhoneNumber: phone,
         Address: address,
         City: city,
+        Rate: rate,
         LoanAmount: loanAmount,
         LoanType: loanType,
+        ApplicantType: applicantType,
+        Country: country,
+        Docs: docs,
+        InvestmentType: investmentType,
+        ProjectName: projectName,
+        IdNumber: idNumber,
         Province: province,
         PostalCode: postalCode,
-        Country: country,
       }
     })
 

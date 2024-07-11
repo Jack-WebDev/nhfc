@@ -21,6 +21,8 @@ type LoanApplication = {
   City: string;
   Province: string;
   PostalCode: string;
+  ProjectName: string;
+  InvestmentType: string;
   Country: string;
   LoanType: string;
   LoanAmount: string;
@@ -82,13 +84,13 @@ export default function ViewApplication() {
             <Accordion type="single" collapsible className="w-full bg-gray-100">
               <AccordionItem value="item-1">
                 <AccordionTrigger className="px-4">
-                  Project: Harmony Heights Social Housing
+                  Project: {loan.ProjectName}
                 </AccordionTrigger>
-                <AccordionContent className="grid">
+                <AccordionContent className="grid gap-y-4 px-8">
                   <h2 className="text-2xl font-semibold text-blue-500">
                     Project Description:
                   </h2>
-                  Harmony Heights is an innovative social housing project
+                  {loan.ProjectName} is an innovative social housing project
                   located in the heart of Johannesburg. This development aims to
                   provide quality, affordable housing to low and middle-income
                   families while fostering a sense of community and sustainable

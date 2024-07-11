@@ -6,6 +6,8 @@ import { SideNav, TopNav } from '@/components'
 import { UiContextProvider, UserContextProvider, getAuth } from '@/context'
 import { redirect, useRouter } from 'next/navigation'
 import { Toaster } from '@/components'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -27,6 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en" className='overflow-hidden'>
       <body className={`${inter.className} `}>
+      <ToastContainer autoClose={2000} />
+
         <Content>
         {children}
         </Content>
