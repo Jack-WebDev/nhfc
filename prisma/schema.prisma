@@ -4,7 +4,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Session {
@@ -122,6 +122,33 @@ model FirstHomeLoan {
   previousCompanyContactPersonEmail String
   termsAgreement String
   createdAt    DateTime @default(now())
+}
+
+
+model Projects {
+  id        String   @id @default(cuid())
+  projectName String
+  projectCode String
+  programme String
+  projectStatus String
+  province String
+  municipality String
+  ward String
+  address String
+  gpscoordinates String
+  projectOwner String
+  developer String
+  projectLiason String
+  materialSupplier String
+  contractor String
+  deliverablesSummary String
+  skilledWorkers String
+  unskilledWorkers String
+  schools String
+  clinics String
+  communityHalls String
+  sportsField String
+  implementationPartners String
 }
 
 
