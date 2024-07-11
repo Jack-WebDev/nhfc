@@ -43,9 +43,9 @@ export default function Home() {
                 </li>
               </ul>
             </nav>
-            <div className="auth-buttons">
-              <Link href="/login" className="login-btn">Login</Link>
-              <Link href="/register" className="register-btn">Register</Link>
+            <div className="auth-buttons flex gap-x-4">
+              <Link href="/login" className="login-btn rounded-xl py-2 px-4">Login</Link>
+              <Link href="/register" className="register-btn rounded-xl py-2 px-4">Register</Link>
             </div>
           </div>
         </div>

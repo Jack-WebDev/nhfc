@@ -130,6 +130,8 @@ export default function Applications() {
 
   }
 
+
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -377,17 +379,17 @@ export default function Applications() {
                 &times;
               </button>
               {isLoading ? (
-                <div className="loading">
+                <div className="loading p-8">
                   <div className="spinner"></div>
                   <span>Checking eligibility...</span>
                 </div>
               ) : (
                 <div className="result">
-                    <h3>Eligibility Results</h3>
-                  <ul>
+                    <h3 className='underline text-center text-lg font-semibold my-4'>Eligibility Results</h3>
+                  <ul className='grid gap-y-4 '>
                     {steps.map((step, index) => (
-                      <li key={index} className={step.result === 'Passed' ? 'passed' : 'failed'}>
-                        {step.message} {step.result}
+                      <li key={index} className={`text-black ${step.result === 'Passed' ? 'passed text-green-700' : 'failed text-red-700'}`}>
+                        {step.message} <span className='font-bold'>{step.result}</span>
                       </li>
                     ))}
                   </ul>

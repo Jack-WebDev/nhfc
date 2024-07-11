@@ -86,11 +86,11 @@ export default function ViewApplication() {
                 <AccordionTrigger className="px-4">
                   Project: {loan.ProjectName}
                 </AccordionTrigger>
-                <AccordionContent className="grid">
+                <AccordionContent className="grid gap-y-4 px-8">
                   <h2 className="text-2xl font-semibold text-blue-500">
                     Project Description:
                   </h2>
-                  Harmony Heights is an innovative social housing project
+                  {loan.ProjectName} is an innovative social housing project
                   located in the heart of Johannesburg. This development aims to
                   provide quality, affordable housing to low and middle-income
                   families while fostering a sense of community and sustainable
