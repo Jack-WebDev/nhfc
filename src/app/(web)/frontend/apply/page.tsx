@@ -422,91 +422,106 @@ export default function ApplicationProcess() {
                     <div>
                       {currentStep === 1 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
-                        <h2 className="text-2xl font-semibold mb-4">
-                          Applicant Identification
-                        </h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                          <label className="block">
-                            <span className="text-gray-700">
-                              RSA ID Number:
-                            </span>
-                            <input
-                              type="text"
-                              name="idNumber"
-                              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                              value={formData.personalData.idNumber}
-                              onChange={handleChange}
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-gray-700">First Name:</span>
-                            <input
-                              type="text"
-                              name="firstName"
-                              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                              value={formData.personalData.firstName}
-                              onChange={handleChange}
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-gray-700">Last Name:</span>
-                            <input
-                              type="text"
-                              name="lastName"
-                              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                              value={formData.personalData.lastName}
-                              onChange={handleChange}
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-gray-700">Email:</span>
-                            <input
-                              type="email"
-                              name="email"
-                              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                              value={formData.personalData.email}
-                              onChange={handleChange}
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-gray-700">
-                              Phone Number:
-                            </span>
-                            <input
-                              type="text"
-                              name="phoneNumber"
-                              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                              value={formData.personalData.phoneNumber}
-                              onChange={handleChange}
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-gray-700">Gender:</span>
-                            <input
-                              type="text"
-                              name="gender"
-                              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                              value={formData.personalData.gender}
-                              onChange={handleChange}
-                            />
-                          </label>
-                          <label className="block">
-                            <span className="text-gray-700">Race:</span>
-                            <input
-                              type="text"
-                              name="race"
-                              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                              value={formData.personalData.race}
-                              onChange={handleChange}
-                            />
-                          </label>
-                        </div>
-                      </div>
-                    )}
-
-{currentStep === 2 && (
-                        <div className="p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
+                            Applicant Identification
+                          </h2>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <label className="block">
+                              <span className="text-gray-700">
+                                RSA ID Number:
+                              </span>
+                              <input
+                                type="text"
+                                name="idNumber"
+                                placeholder="Enter your RSA ID Number"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                value={formData.personalData.idNumber}
+                                onChange={handleChange}
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="text-gray-700">First Name:</span>
+                              <input
+                                type="text"
+                                name="firstName"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                value={formData.personalData.firstName}
+                                onChange={handleChange}
+                                placeholder="Enter your First Name"
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="text-gray-700">Last Name:</span>
+                              <input
+                                type="text"
+                                name="lastName"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                value={formData.personalData.lastName}
+                                onChange={handleChange}
+                                placeholder="Enter your Last Name"
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="text-gray-700">Email:</span>
+                              <input
+                                type="email"
+                                name="email"
+                                placeholder="Enter your Email"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                value={formData.personalData.email}
+                                onChange={handleChange}
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="text-gray-700">
+                                Phone Number:
+                              </span>
+                              <input
+                                type="text"
+                                name="phoneNumber"
+                                placeholder="Enter your Phone Number"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                value={formData.personalData.phoneNumber}
+                                onChange={handleChange}
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="text-gray-700">Gender:</span>
+                              <input
+                                type="text"
+                                name="gender"
+                                placeholder="Enter your Gender"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                value={formData.personalData.gender}
+                                onChange={handleChange}
+                              />
+                            </label>
+                            <label className="block">
+                              <span className="text-gray-700">Race:</span>
+
+                              <select
+                                name="race"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                value={formData.personalData.race}
+                                onChange={handleChange}
+                              >
+                                <option value="" disabled>
+                                  Select your Race
+                                </option>
+                                <option value="black">Black</option>
+                                <option value="white">White</option>
+                                <option value="asian">Asian</option>
+                                <option value="colored">Colored</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </label>
+                          </div>
+                        </div>
+                      )}
+
+                      {currentStep === 2 && (
+                        <div className="p-6 bg-white rounded-lg shadow-md">
+                          <h2 className="text-2xl font-semibold mb-6">
                             Current Physical Address
                           </h2>
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -517,6 +532,7 @@ export default function ApplicationProcess() {
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 value={formData.addressData.address}
                                 onChange={handleChange}
+                                placeholder="Enter your Address"
                               />
                             </label>
                             <label className="block">
@@ -526,6 +542,7 @@ export default function ApplicationProcess() {
                                 name="suburb"
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 value={formData.addressData.suburb}
+                                placeholder="Enter your Suburb"
                                 onChange={handleChange}
                               />
                             </label>
@@ -534,6 +551,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="city"
+                                placeholder="Enter your City"
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 value={formData.addressData.city}
                                 onChange={handleChange}
@@ -541,13 +559,34 @@ export default function ApplicationProcess() {
                             </label>
                             <label className="block">
                               <span className="text-gray-700">Province:</span>
-                              <input
-                                type="text"
+
+                              <select
                                 name="province"
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 value={formData.addressData.province}
                                 onChange={handleChange}
-                              />
+                              >
+                                <option value="" disabled>
+                                  Select your Province
+                                </option>
+                                <option value="Gauteng">Gauteng</option>
+                                <option value="Western Cape">
+                                  Western Cape
+                                </option>
+                                <option value="KwaZulu-Natal">
+                                  KwaZulu-Natal
+                                </option>
+                                <option value="Eastern Cape">
+                                  Eastern Cape
+                                </option>
+                                <option value="Free State">Free State</option>
+                                <option value="Limpopo">Limpopo</option>
+                                <option value="Mpumalanga">Mpumalanga</option>
+                                <option value="North West">North West</option>
+                                <option value="Northern Cape">
+                                  Northern Cape
+                                </option>
+                              </select>
                             </label>
                             <label className="block">
                               <span className="text-gray-700">
@@ -556,6 +595,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="postalCode"
+                                placeholder="Enter your Postal Code"
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 value={formData.addressData.postalCode}
                                 onChange={handleChange}
@@ -689,24 +729,37 @@ export default function ApplicationProcess() {
                           </label>
 
                           <label className="block">
-                              <span className="text-gray-700">Product:</span>
-                              <input
-                                type="text"
-                                name="product"
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                value={formData.supportData.product}
-                                onChange={handleChange}
-                              />
-                            </label>
+                            <span className="text-gray-700">Product:</span>
+
+                            <select
+                              name="product"
+                              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                              value={formData.supportData.product}
+                              onChange={handleChange}
+                            >
+                              <option value="" disabled>
+                                Select Product
+                              </option>
+                              <option value="Housing Finance - 2 Bedroom">
+                                Housing Finance - 2 Bedroom
+                              </option>
+                              <option value="Housing Finance - 3 Bedroom">
+                                Housing Finance - 3 Bedroom
+                              </option>
+                              <option value="Housing Finance - 4 Bedroom">
+                                Housing Finance - 4 Bedroom
+                              </option>
+                            </select>
+                          </label>
                         </div>
                       )}
 
-{currentStep === 4 && (
+                      {currentStep === 4 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
                             Qualification
                           </h2>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             <label className="block col-span-2">
                               <span className="text-gray-700">
                                 I am a South African citizen or Resident:
@@ -816,12 +869,12 @@ export default function ApplicationProcess() {
                         </div>
                       )}
 
-{currentStep === 5 && (
+                      {currentStep === 5 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
                             Dependants Living With Applicant
                           </h2>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             <label className="block">
                               <span className="text-gray-700">
                                 No. of Female Children Under 18:
@@ -893,7 +946,7 @@ export default function ApplicationProcess() {
                           </div>
                         </div>
                       )}
-                     {currentStep === 6 && (
+                      {currentStep === 6 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
                             Applicant Current Employer
@@ -1023,7 +1076,7 @@ export default function ApplicationProcess() {
                           </div>
                         </div>
                       )}
-                     {currentStep === 7 && (
+                      {currentStep === 7 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
                             Previous Employment
@@ -1141,7 +1194,11 @@ export default function ApplicationProcess() {
                               />
                             </label>
                           </div>
-                          <button type="submit" className="bg-blue-500 text-white rounded-xl py-2 px-4 mb-8">Submit</button>
+                          <button
+                            type="submit"
+                            className="py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"                          >
+                            Submit
+                          </button>
                         </div>
                       )}
                       {currentStep === 8 && (
@@ -1151,8 +1208,7 @@ export default function ApplicationProcess() {
                       <div>
                         {currentStep > 1 && (
                           <button
-                            className="py-2 px-4 border rounded-xl bg-gray-500 text-white"
-                            type="button"
+                          className="py-2 px-6 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition ease-in-out duration-200"                            type="button"
                             onClick={handlePrevious}
                           >
                             Previous
@@ -1160,8 +1216,7 @@ export default function ApplicationProcess() {
                         )}
                         {currentStep < 7 && (
                           <button
-                            className="py-2 px-4 border rounded-xl bg-green-500 text-white"
-                            type="button"
+                          className="py-2 px-6 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition ease-in-out duration-200"                            type="button"
                             onClick={handleNext}
                           >
                             Next
