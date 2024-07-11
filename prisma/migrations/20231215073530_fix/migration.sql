@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Passenger" ALTER COLUMN "passengerNumber" SET DATA TYPE TEXT,
-ALTER COLUMN "idType" SET DATA TYPE TEXT;
