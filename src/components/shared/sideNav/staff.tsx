@@ -7,7 +7,7 @@ import {
   useUiStateContext,
   useUserContext,
 } from "@/context";
-import { BookOpen, CarFront, FileBarChart, FileText, HelpCircle, LayoutDashboard, MoveUpRightIcon, Newspaper, PenSquare, Settings, ShoppingBag, User, Users } from "lucide-react";
+import { BookOpen, CarFront, FileBarChart, FileText, FolderKanban, HelpCircle, LayoutDashboard, MoveUpRightIcon, Newspaper, PenSquare, Settings, ShoppingBag, User, Users } from "lucide-react";
 import { LinkType, NavLinkGroup } from "./navLinkGroup";
 
 const Staff = () => {
@@ -67,6 +67,7 @@ const Staff = () => {
                 <>
                 <NavLink url="/dashboard" title="Dashboard" Icon={LayoutDashboard} />
                 <NavLink url="/dashboard/applications" title="Applications" Icon={FileText} />
+                <NavLink url="/dashboard/projects" title="Projects" Icon={FolderKanban} />
                 <NavLink url="/dashboard/queries" title="Queries" Icon={HelpCircle} />
                 <NavLink url="/dashboard/queries" title="Reports" Icon={FileBarChart} />
 

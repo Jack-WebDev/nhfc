@@ -71,7 +71,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function Component() {
+export function BarChartComponent() {
   return (
     <ChartContainer config={chartConfig} className="h-1/2 w-1/2 bg-white">
       <BarChart accessibilityLayer data={chartData}>
