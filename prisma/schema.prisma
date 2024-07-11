@@ -49,6 +49,9 @@ model Applications {
   Email String @unique
   PhoneNumber String @unique
   Address String
+  IdNumber String?
+  InvestmentType String?
+  ProjectName String?
   City String
   Province String
   PostalCode String
