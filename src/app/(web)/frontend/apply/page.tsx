@@ -25,92 +25,99 @@ export default function ApplicationProcess() {
 
   const [formData, setFormData] = useState({
     personalData: {
-      idNumber: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      gender: '',
-      race: ''
+      idNumber: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      gender: "",
+      race: "",
     },
     addressData: {
-      address: '',
-      suburb: '',
-      city: '',
-      province: '',
-      postalCode: ''
+      address: "",
+      suburb: "",
+      city: "",
+      province: "",
+      postalCode: "",
     },
     supportData: {
-      supportType: '',
-      province: '',
-      municipalityMetro: '',
-      projectName: '',
-      product: ''
+      supportType: "",
+      province: "",
+      municipalityMetro: "",
+      projectName: "",
+      product: "",
     },
     qualificationData: {
-      isCitizenOrResident: '',
-      isOver18: '',
-      isFirstTimeBuyer: '',
-      hasDependents: '',
-      monthlyIncomeApplicant: '',
-      monthlyIncomeSpouse: '',
-      combinedMonthlyIncome: ''
+      isCitizenOrResident: "",
+      isOver18: "",
+      isFirstTimeBuyer: "",
+      hasDependents: "",
+      monthlyIncomeApplicant: "",
+      monthlyIncomeSpouse: "",
+      combinedMonthlyIncome: "",
     },
     dependentsData: {
-      femaleChildrenUnder18: '',
-      maleChildrenUnder18: '',
-      femaleChildren18To24: '',
-      maleChildren18To24: '',
-      otherDependents: ''
+      femaleChildrenUnder18: "",
+      maleChildrenUnder18: "",
+      femaleChildren18To24: "",
+      maleChildren18To24: "",
+      otherDependents: "",
     },
     currentEmployerData: {
-      companyName: '',
-      address: '',
-      suburb: '',
-      city: '',
-      province: '',
-      postalCode: '',
-      employmentDate: '',
-      contactPersonName: '',
-      contactPersonPhone: '',
-      contactPersonEmail: ''
+      companyName: "",
+      address: "",
+      suburb: "",
+      city: "",
+      province: "",
+      postalCode: "",
+      employmentDate: "",
+      contactPersonName: "",
+      contactPersonPhone: "",
+      contactPersonEmail: "",
     },
     previousEmploymentData: {
-      companyName: '',
-      address: '',
-      suburb: '',
-      city: '',
-      province: '',
-      postalCode: '',
-      employmentStartDate: '',
-      employmentEndDate: '',
-      termsAgreement: ''
-    }
+      companyName: "",
+      address: "",
+      suburb: "",
+      city: "",
+      province: "",
+      postalCode: "",
+      employmentStartDate: "",
+      employmentEndDate: "",
+      termsAgreement: "",
+    },
   });
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData; // Assuming formData is your form data state
-    setFormData(prevFormData => ({
+    setFormData((prevFormData) => ({
       ...prevFormData,
       [stepDataKey]: {
         ...prevFormData[stepDataKey],
-        [name as keyof typeof prevFormData[typeof stepDataKey]]: value // Type assertion here
-      }
+        [name as keyof (typeof prevFormData)[typeof stepDataKey]]: value, // Type assertion here
+      },
     }));
   };
-  
 
-  const getStepDataKey = (step:any) => {
+  const getStepDataKey = (step: any) => {
     switch (step) {
-      case 1: return 'personalData';
-      case 2: return 'addressData';
-      case 3: return 'supportData';
-      case 4: return 'qualificationData';
-      case 5: return 'dependentsData';
-      case 6: return 'currentEmployerData';
-      case 7: return 'previousEmploymentData';
-      default: return '';
+      case 1:
+        return "personalData";
+      case 2:
+        return "addressData";
+      case 3:
+        return "supportData";
+      case 4:
+        return "qualificationData";
+      case 5:
+        return "dependentsData";
+      case 6:
+        return "currentEmployerData";
+      case 7:
+        return "previousEmploymentData";
+      default:
+        return "";
     }
   };
 
@@ -870,482 +877,520 @@ export default function ApplicationProcess() {
                         </div>
                       )} */}
                       {currentStep === 1 && (
-        <div>
-          <h2 className="text-2xl font-semibold">Applicant Identification</h2>
-          <label>
-            RSA ID Number:
-            <input
-              type="text"
-              name="idNumber"
-              value={formData.personalData.idNumber}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            First Name:
-            <input
-              type="text"
-              name="firstName"
-              value={formData.personalData.firstName}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Last Name:
-            <input
-              type="text"
-              name="lastName"
-              value={formData.personalData.lastName}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.personalData.email}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Phone Number:
-            <input
-              type="text"
-              name="phoneNumber"
-              value={formData.personalData.phoneNumber}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Gender:
-            <input
-              type="text"
-              name="gender"
-              value={formData.personalData.gender}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Race:
-            <input
-              type="text"
-              name="race"
-              value={formData.personalData.race}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
+                        <div>
+                          <h2 className="text-2xl font-semibold">
+                            Applicant Identification
+                          </h2>
+                          <label>
+                            RSA ID Number:
+                            <input
+                              type="text"
+                              name="idNumber"
+                              value={formData.personalData.idNumber}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            First Name:
+                            <input
+                              type="text"
+                              name="firstName"
+                              value={formData.personalData.firstName}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Last Name:
+                            <input
+                              type="text"
+                              name="lastName"
+                              value={formData.personalData.lastName}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Email:
+                            <input
+                              type="email"
+                              name="email"
+                              value={formData.personalData.email}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Phone Number:
+                            <input
+                              type="text"
+                              name="phoneNumber"
+                              value={formData.personalData.phoneNumber}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Gender:
+                            <input
+                              type="text"
+                              name="gender"
+                              value={formData.personalData.gender}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Race:
+                            <input
+                              type="text"
+                              name="race"
+                              value={formData.personalData.race}
+                              onChange={handleChange}
+                            />
+                          </label>
+                        </div>
+                      )}
 
-      {currentStep === 2 && (
-        <div>
-          <h2 className="text-2xl font-semibold">Current Physical Address</h2>
-          <label>
-            Address:
-            <textarea
-              name="address"
-              value={formData.addressData.address}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Suburb:
-            <input
-              type="text"
-              name="suburb"
-              value={formData.addressData.suburb}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            City:
-            <input
-              type="text"
-              name="city"
-              value={formData.addressData.city}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Province:
-            <input
-              type="text"
-              name="province"
-              value={formData.addressData.province}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Postal Code:
-            <input
-              type="text"
-              name="postalCode"
-              value={formData.addressData.postalCode}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
+                      {currentStep === 2 && (
+                        <div>
+                          <h2 className="text-2xl font-semibold">
+                            Current Physical Address
+                          </h2>
+                          <label>
+                            Address:
+                            <textarea
+                              name="address"
+                              value={formData.addressData.address}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Suburb:
+                            <input
+                              type="text"
+                              name="suburb"
+                              value={formData.addressData.suburb}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            City:
+                            <input
+                              type="text"
+                              name="city"
+                              value={formData.addressData.city}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Province:
+                            <input
+                              type="text"
+                              name="province"
+                              value={formData.addressData.province}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Postal Code:
+                            <input
+                              type="text"
+                              name="postalCode"
+                              value={formData.addressData.postalCode}
+                              onChange={handleChange}
+                            />
+                          </label>
+                        </div>
+                      )}
 
-      {currentStep === 3 && (
-        <div>
-          <h2>Support Type, Project and Product</h2>
-          <label>
-            Support Type:
-            <input
-              type="text"
-              name="supportType"
-              value={formData.supportData.supportType}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Province:
-            <input
-              type="text"
-              name="province"
-              value={formData.supportData.province}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Municipality/ Metro:
-            <input
-              type="text"
-              name="municipalityMetro"
-              value={formData.supportData.municipalityMetro}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Project Name:
-            <input
-              type="text"
-              name="projectName"
-              value={formData.supportData.projectName}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Product:
-            <input
-              type="text"
-              name="product"
-              value={formData.supportData.product}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
+                      {currentStep === 3 && (
+                        <div>
+                          <h2>Support Type, Project and Product</h2>
+                          <label>
+                            Support Type:
+                            <input
+                              type="text"
+                              name="supportType"
+                              value={formData.supportData.supportType}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Province:
+                            <input
+                              type="text"
+                              name="province"
+                              value={formData.supportData.province}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Municipality/ Metro:
+                            <input
+                              type="text"
+                              name="municipalityMetro"
+                              value={formData.supportData.municipalityMetro}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Project Name:
+                            <input
+                              type="text"
+                              name="projectName"
+                              value={formData.supportData.projectName}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Product:
+                            <input
+                              type="text"
+                              name="product"
+                              value={formData.supportData.product}
+                              onChange={handleChange}
+                            />
+                          </label>
+                        </div>
+                      )}
 
-      {currentStep === 4 && (
-        <div>
-          <h2>Qualification</h2>
-          <label>
-            I am a South African citizen or Resident:
-            <select
-              name="isCitizenOrResident"
-              value={formData.qualificationData.isCitizenOrResident}
-              onChange={handleChange}
-            >
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </label>
-          <label>
-            I am over 18 years old:
-            <select
-              name="isOver18"
-              value={formData.qualificationData.isOver18}
-              onChange={handleChange}
-            >
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </label>
-          <label>
-            I am a first-time buyer:
-            <select
-              name="isFirstTimeBuyer"
-              value={formData.qualificationData.isFirstTimeBuyer}
-              onChange={handleChange}
-            >
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </label>
-          <label>
-            I have dependants that live with me:
-            <select
-              name="hasDependents"
-              value={formData.qualificationData.hasDependents}
-              onChange={handleChange}
-            >
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </label>
-          <label>
-            Monthly Income Applicant:
-            <input
-              type="text"
-              name="monthlyIncomeApplicant"
-              value={formData.qualificationData.monthlyIncomeApplicant}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Monthly Income Spouse:
-            <input
-              type="text"
-              name="monthlyIncomeSpouse"
-              value={formData.qualificationData.monthlyIncomeSpouse}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Combined Monthly Household Income (between R6000 - R12000):
-            <input
-              type="text"
-              name="combinedMonthlyIncome"
-              value={formData.qualificationData.combinedMonthlyIncome}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
-      {currentStep === 5 && (
-        <div>
-          <h2>Dependants Living With Applicant</h2>
-          <label>
-            No. of Female Children Under 18:
-            <input
-              type="text"
-              name="femaleChildrenUnder18"
-              value={formData.dependentsData.femaleChildrenUnder18}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            No. of Male Children Under 18:
-            <input
-              type="text"
-              name="maleChildrenUnder18"
-              value={formData.dependentsData.maleChildrenUnder18}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            No. of Female Children Between 18 and 24:
-            <input
-              type="text"
-              name="femaleChildren18To24"
-              value={formData.dependentsData.femaleChildren18To24}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            No. of Male Children Between 18 and 24:
-            <input
-              type="text"
-              name="maleChildren18To24"
-              value={formData.dependentsData.maleChildren18To24}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Other (Including Spouse):
-            <input
-              type="text"
-              name="otherDependents"
-              value={formData.dependentsData.otherDependents}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
-      {currentStep === 6 && (
-        <div>
-          <h2>Applicant Current Employer</h2>
-          <label>
-            Company Name:
-            <input
-              type="text"
-              name="companyName"
-              value={formData.currentEmployerData.companyName}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Address:
-            <textarea
-              name="address"
-              value={formData.currentEmployerData.address}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Suburb:
-            <input
-              type="text"
-              name="suburb"
-              value={formData.currentEmployerData.suburb}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            City:
-            <input
-              type="text"
-              name="city"
-              value={formData.currentEmployerData.city}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Province:
-            <input
-              type="text"
-              name="province"
-              value={formData.currentEmployerData.province}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Postal Code:
-            <input
-              type="text"
-              name="postalCode"
-              value={formData.currentEmployerData.postalCode}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Employment Date:
-            <input
-              type="text"
-              name="employmentDate"
-              value={formData.currentEmployerData.employmentDate}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Contact Person Name:
-            <input
-              type="text"
-              name="contactPersonName"
-              value={formData.currentEmployerData.contactPersonName}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Contact Person Phone:
-            <input
-              type="text"
-              name="contactPersonPhone"
-              value={formData.currentEmployerData.contactPersonPhone}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Contact Person Email:
-            <input
-              type="text"
-              name="contactPersonEmail"
-              value={formData.currentEmployerData.contactPersonEmail}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
-      {currentStep === 7 && (
-        <div>
-          <h2>Previous Employment</h2>
-          <label>
-            Company Name:
-            <input
-              type="text"
-              name="companyName"
-              value={formData.previousEmploymentData.companyName}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Address:
-            <textarea
-              name="address"
-              value={formData.previousEmploymentData.address}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Suburb:
-            <input
-              type="text"
-              name="suburb"
-              value={formData.previousEmploymentData.suburb}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            City:
-            <input
-              type="text"
-              name="city"
-              value={formData.previousEmploymentData.city}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Province:
-            <input
-              type="text"
-              name="province"
-              value={formData.previousEmploymentData.province}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Postal Code:
-            <input
-              type="text"
-              name="postalCode"
-              value={formData.previousEmploymentData.postalCode}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Employment Start Date:
-            <input
-              type="text"
-              name="employmentStartDate"
-              value={formData.previousEmploymentData.employmentStartDate}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Employment End Date:
-            <input
-              type="text"
-              name="employmentEndDate"
-              value={formData.previousEmploymentData.employmentEndDate}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Terms and Conditions:
-            <input
-              type="text"
-              name="termsAgreement"
-              value={formData.previousEmploymentData.termsAgreement}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-      )}
-
-
+                      {currentStep === 4 && (
+                        <div>
+                          <h2>Qualification</h2>
+                          <label>
+                            I am a South African citizen or Resident:
+                            <select
+                              name="isCitizenOrResident"
+                              value={
+                                formData.qualificationData.isCitizenOrResident
+                              }
+                              onChange={handleChange}
+                            >
+                              <option value="yes">Yes</option>
+                              <option value="no">No</option>
+                            </select>
+                          </label>
+                          <label>
+                            I am over 18 years old:
+                            <select
+                              name="isOver18"
+                              value={formData.qualificationData.isOver18}
+                              onChange={handleChange}
+                            >
+                              <option value="yes">Yes</option>
+                              <option value="no">No</option>
+                            </select>
+                          </label>
+                          <label>
+                            I am a first-time buyer:
+                            <select
+                              name="isFirstTimeBuyer"
+                              value={
+                                formData.qualificationData.isFirstTimeBuyer
+                              }
+                              onChange={handleChange}
+                            >
+                              <option value="yes">Yes</option>
+                              <option value="no">No</option>
+                            </select>
+                          </label>
+                          <label>
+                            I have dependants that live with me:
+                            <select
+                              name="hasDependents"
+                              value={formData.qualificationData.hasDependents}
+                              onChange={handleChange}
+                            >
+                              <option value="yes">Yes</option>
+                              <option value="no">No</option>
+                            </select>
+                          </label>
+                          <label>
+                            Monthly Income Applicant:
+                            <input
+                              type="text"
+                              name="monthlyIncomeApplicant"
+                              value={
+                                formData.qualificationData
+                                  .monthlyIncomeApplicant
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Monthly Income Spouse:
+                            <input
+                              type="text"
+                              name="monthlyIncomeSpouse"
+                              value={
+                                formData.qualificationData.monthlyIncomeSpouse
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Combined Monthly Household Income (between R6000 -
+                            R12000):
+                            <input
+                              type="text"
+                              name="combinedMonthlyIncome"
+                              value={
+                                formData.qualificationData.combinedMonthlyIncome
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                        </div>
+                      )}
+                      {currentStep === 5 && (
+                        <div>
+                          <h2>Dependants Living With Applicant</h2>
+                          <label>
+                            No. of Female Children Under 18:
+                            <input
+                              type="text"
+                              name="femaleChildrenUnder18"
+                              value={
+                                formData.dependentsData.femaleChildrenUnder18
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            No. of Male Children Under 18:
+                            <input
+                              type="text"
+                              name="maleChildrenUnder18"
+                              value={
+                                formData.dependentsData.maleChildrenUnder18
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            No. of Female Children Between 18 and 24:
+                            <input
+                              type="text"
+                              name="femaleChildren18To24"
+                              value={
+                                formData.dependentsData.femaleChildren18To24
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            No. of Male Children Between 18 and 24:
+                            <input
+                              type="text"
+                              name="maleChildren18To24"
+                              value={formData.dependentsData.maleChildren18To24}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Other (Including Spouse):
+                            <input
+                              type="text"
+                              name="otherDependents"
+                              value={formData.dependentsData.otherDependents}
+                              onChange={handleChange}
+                            />
+                          </label>
+                        </div>
+                      )}
+                      {currentStep === 6 && (
+                        <div>
+                          <h2>Applicant Current Employer</h2>
+                          <label>
+                            Company Name:
+                            <input
+                              type="text"
+                              name="companyName"
+                              value={formData.currentEmployerData.companyName}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Address:
+                            <textarea
+                              name="address"
+                              value={formData.currentEmployerData.address}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Suburb:
+                            <input
+                              type="text"
+                              name="suburb"
+                              value={formData.currentEmployerData.suburb}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            City:
+                            <input
+                              type="text"
+                              name="city"
+                              value={formData.currentEmployerData.city}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Province:
+                            <input
+                              type="text"
+                              name="province"
+                              value={formData.currentEmployerData.province}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Postal Code:
+                            <input
+                              type="text"
+                              name="postalCode"
+                              value={formData.currentEmployerData.postalCode}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Employment Date:
+                            <input
+                              type="text"
+                              name="employmentDate"
+                              value={
+                                formData.currentEmployerData.employmentDate
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Contact Person Name:
+                            <input
+                              type="text"
+                              name="contactPersonName"
+                              value={
+                                formData.currentEmployerData.contactPersonName
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Contact Person Phone:
+                            <input
+                              type="text"
+                              name="contactPersonPhone"
+                              value={
+                                formData.currentEmployerData.contactPersonPhone
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Contact Person Email:
+                            <input
+                              type="text"
+                              name="contactPersonEmail"
+                              value={
+                                formData.currentEmployerData.contactPersonEmail
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                        </div>
+                      )}
+                      {currentStep === 7 && (
+                        <div>
+                          <h2>Previous Employment</h2>
+                          <label>
+                            Company Name:
+                            <input
+                              type="text"
+                              name="companyName"
+                              value={
+                                formData.previousEmploymentData.companyName
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Address:
+                            <textarea
+                              name="address"
+                              value={formData.previousEmploymentData.address}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Suburb:
+                            <input
+                              type="text"
+                              name="suburb"
+                              value={formData.previousEmploymentData.suburb}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            City:
+                            <input
+                              type="text"
+                              name="city"
+                              value={formData.previousEmploymentData.city}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Province:
+                            <input
+                              type="text"
+                              name="province"
+                              value={formData.previousEmploymentData.province}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Postal Code:
+                            <input
+                              type="text"
+                              name="postalCode"
+                              value={formData.previousEmploymentData.postalCode}
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Employment Start Date:
+                            <input
+                              type="text"
+                              name="employmentStartDate"
+                              value={
+                                formData.previousEmploymentData
+                                  .employmentStartDate
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Employment End Date:
+                            <input
+                              type="text"
+                              name="employmentEndDate"
+                              value={
+                                formData.previousEmploymentData
+                                  .employmentEndDate
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                          <label>
+                            Terms and Conditions:
+                            <input
+                              type="text"
+                              name="termsAgreement"
+                              value={
+                                formData.previousEmploymentData.termsAgreement
+                              }
+                              onChange={handleChange}
+                            />
+                          </label>
+                        </div>
+                      )}
 
                       <div>
                         {currentStep > 1 && (

@@ -46,6 +46,7 @@ model Applications {
   id        String @id @default(cuid())
   NameOfCompany String 
   ContactPerson String
+  ApplicantType String?
   Email String @unique
   PhoneNumber String @unique
   Address String
@@ -55,8 +56,10 @@ model Applications {
   City String
   Province String
   PostalCode String
-  Country String
   LoanType String
+  Rate String?
+  Docs String?
+  Country String?
   LoanAmount String
   LoanStatus String @default("Pending")
   createdAt    DateTime @default(now())

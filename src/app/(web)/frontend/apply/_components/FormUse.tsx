@@ -26,6 +26,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Organization/Business", "Individual"],
         },
+        { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "text" },
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
@@ -95,6 +96,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Organization/Business", "Individual"],
         },
+        { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "text" },
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
@@ -164,6 +166,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Organization/Business", "Individual"],
         },
+        { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "text" },
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
@@ -233,6 +236,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Organization/Business", "Individual"],
         },
+        { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "text" },
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
@@ -302,6 +306,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Organization/Business", "Individual"],
         },
+        { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "text" },
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
@@ -371,6 +376,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Organization/Business", "Individual"],
         },
+        { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "text" },
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
@@ -437,7 +443,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
     const { name, value, type, files } = e.target;
 
     if (type === "file") {
-      setFormData((prevData) => ({ ...prevData, [name]: files?.[0] }));
+      setFormData((prevData) => ({ ...prevData, [name]: files?.[0].name }));
     } else {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }

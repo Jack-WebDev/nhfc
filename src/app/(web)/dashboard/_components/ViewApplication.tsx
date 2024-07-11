@@ -65,6 +65,7 @@ export default function ViewApplication() {
                 <p>
                   Name: <span>{loan.ContactPerson}</span>
                 </p>
+                <p>ID Number: <span>{loan.IdNumber}</span></p>
                 <p>
                   Email: <span>{loan.Email}</span>
                 </p>
