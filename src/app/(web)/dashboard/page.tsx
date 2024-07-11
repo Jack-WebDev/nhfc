@@ -15,6 +15,11 @@ const Page = async () => {
       LoanStatus: "Declined",
     },
   });
+  const totalPendingApplications = await db.applications.count({
+    where: {
+      LoanStatus: "Pending",
+    },
+  });
 
   return (
     <div>
@@ -26,6 +31,10 @@ const Page = async () => {
           <DashboardCard
             total={totalApprovedApplications}
             title="Approved Applications"
+          />
+                    <DashboardCard
+            total={totalPendingApplications}
+            title="Pending Applications"
           />
           <DashboardCard
             total={totalDeclinedApplications}

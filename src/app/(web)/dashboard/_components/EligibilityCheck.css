@@ -62,13 +62,13 @@ check-eligibility button {
     margin-top: 20px;
   }
 
-  .passed {
+  /* .passed {
     color: green;
   }
   
   .failed {
     color: red;
-  }
+  } */
   
   .summary {
     margin-top: 20px;
