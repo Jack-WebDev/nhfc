@@ -10,7 +10,7 @@ export default function RootLayout() {
   useEffect(() => {
     const logout = async () => {
       try {
-        const res = await axios.post(`${url}/auth/logout`);
+        const res = await axios.post(`/api/auth/logout`);
         window.location.replace("/");
       } catch (error) {}
     };
