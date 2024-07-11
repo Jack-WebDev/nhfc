@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import FormSections from "./FormSections";
 import axios, { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type FormData = {
   [key: string]: any;
@@ -15,6 +17,7 @@ type TitleProp = {
 export default function FormUse({ selectedOption }: TitleProp) {
   const [formData, setFormData] = useState<FormData>({});
   const [currentSection, setCurrentSection] = useState<number>(0);
+  const router = useRouter();
 
   const sections = [
     {
@@ -24,9 +27,18 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "applicantType",
           label: "Applicant Type",
           type: "select",
-          options: ["Organization/Business", "Individual"],
+          options: ["Type of Applicant","Organization/Business", "Individual"],
         },
-        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "idNumber", label: "Id Number", type: "text" },
+        { name: "projectName", label: "Project Name", type: "select", options:[
+          "Select Project",
+          "Fleurhof Integrated Housing Development",
+          "Belhar Social Housing Project",
+          "Westgate Social Housing Project",
+          "Devland Gardens",
+          "Southernwood Square",
+          "Thembelihle Village",
+        ]},
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
         {
@@ -34,6 +46,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Province",
           type: "select",
           options: [
+            "Select Province",
             "Gauteng",
             "Western Cape",
             "KwaZulu-Natal",
@@ -51,7 +64,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "investmentType",
           label: "Investment Type",
           type: "select",
-          options: ["Quasi Equity", "Equity", "Loan"],
+          options: ["Select Investment Type","Quasi Equity", "Equity", "Loan"],
         },
 
         { name: "loanAmount", label: "Investment Amount", type: "text" },
@@ -81,7 +94,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "country",
           label: "Country",
           type: "select",
-          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+          options: ["Select Country","South Africa", "Nigeria", "Ghana", "Botswana"],
         },
         { name: "docs", label: "Attach Documents", type: "file" },
       ],
@@ -93,9 +106,18 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "applicantType",
           label: "Applicant Type",
           type: "select",
-          options: ["Organization/Business", "Individual"],
+          options: ["Type of Applicant","Organization/Business", "Individual"],
         },
-        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "idNumber", label: "Id Number", type: "text" },
+        { name: "projectName", label: "Project Name", type: "select", options:[
+          "Select Project",
+          "Fleurhof Integrated Housing Development",
+          "Belhar Social Housing Project",
+          "Westgate Social Housing Project",
+          "Devland Gardens",
+          "Southernwood Square",
+          "Thembelihle Village",
+        ]},
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
         {
@@ -103,6 +125,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Province",
           type: "select",
           options: [
+            "Select Province",
             "Gauteng",
             "Western Cape",
             "KwaZulu-Natal",
@@ -120,7 +143,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "investmentType",
           label: "Investment Type",
           type: "select",
-          options: ["Quasi Equity", "Equity", "Loan"],
+          options: ["Select Investment Type","Quasi Equity", "Equity", "Loan"],
         },
 
         { name: "loanAmount", label: "Investment Amount", type: "text" },
@@ -150,7 +173,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "country",
           label: "Country",
           type: "select",
-          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+          options: ["Select Country","South Africa", "Nigeria", "Ghana", "Botswana"],
         },
         { name: "docs", label: "Attach Documents", type: "file" },
       ],
@@ -162,9 +185,18 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "applicantType",
           label: "Applicant Type",
           type: "select",
-          options: ["Organization/Business", "Individual"],
+          options: ["Type of Applicant","Organization/Business", "Individual"],
         },
-        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "idNumber", label: "Id Number", type: "text" },
+        { name: "projectName", label: "Project Name", type: "select", options:[
+          "Select Project",
+          "Fleurhof Integrated Housing Development",
+          "Belhar Social Housing Project",
+          "Westgate Social Housing Project",
+          "Devland Gardens",
+          "Southernwood Square",
+          "Thembelihle Village",
+        ]},
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
         {
@@ -172,6 +204,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Province",
           type: "select",
           options: [
+            "Select Province",
             "Gauteng",
             "Western Cape",
             "KwaZulu-Natal",
@@ -189,7 +222,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "investmentType",
           label: "Investment Type",
           type: "select",
-          options: ["Quasi Equity", "Equity", "Loan"],
+          options: ["Select Investment Type","Quasi Equity", "Equity", "Loan"],
         },
 
         { name: "loanAmount", label: "Investment Amount", type: "text" },
@@ -219,7 +252,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "country",
           label: "Country",
           type: "select",
-          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+          options: ["Select Country","South Africa", "Nigeria", "Ghana", "Botswana"],
         },
         { name: "docs", label: "Attach Documents", type: "file" },
       ],
@@ -231,9 +264,18 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "applicantType",
           label: "Applicant Type",
           type: "select",
-          options: ["Organization/Business", "Individual"],
+          options: ["Type of Applicant","Organization/Business", "Individual"],
         },
-        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "idNumber", label: "Id Number", type: "text" },
+        { name: "projectName", label: "Project Name", type: "select", options:[
+          "Select Project",
+          "Fleurhof Integrated Housing Development",
+          "Belhar Social Housing Project",
+          "Westgate Social Housing Project",
+          "Devland Gardens",
+          "Southernwood Square",
+          "Thembelihle Village",
+        ]},
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
         {
@@ -241,6 +283,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Province",
           type: "select",
           options: [
+            "Select Province",
             "Gauteng",
             "Western Cape",
             "KwaZulu-Natal",
@@ -258,7 +301,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "investmentType",
           label: "Investment Type",
           type: "select",
-          options: ["Quasi Equity", "Equity", "Loan"],
+          options: ["Select Investment Type","Quasi Equity", "Equity", "Loan"],
         },
 
         { name: "loanAmount", label: "Investment Amount", type: "text" },
@@ -288,7 +331,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "country",
           label: "Country",
           type: "select",
-          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+          options: ["Select Country","South Africa", "Nigeria", "Ghana", "Botswana"],
         },
         { name: "docs", label: "Attach Documents", type: "file" },
       ],
@@ -300,9 +343,18 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "applicantType",
           label: "Applicant Type",
           type: "select",
-          options: ["Organization/Business", "Individual"],
+          options: ["Type of Applicant","Organization/Business", "Individual"],
         },
-        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "idNumber", label: "Id Number", type: "text" },
+        { name: "projectName", label: "Project Name", type: "select", options:[
+          "Select Project",
+          "Fleurhof Integrated Housing Development",
+          "Belhar Social Housing Project",
+          "Westgate Social Housing Project",
+          "Devland Gardens",
+          "Southernwood Square",
+          "Thembelihle Village",
+        ]},
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
         {
@@ -310,6 +362,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Province",
           type: "select",
           options: [
+            "Select Province",
             "Gauteng",
             "Western Cape",
             "KwaZulu-Natal",
@@ -327,7 +380,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "investmentType",
           label: "Investment Type",
           type: "select",
-          options: ["Quasi Equity", "Equity", "Loan"],
+          options: ["Select Investment Type","Quasi Equity", "Equity", "Loan"],
         },
 
         { name: "loanAmount", label: "Investment Amount", type: "text" },
@@ -357,7 +410,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "country",
           label: "Country",
           type: "select",
-          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+          options: ["Select Country","South Africa", "Nigeria", "Ghana", "Botswana"],
         },
         { name: "docs", label: "Attach Documents", type: "file" },
       ],
@@ -369,9 +422,18 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "applicantType",
           label: "Applicant Type",
           type: "select",
-          options: ["Organization/Business", "Individual"],
+          options: ["Type of Applicant","Organization/Business", "Individual"],
         },
-        { name: "projectName", label: "Project Name", type: "text" },
+        { name: "idNumber", label: "Id Number", type: "text" },
+        { name: "projectName", label: "Project Name", type: "select", options:[
+          "Select Project",
+          "Fleurhof Integrated Housing Development",
+          "Belhar Social Housing Project",
+          "Westgate Social Housing Project",
+          "Devland Gardens",
+          "Southernwood Square",
+          "Thembelihle Village",
+        ]},
         { name: "nameOfCompany", label: "Name of Company", type: "text" },
         { name: "fullName", label: "Contact Person", type: "text" },
         {
@@ -379,6 +441,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Province",
           type: "select",
           options: [
+            "Select Province",
             "Gauteng",
             "Western Cape",
             "KwaZulu-Natal",
@@ -396,7 +459,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "investmentType",
           label: "Investment Type",
           type: "select",
-          options: ["Quasi Equity", "Equity", "Loan"],
+          options: ["Select Investment Type","Quasi Equity", "Equity", "Loan"],
         },
 
         { name: "loanAmount", label: "Investment Amount", type: "text" },
@@ -426,7 +489,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           name: "country",
           label: "Country",
           type: "select",
-          options: ["South Africa", "Nigeria", "Ghana", "Botswana"],
+          options: ["Select Country","South Africa", "Nigeria", "Ghana", "Botswana"],
         },
         { name: "docs", label: "Attach Documents", type: "file" },
       ],
@@ -437,7 +500,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
     const { name, value, type, files } = e.target;
 
     if (type === "file") {
-      setFormData((prevData) => ({ ...prevData, [name]: files?.[0] }));
+      setFormData((prevData) => ({ ...prevData, [name]: files?.[0].name }));
     } else {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
@@ -452,6 +515,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
         loanType: selectedOption,
       });
       console.log(res);
+      router.push("/frontend");
+      toast.success("Application Submitted Successfully");
     } catch (error) {
       console.log(error as AxiosError);
     }

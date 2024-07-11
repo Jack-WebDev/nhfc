@@ -51,6 +51,7 @@ import {
 } from "@/components";
 import axios from "axios";
 import ViewApplication from "../_components/ViewApplication";
+import "../_components/EligibilityCheck.css";
 
 type LoanApplication = {
   id: string;
@@ -81,6 +82,10 @@ export default function Applications() {
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const [selectedLoan, setSelectedLoan] = React.useState<any | null>(null);
   const [data, setData] = React.useState<LoanApplication[]>([]);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [steps, setSteps] = React.useState<{ message: string; result: string }[]>([]);
+  const [result, setResult] = React.useState<string | null>(null);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -92,9 +97,43 @@ export default function Applications() {
     fetchApplications();
   }, []);
 
-  const handleViewLoan = (loan: any) => {
-    setSelectedLoan(loan);
-    setDialogOpen(true);
+  const EligibilityChecker = async () => {
+    setIsModalOpen(true);
+    setIsLoading(true);
+    setSteps([]);
+    setResult(null);
+
+    const processSteps = [
+      'Checking credit score...',
+      'Verifying income...',
+      'Checking employment status...',
+      'Validating identity...',
+      'Reviewing application history...'
+    ];
+
+    let finalEligibility = true;
+
+    for (let i = 0; i < processSteps.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const stepResult = Math.random() > 0.2 ? 'Passed' : 'Failed';
+      setSteps((prevSteps) => [...prevSteps, { message: processSteps[i], result: stepResult }]);
+
+      if (stepResult === 'Failed') {
+        finalEligibility = false;
+      }
+    }
+
+    setResult(finalEligibility ? 'Eligible' : 'Not Eligible');
+    setIsLoading(false);
+
+    
+
+  }
+
+
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleViewApplication = (loan: LoanApplication) => {
@@ -220,7 +259,7 @@ export default function Applications() {
               <DropdownMenuItem onClick={() => handleViewApplication(loan)}>
                 View Details
               </DropdownMenuItem>
-              <DropdownMenuItem>Eligibility Check</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => EligibilityChecker()}>Eligibility Check</DropdownMenuItem>
               <DropdownMenuItem>Generate PDF</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -249,6 +288,7 @@ export default function Applications() {
   });
 
   return (
+    <>
     <div className="w-full">
       <h1 className="text-3xl font-semibold">Loan Applications</h1>
       <div className="flex justify-between items-baseline mb-8">
@@ -332,5 +372,35 @@ export default function Applications() {
         />
       )}
     </div>
+    {isModalOpen && (
+          <div className="modal">
+            <div className="modal-content">
+              <button className="close-button" onClick={closeModal}>
+                &times;
+              </button>
+              {isLoading ? (
+                <div className="loading p-8">
+                  <div className="spinner"></div>
+                  <span>Checking eligibility...</span>
+                </div>
+              ) : (
+                <div className="result">
+                    <h3 className='underline text-center text-lg font-semibold my-4'>Eligibility Results</h3>
+                  <ul className='grid gap-y-4 '>
+                    {steps.map((step, index) => (
+                      <li key={index} className={`text-black ${step.result === 'Passed' ? 'passed text-green-700' : 'failed text-red-700'}`}>
+                        {step.message} <span className='font-bold'>{step.result}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="summary">
+                    <p><strong>Overall Result: {result}</strong></p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+    </>
   );
 }

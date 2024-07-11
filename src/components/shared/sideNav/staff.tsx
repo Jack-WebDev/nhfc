@@ -56,7 +56,7 @@ const Staff = () => {
         <>
         <NavLink url="/frontend" title="My Applications" Icon={FileText} />
         <NavLink url="/frontend/queries" title="Queries" Icon={HelpCircle} />
-        <NavLink url="/dashboard/products" title="Our Products" Icon={ShoppingBag} />
+        <NavLink url="/frontend/projects" title="Our Projects" Icon={ShoppingBag} />
         <NavLink url="/dashboard/impact" title="Impact" Icon={MoveUpRightIcon} />
         <NavLink url="/dashboard/news" title="News and Media" Icon={Newspaper} />
         <NavLink url="/dashboard/support" title="Support" Icon={HelpCircle} />

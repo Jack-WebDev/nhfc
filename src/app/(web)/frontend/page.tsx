@@ -214,7 +214,7 @@ export default function Applications() {
               <DropdownMenuItem onClick={() => handleViewApplication(loan)}>
                 View Details
               </DropdownMenuItem>
-              <DropdownMenuItem>Edit Application</DropdownMenuItem>
+              {/* <DropdownMenuItem>Edit Application</DropdownMenuItem> */}
               <DropdownMenuItem>Generate PDF</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
