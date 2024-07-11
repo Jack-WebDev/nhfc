@@ -7,6 +7,7 @@ import { EllipsisVerticalIcon } from "lucide-react";
 import Modal from "../_components/Modal";
 import NewQueryForm from "../_components/NewQueryForm";
 import ViewQuery from "../_components/ViewQuery";
+import axios, { AxiosError } from "axios";
 
 type Query = {
   referenceNo: string;
@@ -20,41 +21,41 @@ type Query = {
   attachments?: string[];
 };
 
-const initialQueries: Query[] = [
-  {
-    referenceNo: "100250",
-    fullName: "Linda Mangena",
-    queryType: "Complaint",
-    queryDate: "18 Aug 2023 11h35",
-    queryStatus: "Open",
-    description: "Description for Complaint",
-    appliedLoan: "#123456 Loan 1",
-    replyTo: "",
-    attachments: []
-  },
-  {
-    referenceNo: "100560",
-    fullName: "Linda Mangena",
-    queryType: "Enquiry",
-    queryDate: "18 Aug 2023 11h35",
-    queryStatus: "Open",
-    description: "Description for Enquiry",
-    appliedLoan: "#123457 Loan 2",
-    replyTo: "",
-    attachments: []
-  },
-  {
-    referenceNo: "102350",
-    fullName: "Linda Mangena",
-    queryType: "Case",
-    queryDate: "18 Aug 2023 11h35",
-    queryStatus: "Closed",
-    description: "Description for Case",
-    appliedLoan: "#123458 Loan 3",
-    replyTo: "",
-    attachments: []
-  },
-];
+// const initialQueries: Query[] = [
+//   {
+//     referenceNo: "100250",
+//     fullName: "Linda Mangena",
+//     queryType: "Complaint",
+//     queryDate: "18 Aug 2023 11h35",
+//     queryStatus: "Open",
+//     description: "Description for Complaint",
+//     appliedLoan: "#123456 Loan 1",
+//     replyTo: "",
+//     attachments: []
+//   },
+//   {
+//     referenceNo: "100560",
+//     fullName: "Linda Mangena",
+//     queryType: "Enquiry",
+//     queryDate: "18 Aug 2023 11h35",
+//     queryStatus: "Open",
+//     description: "Description for Enquiry",
+//     appliedLoan: "#123457 Loan 2",
+//     replyTo: "",
+//     attachments: []
+//   },
+//   {
+//     referenceNo: "102350",
+//     fullName: "Linda Mangena",
+//     queryType: "Case",
+//     queryDate: "18 Aug 2023 11h35",
+//     queryStatus: "Closed",
+//     description: "Description for Case",
+//     appliedLoan: "#123458 Loan 3",
+//     replyTo: "",
+//     attachments: []
+//   },
+// ];
 
 const statusStyles: { [key in Query["queryStatus"]]: string } = {
   Open: "bg-green-200 text-green-800",
@@ -71,29 +72,34 @@ const QueriesList: React.FC = () => {
   const [selectedQuery, setSelectedQuery] = useState<Query | null>(null);
 
   useEffect(() => {
-    const savedQueries = localStorage.getItem("queries");
-    if (savedQueries) {
-      try {
-        const parsedQueries = JSON.parse(savedQueries);
-        if (Array.isArray(parsedQueries)) {
-          setQueries(parsedQueries);
-        } else {
-          setQueries(initialQueries);
-        }
-      } catch (error) {
-        console.error("Error parsing saved queries from localStorage:", error);
-        setQueries(initialQueries);
-      }
-    } else {
-      setQueries(initialQueries);
+    // const savedQueries = localStorage.getItem("queries");
+    // if (savedQueries) {
+    //   try {
+    //     const parsedQueries = JSON.parse(savedQueries);
+    //     if (Array.isArray(parsedQueries)) {
+    //       setQueries(parsedQueries);
+    //     } else {
+    //       setQueries(initialQueries);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error parsing saved queries from localStorage:", error);
+    //     setQueries(initialQueries);
+    //   }
+    // } else {
+    //   setQueries(initialQueries);
+    // }
+    const fetchQuesries = async () => {
+      const res = await axios.get("/api/userqueries");
+      setQueries(res.data);
     }
+    fetchQuesries();
   }, []);
 
-  useEffect(() => {
-    if (queries.length > 0) {
-      localStorage.setItem("queries", JSON.stringify(queries));
-    }
-  }, [queries]);
+  // useEffect(() => {
+  //   if (queries.length > 0) {
+  //     localStorage.setItem("queries", JSON.stringify(queries));
+  //   }
+  // }, [queries]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -113,13 +119,23 @@ const QueriesList: React.FC = () => {
     setSelectedQuery(null);
   };
 
-  const addQuery = (newQuery: Query) => {
-    setQueries((prevQueries) => {
-      const updatedQueries = [...prevQueries, newQuery];
-      localStorage.setItem("queries", JSON.stringify(updatedQueries));
-      return updatedQueries;
-    });
-  };
+  // const addQuery = async (newQuery: Query) => {
+  //   // setQueries((prevQueries) => {
+  //   //   const updatedQueries = [...prevQueries, newQuery];
+  //   //   localStorage.setItem("queries", JSON.stringify(updatedQueries));
+  //   //   return updatedQueries;
+  //   // });
+  //   const updatedQueries = [...queries, newQuery];
+  //   try {
+  //     console.log(updatedQueries)
+  //     // const res = await axios.post("/api/userqueries", updatedQueries);
+  //     // setQueries(res.data);
+  //     // console.log(res)
+      
+  //   } catch (error) {
+  //     console.log(error as AxiosError);
+  //   }
+  // };
 
   const saveQuery = (updatedQuery: Query) => {
     setQueries((prevQueries) => {
@@ -143,7 +159,7 @@ const QueriesList: React.FC = () => {
         </button>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <NewQueryForm onClose={handleCloseModal} addQuery={addQuery} />
+        <NewQueryForm onClose={handleCloseModal} />
       </Modal>
       {selectedQuery && (
         <ViewQuery

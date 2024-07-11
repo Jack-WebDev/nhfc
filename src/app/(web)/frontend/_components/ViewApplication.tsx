@@ -21,6 +21,8 @@ type LoanApplication = {
   City: string;
   Province: string;
   PostalCode: string;
+  ProjectName: string;
+  InvestmentType: string;
   Country: string;
   LoanType: string;
   LoanAmount: string;
@@ -82,7 +84,7 @@ export default function ViewApplication() {
             <Accordion type="single" collapsible className="w-full bg-gray-100">
               <AccordionItem value="item-1">
                 <AccordionTrigger className="px-4">
-                  Project: Harmony Heights Social Housing
+                  Project: {loan.ProjectName}
                 </AccordionTrigger>
                 <AccordionContent className="grid">
                   <h2 className="text-2xl font-semibold text-blue-500">

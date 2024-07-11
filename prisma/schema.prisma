@@ -125,6 +125,44 @@ model FirstHomeLoan {
 }
 
 
+model AdminQueries {
+  id        String   @id @default(cuid())
+  referenceNo String
+  fullName String
+  queryType String
+  queryDate String
+  queryStatus String
+  description String
+  appliedLoan String
+  replyTo String?
+  attachments String
+}
+
+model userReplies {
+  id        String   @id @default(cuid())
+  replyTo String
+  attachments String
+}
+
+model adminReplies {
+  id        String   @id @default(cuid())
+  replyTo String
+  attachments String
+}
+
+model UserQueries {
+  id        String   @id @default(cuid())
+  referenceNo String
+  fullName String
+  queryType String
+  queryDate String
+  queryStatus String
+  description String
+  appliedLoan String
+  replyTo String?
+  attachments String
+}
+
 
 
 enum BookStatus {
