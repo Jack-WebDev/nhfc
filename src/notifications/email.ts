@@ -1,2 +1,2 @@
-export const email = process.env.NEXT_PUBLIC_EMAIL;
-export const pass = process.env.NEXT_PUBLIC_EMAIL_PASS;
+export const email = process.env.EMAIL;
+export const pass = process.env.EMAIL_PASS;

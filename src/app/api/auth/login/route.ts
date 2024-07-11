@@ -7,8 +7,8 @@ import { cookies } from "next/headers";
 import { UserStatus } from "@prisma/client";
 
 export const POST = async (request: Request) => {
-  const accessSecret = process.env.NEXT_PUBLIC_ACCESS_TOKEN as string;
-  const authSecret = process.env.NEXT_PUBLIC_AUTH_TOKEN as string;
+  const accessSecret = process.env.ACCESS_TOKEN as string;
+  const authSecret = process.env.AUTH_TOKEN as string;
 
   // grab data from the request
   const data = await request.json();

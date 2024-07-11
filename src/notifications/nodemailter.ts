@@ -15,9 +15,7 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
-export const createUserTemplate = (
-  accountInfo: AccountDetails
-) => {
+export const createUserTemplate = (accountInfo: AccountDetails) => {
   const html = `
     <h1>Alfred Duma Municipality</h1>
     <p>You have been registered as a member and a user of our Book management system </p>
@@ -28,7 +26,7 @@ export const createUserTemplate = (
             <li>Password:  ${accountInfo.password} </li>
             <li>Role:  ${accountInfo.role} </li>
             <li>Status:  ${accountInfo.status.split("_").join(" ")} </li>
-            <li>Link:  ${process.env.NEXT_PUBLIC_URL} </li>
+            <li>Link:  ${process.env.URL} </li>
         </ul>
 
     </div>

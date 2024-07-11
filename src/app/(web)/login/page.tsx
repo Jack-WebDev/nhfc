@@ -17,7 +17,7 @@ const LoginPage = (props: Props) => {
   const [password, setPassword] = useState("");
   const [tracker, setTracker] = useState(0);
   const router = useRouter();
-  const url = process.env.NEXT_PUBLIC_BASE_URL as string;
+  const url = process.env.BASE_URL as string;
   const { data } = useUserContext() as UserContextType;
 
   useEffect(() => {
@@ -59,7 +59,6 @@ const LoginPage = (props: Props) => {
       </div>
 
       <div className="flex-1 flex flex-col w-full lg-w-auto gap-2 bg-white items-center p-4  h-64 lg:h-full  justify-center rounded-lg">
-
         <Image
           width={1920}
           height={1080}

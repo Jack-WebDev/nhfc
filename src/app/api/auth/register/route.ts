@@ -83,7 +83,7 @@ export const POST = async (request: Request) => {
         gender: gender,
         role: "Data_Capture",
         password: hashedPassword,
-        status: UserStatus.Inactive,
+        status: UserStatus.Active,
       },
     });
 
