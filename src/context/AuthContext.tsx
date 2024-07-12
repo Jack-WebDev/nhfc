@@ -46,10 +46,10 @@ export const UserContextProvider = ({
   useEffect(() => {
     if (data?.role === "Admin") {
       router.push("/dashboard");
-    } else if (data?.role === "Data_Capture") {
+    } else if (data?.role === "Client") {
       router.push("/frontend");
     }
-  }, [data,router]);
+  }, [data, router]);
 
   return (
     <StateContext.Provider

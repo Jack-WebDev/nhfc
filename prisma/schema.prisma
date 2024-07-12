@@ -1,9 +1,10 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
   // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -37,160 +38,152 @@ model User {
   gender    String?
   status    UserStatus    @default(Active)
   createdAt DateTime      @default(now())
-  otp     Otp?
-  session Session?
+  otp       Otp?
+  session   Session?
 }
-
 
 model Applications {
-  id        String @id @default(cuid())
-  NameOfCompany String 
-  ContactPerson String
-  ApplicantType String?
-  Email String @unique
-  PhoneNumber String @unique
-  Address String
-  IdNumber String?
+  id             String   @id @default(cuid())
+  NameOfCompany  String
+  ContactPerson  String
+  ApplicantType  String?
+  Email          String   @unique
+  PhoneNumber    String   @unique
+  Address        String
+  IdNumber       String?
   InvestmentType String?
-  ProjectName String?
-  City String
-  Province String
-  PostalCode String
-  LoanType String
-  Rate String?
-  Docs String?
-  Country String?
-  LoanAmount String
-  LoanStatus String @default("Pending")
-  createdAt    DateTime @default(now())
-
+  ProjectName    String?
+  City           String
+  Province       String
+  PostalCode     String
+  LoanType       String
+  Rate           String?
+  Docs           String?
+  Country        String?
+  LoanAmount     String
+  LoanStatus     String   @default("Pending")
+  createdAt      DateTime @default(now())
 }
-
-
 
 model FirstHomeLoan {
-  id        String   @id @default(cuid())
-  idNumber  String @unique
-  firstName String
-  lastName  String
-  email     String
-  phone     String
-  gender    String
-  race      String
-  address   String
-  suburb    String
-  city      String
-  province  String
-  postalCode String
-  supportType String
-  projectProvince String
-  municipalityMetro String
-  projectName String
-  product String
-  isCitizenOrResident String
-  isOver18 String
-  isFirstTimeBuyer String
-  hasDependents String
-  monthlyIncomeApplicant String
-  monthlyIncomeSpouse String
-  combinedMonthlyIncome String
-  femaleChildrenUnder18 String
-  maleChildrenUnder18 String
-  femaleChildren18To24 String
-  maleChildren18To24 String
-  otherDependents String
-  currentCompanyName String
-  currentCompanyAddress String
-  currentCompanySuburb String
-  currentCompanyCity String
-  currentCompanyProvince String
-  currentCompanyPostalCode String
-  currentCompanyEmploymentDate String
-  currentCompanyContactPersonName String
-  currentCompanyContactPersonPhone String
-  currentCompanyContactPersonEmail String
-  previousCompanyName String
-  previousCompanyAddress String
-  previousCompanySuburb String
-  previousCompanyCity String
-  previousCompanyProvince String
-  previousCompanyPostalCode String
+  id                                 String   @id @default(cuid())
+  idNumber                           String   @unique
+  firstName                          String
+  lastName                           String
+  email                              String
+  phone                              String
+  gender                             String
+  race                               String
+  address                            String
+  suburb                             String
+  city                               String
+  province                           String
+  postalCode                         String
+  supportType                        String
+  projectProvince                    String
+  municipalityMetro                  String
+  projectName                        String
+  product                            String
+  isCitizenOrResident                String
+  isOver18                           String
+  isFirstTimeBuyer                   String
+  hasDependents                      String
+  monthlyIncomeApplicant             String
+  monthlyIncomeSpouse                String
+  combinedMonthlyIncome              String
+  femaleChildrenUnder18              String
+  maleChildrenUnder18                String
+  femaleChildren18To24               String
+  maleChildren18To24                 String
+  otherDependents                    String
+  currentCompanyName                 String
+  currentCompanyAddress              String
+  currentCompanySuburb               String
+  currentCompanyCity                 String
+  currentCompanyProvince             String
+  currentCompanyPostalCode           String
+  currentCompanyEmploymentDate       String
+  currentCompanyContactPersonName    String
+  currentCompanyContactPersonPhone   String
+  currentCompanyContactPersonEmail   String
+  previousCompanyName                String
+  previousCompanyAddress             String
+  previousCompanySuburb              String
+  previousCompanyCity                String
+  previousCompanyProvince            String
+  previousCompanyPostalCode          String
   previousCompanyEmploymentStartDate String
-  previousCompanyEmploymentEndDate String
-  previousCompanyContactPersonName String
-  previousCompanyContactPersonPhone String
-  previousCompanyContactPersonEmail String
-  termsAgreement String
-  createdAt    DateTime @default(now())
+  previousCompanyEmploymentEndDate   String
+  previousCompanyContactPersonName   String
+  previousCompanyContactPersonPhone  String
+  previousCompanyContactPersonEmail  String
+  termsAgreement                     String
+  createdAt                          DateTime @default(now())
 }
 
-
 model Projects {
-  id        String   @id @default(cuid())
-  projectName String
-  projectCode String
-  programme String
-  projectStatus String
-  province String
-  municipality String
-  ward String
-  address String
-  gpscoordinates String
-  projectOwner String
-  developer String
-  projectLiason String
-  materialSupplier String
-  contractor String
-  deliverablesSummary String
-  skilledWorkers String
-  unskilledWorkers String
-  schools String
-  clinics String
-  communityHalls String
-  sportsField String
+  id                     String @id @default(cuid())
+  projectName            String
+  projectCode            String
+  programme              String
+  projectStatus          String
+  province               String
+  municipality           String
+  ward                   String
+  address                String
+  gpscoordinates         String
+  projectOwner           String
+  developer              String
+  projectLiason          String
+  materialSupplier       String
+  contractor             String
+  deliverablesSummary    String
+  skilledWorkers         String
+  unskilledWorkers       String
+  schools                String
+  clinics                String
+  communityHalls         String
+  sportsField            String
   implementationPartners String
 }
 
-
 model AdminQueries {
-  id        String   @id @default(cuid())
+  id          String  @id @default(cuid())
   referenceNo String
-  fullName String
-  queryType String
-  queryDate String
+  fullName    String
+  queryType   String
+  queryDate   String
   queryStatus String
   description String
   appliedLoan String
-  replyTo String?
+  replyTo     String?
   attachments String
 }
 
 model userReplies {
-  id        String   @id @default(cuid())
-  replyTo String
+  id          String @id @default(cuid())
+  replyTo     String
   attachments String
 }
 
 model adminReplies {
-  id        String   @id @default(cuid())
-  replyTo String
+  id          String @id @default(cuid())
+  replyTo     String
   attachments String
 }
 
 model UserQueries {
-  id        String   @id @default(cuid())
+  id          String  @id @default(cuid())
   referenceNo String
-  fullName String
-  queryType String
-  queryDate String
+  fullName    String
+  queryType   String
+  queryDate   String
   queryStatus String
   description String
   appliedLoan String
-  replyTo String?
+  replyTo     String?
   attachments String
 }
-
-
 
 enum BookStatus {
   Issued
@@ -214,7 +207,7 @@ enum UserStatus {
 
 enum UserRole {
   Admin
-  Data_Capture
+  Client
   Camera_Uploader
   Traffic_Officer
 }

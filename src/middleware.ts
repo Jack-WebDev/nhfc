@@ -10,13 +10,12 @@ export async function middleware(request: NextRequest) {
   const token = await getAuthCookie();
   //@ts-ignore
   //@ts-ignore
-  const expiry = new Date(data?.expiresAt)
+  const expiry = new Date(data?.expiresAt);
   const now = new Date(Date.now());
   //@ts-ignore
   const timeDifference = expiry - now;
 
-  const userId = data?.userId
-
+  const userId = data?.userId;
 
   if (request.nextUrl.pathname.startsWith("/api/users")) {
     if (!token) {
@@ -29,22 +28,35 @@ export async function middleware(request: NextRequest) {
     if (request.method === "POST") {
       //@ts-ignore
       if (data?.role !== "Admin") {
-        return new NextResponse(JSON.stringify({ message: "You are not authorized to create new user" }), {
-          status: 401,
-        });
+        return new NextResponse(
+          JSON.stringify({
+            message: "You are not authorized to create new user",
+          }),
+          {
+            status: 401,
+          }
+        );
       }
     }
     if (request.method === "PATCH") {
       //@ts-ignore
       if (data?.role !== "Admin") {
-        return new NextResponse(JSON.stringify({ message: "You are not authorized to modify user accounts" }), {
-          status: 401,
-        });
+        return new NextResponse(
+          JSON.stringify({
+            message: "You are not authorized to modify user accounts",
+          }),
+          {
+            status: 401,
+          }
+        );
       }
     }
   }
 
-  if (request.nextUrl.pathname.startsWith("/api/batch") || request.nextUrl.pathname.startsWith("/api/books")) {
+  if (
+    request.nextUrl.pathname.startsWith("/api/batch") ||
+    request.nextUrl.pathname.startsWith("/api/books")
+  ) {
     if (!token) {
       return new NextResponse(
         JSON.stringify({ message: " Unauthenticated User" }),
@@ -52,12 +64,17 @@ export async function middleware(request: NextRequest) {
       );
     }
     if (request.method === "POST" || request.method === "PATCH") {
-        //@ts-ignore
-        if (data?.role !== "Admin" && data?.role !== "Data_Capture") {
-          return new NextResponse(JSON.stringify({ message: "You are not authorized for this actions" }), {
+      //@ts-ignore
+      if (data?.role !== "Admin" && data?.role !== "Client") {
+        return new NextResponse(
+          JSON.stringify({
+            message: "You are not authorized for this actions",
+          }),
+          {
             status: 401,
-          });
-        }
+          }
+        );
+      }
     }
   }
 
@@ -68,17 +85,10 @@ export async function middleware(request: NextRequest) {
       );
     }
 
-    
-
-    if(timeDifference < 0){
-      return NextResponse.redirect(
-        new URL(`/logout`, request.url)
-      );
+    if (timeDifference < 0) {
+      return NextResponse.redirect(new URL(`/logout`, request.url));
     }
-    
-    
   }
-
 
   // if (request.nextUrl.pathname.startsWith("/login")) {
   //   if (token) {
@@ -88,48 +98,38 @@ export async function middleware(request: NextRequest) {
   //             new URL(`/updatePassword/${userId}`, request.url)
   //           );
   //         }
-     
+
   //         return NextResponse.redirect(
   //           new URL(`/dashboard`, request.url)
   //         );
-        
+
   //     }
-    
+
   // }
 
   if (request.nextUrl.pathname.startsWith("/dashboard/users")) {
     //@ts-ignore
-    if(data?.role !== "Admin"){
+    if (data?.role !== "Admin") {
       return NextResponse.redirect(
         new URL(`/dashboard/capturing`, request.url)
       );
-    
     }
-      
-    
-    
   }
   if (request.nextUrl.pathname.startsWith("/dashboard/reports")) {
     //@ts-ignore
-    if(data?.role !== "Admin"){
+    if (data?.role !== "Admin") {
       return NextResponse.redirect(
         new URL(`/dashboard/capturing`, request.url)
       );
-    
     }
-      
-    
-    
   }
   if (request.nextUrl.pathname === "/") {
     return NextResponse.redirect(new URL(`/home`, request.url));
   }
-  
+
   if (request.nextUrl.pathname.startsWith("/profile")) {
     if (!token) {
       return NextResponse.redirect(new URL(`/login`, request.url));
     }
   }
-
 }
-
