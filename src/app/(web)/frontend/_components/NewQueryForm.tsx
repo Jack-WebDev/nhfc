@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios, { AxiosError } from "axios";
 
 type NewQueryFormProps = {
   onClose: () => void;
+  addQuery: (newQuery: any) => void;
 };
 
-const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose }) => {
+const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose, addQuery }) => {
   const [queryType, setQueryType] = useState("General");
   const [appliedLoan, setAppliedLoan] = useState(
     "#9458 Private Housing Finance"
@@ -18,7 +18,7 @@ const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose }) => {
 
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newQuery = {
       referenceNo: (Math.floor(Math.random() * 900000) + 100000).toString(),
@@ -30,20 +30,14 @@ const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose }) => {
       description,
       file,
     };
-    console.log(newQuery)
-    try {
-      const res = await axios.post("/api/userqueries", newQuery);
-      console.log(res);
-      onClose();
-    } catch (error) {
-      console.log(error as AxiosError);
-    }
+    addQuery(newQuery);
     onClose();
+    router.push("/queries");
   };
 
-  const handleFileChange = (e: any) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFile(e.target.files[0].name);
+      setFile(e.target.files[0]);
     }
   };
 

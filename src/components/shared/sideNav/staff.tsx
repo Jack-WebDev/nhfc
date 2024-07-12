@@ -73,7 +73,7 @@ const Staff = () => {
           <NavLink url="/frontend/queries" title="Queries" Icon={HelpCircle} />
           <NavLink
             url="/frontend/projects"
-            title="Our Projects"
+            title="NHFC Projects"
             Icon={ShoppingBag}
           />
           <NavLink
