@@ -5,7 +5,7 @@ import Modal from "./Modal";
 import NewQueryForm from "./NewQueryForm";
 import ViewQuery from "./ViewQuery";
 import { Menu, Transition } from "@headlessui/react";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { EllipsisVerticalIcon } from "lucide-react";
 
 type Query = {
   referenceNo: string;
