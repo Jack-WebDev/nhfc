@@ -499,7 +499,7 @@ export default function ApplicationProcess() {
                                 name="gender"
                                 value={formData.personalData.gender}
                                 onChange={handleChange}
-                                className="border border border-gray-500 rounded-lg p-1 bg-white"
+                                className="border border-gray-500 rounded-lg p-1 bg-white"
                               >
                                 <option value="">Select Gender</option>
                                 <option value="Male">Male</option>

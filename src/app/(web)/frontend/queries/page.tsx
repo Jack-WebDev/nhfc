@@ -119,23 +119,23 @@ const QueriesList: React.FC = () => {
     setSelectedQuery(null);
   };
 
-  // const addQuery = async (newQuery: Query) => {
-  //   // setQueries((prevQueries) => {
-  //   //   const updatedQueries = [...prevQueries, newQuery];
-  //   //   localStorage.setItem("queries", JSON.stringify(updatedQueries));
-  //   //   return updatedQueries;
-  //   // });
-  //   const updatedQueries = [...queries, newQuery];
-  //   try {
-  //     console.log(updatedQueries)
-  //     // const res = await axios.post("/api/userqueries", updatedQueries);
-  //     // setQueries(res.data);
-  //     // console.log(res)
+  const addQuery = async (newQuery: Query) => {
+    setQueries((prevQueries) => {
+      const updatedQueries = [...prevQueries, newQuery];
+      localStorage.setItem("queries", JSON.stringify(updatedQueries));
+      return updatedQueries;
+    });
+    const updatedQueries = [...queries, newQuery];
+    try {
+      console.log(updatedQueries)
+      // const res = await axios.post("/api/userqueries", updatedQueries);
+      // setQueries(res.data);
+      // console.log(res)
       
-  //   } catch (error) {
-  //     console.log(error as AxiosError);
-  //   }
-  // };
+    } catch (error) {
+      console.log(error as AxiosError);
+    }
+  };
 
   const saveQuery = (updatedQuery: Query) => {
     setQueries((prevQueries) => {
@@ -159,7 +159,7 @@ const QueriesList: React.FC = () => {
         </button>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <NewQueryForm onClose={handleCloseModal} />
+        <NewQueryForm onClose={handleCloseModal} addQuery={addQuery} />
       </Modal>
       {selectedQuery && (
         <ViewQuery

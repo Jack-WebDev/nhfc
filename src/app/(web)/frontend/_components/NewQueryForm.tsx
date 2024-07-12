@@ -32,7 +32,7 @@ const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose, addQuery }) => {
     };
     addQuery(newQuery);
     onClose();
-    router.push("/queries");
+    router.push("/frontend/queries");
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
