@@ -7,7 +7,22 @@ import {
   useUiStateContext,
   useUserContext,
 } from "@/context";
-import { BookOpen, CarFront, FileBarChart, FileText, FolderKanban, HelpCircle, LayoutDashboard, MoveUpRightIcon, Newspaper, PenSquare, Settings, ShoppingBag, User, Users } from "lucide-react";
+import {
+  BookOpen,
+  CarFront,
+  FileBarChart,
+  FileText,
+  FolderKanban,
+  HelpCircle,
+  LayoutDashboard,
+  MoveUpRightIcon,
+  Newspaper,
+  PenSquare,
+  Settings,
+  ShoppingBag,
+  User,
+  Users,
+} from "lucide-react";
 import { LinkType, NavLinkGroup } from "./navLinkGroup";
 
 const Staff = () => {
@@ -20,64 +35,86 @@ const Staff = () => {
     {
       id: "fa2eddc8-b06c-5200-99e7-82405c2d909c",
       title: "Accidents",
-      Icon: CarFront ,
-      url: "/dashboard/accidents"
+      Icon: CarFront,
+      url: "/dashboard/accidents",
     },
     {
       id: "8b43a13a-b229-503a-b19b-91a841ac29f1",
       title: "Books",
-      Icon: BookOpen ,
-      url: "/dashboard/capturing"
+      Icon: BookOpen,
+      url: "/dashboard/capturing",
     },
-  ] 
+  ];
   const reports: LinkType[] = [
     {
       id: "b4d03dbf-d36c-558a-94a3-cfbf8d3bbac3",
       title: "Accidents",
-      Icon: CarFront ,
-      url: "/dashboard/accidentReports"
+      Icon: CarFront,
+      url: "/dashboard/accidentReports",
     },
     {
       id: "e7b1f0d9-5d7b-514c-9f9f-b4572d739e8b",
       title: "Books",
-      Icon: BookOpen ,
-      url: "/dashboard/batchReports"
+      Icon: BookOpen,
+      url: "/dashboard/batchReports",
     },
     {
       id: "7c1ad985-280f-5612-94cb-7b9d8d50a901",
       title: "Users",
-      Icon: User ,
-      url: "/dashboard/userReports"
+      Icon: User,
+      url: "/dashboard/userReports",
     },
-  ] 
+  ];
   return (
     <div className="flex flex-col items-center md:items-start  px-0 md:px-0 pt-12 gap-2 w-full overflow-y-scroll scrollbar-hide  sticky top-0">
-      {data?.role === "Data_Capture" ? (
+      {data?.role === "Client" ? (
         <>
-        <NavLink url="/frontend" title="My Applications" Icon={FileText} />
-        <NavLink url="/frontend/queries" title="Queries" Icon={HelpCircle} />
-        <NavLink url="/frontend/projects" title="Our Projects" Icon={ShoppingBag} />
-        <NavLink url="/dashboard/impact" title="Impact" Icon={MoveUpRightIcon} />
-        <NavLink url="/dashboard/news" title="News and Media" Icon={Newspaper} />
-        <NavLink url="/dashboard/support" title="Support" Icon={HelpCircle} />
+          <NavLink url="/frontend" title="My Applications" Icon={FileText} />
+          <NavLink url="/frontend/queries" title="Queries" Icon={HelpCircle} />
+          <NavLink
+            url="/frontend/projects"
+            title="Our Projects"
+            Icon={ShoppingBag}
+          />
+          <NavLink
+            url="/dashboard/impact"
+            title="Impact"
+            Icon={MoveUpRightIcon}
+          />
+          <NavLink
+            url="/dashboard/news"
+            title="News and Media"
+            Icon={Newspaper}
+          />
+          <NavLink url="/dashboard/support" title="Support" Icon={HelpCircle} />
         </>
       ) : null}
       {/* <NavLinkGroup links={capturing} title="Capturing" TitleIcon={PenSquare}/> */}
       {data?.role === "Admin" ? (
-                <>
-                <NavLink url="/dashboard" title="Dashboard" Icon={LayoutDashboard} />
-                <NavLink url="/dashboard/applications" title="Applications" Icon={FileText} />
-                <NavLink url="/dashboard/projects" title="Projects" Icon={FolderKanban} />
-                <NavLink url="/dashboard/queries" title="Queries" Icon={HelpCircle} />
-                <NavLink url="/dashboard/queries" title="Reports" Icon={FileBarChart} />
+        <>
+          <NavLink url="/dashboard" title="Dashboard" Icon={LayoutDashboard} />
+          <NavLink
+            url="/dashboard/applications"
+            title="Applications"
+            Icon={FileText}
+          />
+          <NavLink
+            url="/dashboard/projects"
+            title="Projects"
+            Icon={FolderKanban}
+          />
+          <NavLink url="/dashboard/queries" title="Queries" Icon={HelpCircle} />
+          <NavLink
+            url="/dashboard/queries"
+            title="Reports"
+            Icon={FileBarChart}
+          />
 
-                <NavLink url="/dashboard/users" title="Users" Icon={Users} />
-                <NavLink url="/dashboard/queries" title="Settings" Icon={Settings} />
-
-                </>
+          <NavLink url="/dashboard/users" title="Users" Icon={Users} />
+          <NavLink url="/dashboard/queries" title="Settings" Icon={Settings} />
+        </>
       ) : null}
       {/* <NavLinkGroup links={reports} title="Reports" TitleIcon={FileText}/> */}
-      
     </div>
   );
 };

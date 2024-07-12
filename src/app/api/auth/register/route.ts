@@ -5,7 +5,6 @@ import { UserStatus } from "@prisma/client";
 import { transporter } from "@/notifications";
 
 export const POST = async (request: Request) => {
-
   // grab data from the request
   const data = await request.json();
   const {
@@ -21,14 +20,13 @@ export const POST = async (request: Request) => {
     role,
   } = data;
 
-  console.log(phone)
+  console.log(phone);
 
   const emailExist = await db.user.findUnique({
     where: { email: email },
   });
 
-
-  console.log(emailExist)
+  console.log(emailExist);
   if (emailExist) {
     return new NextResponse(
       JSON.stringify({ message: "Email already registered" }),
@@ -36,12 +34,12 @@ export const POST = async (request: Request) => {
     );
   }
 
-  console.log("here3")
+  console.log("here3");
   const phoneExist = await db.user.findUnique({
     where: { phone: phone },
   });
 
-  console.log("333")
+  console.log("333");
 
   if (phoneExist) {
     return new NextResponse(
@@ -50,12 +48,12 @@ export const POST = async (request: Request) => {
     );
   }
 
-  console.log("44")
+  console.log("44");
   const IdNumberExist = await db.user.findUnique({
     where: { IdNumber: idNumber },
   });
 
-  console.log("dsds")
+  console.log("dsds");
   if (IdNumberExist) {
     return new NextResponse(
       JSON.stringify({ message: "ID Number already registered" }),
@@ -66,11 +64,22 @@ export const POST = async (request: Request) => {
   const saltRounds = 10;
   const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
-  console.log("2")
+  console.log("2");
 
   try {
-    let role = "Data_Capture"
-    console.log(email, phone, idNumber, firstName, lastName, title, ethnicity, gender, role, hashedPassword)
+    let role = "Client";
+    console.log(
+      email,
+      phone,
+      idNumber,
+      firstName,
+      lastName,
+      title,
+      ethnicity,
+      gender,
+      role,
+      hashedPassword
+    );
     const user = await db.user.create({
       data: {
         email: email,
@@ -81,13 +90,13 @@ export const POST = async (request: Request) => {
         title: title,
         ethnicity: ethnicity,
         gender: gender,
-        role: "Data_Capture",
+        role: "Client",
         password: hashedPassword,
         status: UserStatus.Active,
       },
     });
 
-    console.log(user)
+    console.log(user);
 
     // const otp = Math.floor(100000 + Math.random() * 900000);
 
