@@ -2,9 +2,7 @@
   "name": "book-management",
   "version": "0.1.0",
   "private": true,
-  "prisma": {
-    "seed": "ts-node src/db/seed.js"
-  },
+
   "scripts": {
     "deploy": "sst deploy --stage=prod --profile=num",
     "dev": "next dev",

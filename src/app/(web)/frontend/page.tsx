@@ -79,13 +79,25 @@ export default function Applications() {
   const [rowSelection, setRowSelection] = React.useState({});
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const [selectedLoan, setSelectedLoan] = React.useState<any | null>(null);
-  const [data, setData] = React.useState<LoanApplication[]>([]);
+  const [data, setData] = React.useState<any[]>([]);
 
   useEffect(() => {
     const fetchApplications = async () => {
-      const res = await axios.get("/api/applications");
-      // console.log(res.data)
-      setData(res.data);
+      try {
+        const [res1, res2] = await Promise.all([
+          axios.get("/api/applications"),
+          axios.get("/api/applications/first-home")
+        ]);
+
+        // console.log(res1.data,res2.data)
+
+        // Combine the results
+        const combinedData = [...res1.data, ...res2.data];
+        setData(combinedData);
+        console.log(combinedData)
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
     };
 
     fetchApplications();

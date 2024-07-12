@@ -67,6 +67,7 @@ model Applications {
 
 model FirstHomeLoan {
   id                                 String   @id @default(cuid())
+  LoanType                           String
   idNumber                           String   @unique
   firstName                          String
   lastName                           String
