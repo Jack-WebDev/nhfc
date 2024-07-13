@@ -43,10 +43,11 @@ model User {
 }
 
 model Applications {
-  id             String   @id @default(cuid())
+  id             String   @id
   NameOfCompany  String
   ContactPerson  String
   ApplicantType  String?
+  ApplicationType String?
   Email          String   @unique
   PhoneNumber    String   @unique
   Address        String
@@ -66,7 +67,7 @@ model Applications {
 }
 
 model FirstHomeLoan {
-  id                                 String   @id @default(cuid())
+  id                                 String   @id
   LoanType                           String
   idNumber                           String   @unique
   firstName                          String

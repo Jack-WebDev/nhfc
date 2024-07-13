@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components";
-import { CheckCircle, CircleCheckBig, CircleDashed, Loader } from "lucide-react";
+import { ArrowLeft, CheckCircle, CircleCheckBig, CircleDashed, Loader } from "lucide-react";
 
 type LoanApplication = {
   id: string;
@@ -34,6 +34,7 @@ export default function ViewApplication() {
   const params = useParams();
   const applicationID = params.id;
   const [loanData, setLoanData] = useState<LoanApplication[]>([]);
+  const router = useRouter();
   console.log(loanData);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function ViewApplication() {
 
   return (
     <>
+    <ArrowLeft onClick={() => router.back()} className="0 cursor-pointer" />
       {loanData?.map((loan) => {
         const fomattedDate = loan.createdAt.split("T")[0];
         return (

@@ -180,10 +180,10 @@ export default function Applications() {
       ),
     },
     {
-      accessorKey: "applicationType",
+      accessorKey: "ApplicationType",
       header: "Application Type",
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("applicationType")}</div>
+        <div className="capitalize">{row.getValue("ApplicationType")}</div>
       ),
     },
     {
