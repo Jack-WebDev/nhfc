@@ -218,31 +218,25 @@ export default function Applications() {
       header: "Status",
       cell: ({ row }) => {
         const loanStatus: string = row.getValue("LoanStatus");
-        let variant:
-          | "default"
-          | "secondary"
-          | "destructive"
-          | "outline"
-          | null
-          | undefined;
+        let variant
 
         switch (loanStatus) {
           case "Pending":
-            variant = "default";
+            variant = "yellow";
             break;
           case "Approved":
-            variant = "secondary";
+            variant = "green";
             break;
           case "Rejected":
-            variant = "destructive";
+            variant = "red";
             break;
           default:
-            variant = "default"; // Fallback variant
+            variant = "yelllow"; // Fallback variant
         }
 
         return (
           <div className="capitalize">
-            <Badge variant={variant}>{loanStatus}</Badge>
+            <Badge className={`bg-${variant}-500 text-white`}>{loanStatus}</Badge>
           </div>
         );
       },
