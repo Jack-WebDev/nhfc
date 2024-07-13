@@ -300,7 +300,7 @@ export default function ApplicationProcess() {
                       checked={selectedOption === "Equity Finance"}
                       onChange={handleOptionChange}
                     />
-                    Equity Finance
+                    NHFC Investment
                   </label>
                 </div>
 
@@ -446,7 +446,7 @@ export default function ApplicationProcess() {
                     </div>
                   )}
                   {selectedOption === "First Home Finance" && (
-                    <div>
+                    <div className="grid">
                       {currentStep === 1 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
@@ -637,15 +637,18 @@ export default function ApplicationProcess() {
 
                       {currentStep === 3 && (
                         <div className="grid grid-cols-2 gap-y-2">
-                          <h2>Support Type, Project and Product</h2>
+                          <h2>First Home Finance, Project and Typology</h2>
                           <label>
-                            Support Type:
+                            First Home Finance
                             <select
                               name="supportType"
                               value={formData.supportData.supportType}
                               onChange={handleChange}
+                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             >
-                              <option value="">Select Support Type</option>
+                              <option value="">
+                                Select First Home Finance Type
+                              </option>
                               <option value="socialHousing">
                                 Social Housing
                               </option>
@@ -665,6 +668,7 @@ export default function ApplicationProcess() {
                               name="province"
                               value={formData.supportData.province}
                               onChange={handleChange}
+                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             >
                               <option value="">Select Province</option>
                               <option value="easternCape">Eastern Cape</option>
@@ -688,6 +692,7 @@ export default function ApplicationProcess() {
                               name="municipalityMetro"
                               value={formData.supportData.municipalityMetro}
                               onChange={handleChange}
+                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             >
                               <option value="">
                                 Select Municipality/ Metro
@@ -735,6 +740,7 @@ export default function ApplicationProcess() {
                               name="projectName"
                               value={formData.supportData.projectName}
                               onChange={handleChange}
+                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             >
                               <option value="">Select Project</option>
                               <option value="fleurhofIntegratedHousingDevelopment">
@@ -759,16 +765,17 @@ export default function ApplicationProcess() {
                           </label>
 
                           <label className="block">
-                            <span className="text-gray-700">Product:</span>
+                            <span>Typology:</span>
 
                             <select
                               name="product"
                               className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                               value={formData.supportData.product}
                               onChange={handleChange}
+                              
                             >
                               <option value="" disabled>
-                                Select Product
+                                Select Typology
                               </option>
                               <option value="Housing Finance - 2 Bedroom">
                                 Housing Finance - 2 Bedroom
@@ -1303,17 +1310,23 @@ export default function ApplicationProcess() {
                               <span className="text-gray-700">
                                 Do you agree to the Terms and Conditions?
                               </span>
-                              <select
+                              <input
+                                type="checkbox"
                                 name="termsAgreement"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                value={
-                                  formData.previousEmploymentData.termsAgreement
+                                className="mt-1 block rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                checked={
+                                  formData.previousEmploymentData
+                                    .termsAgreement === "yes"
                                 }
-                                onChange={handleChange}
-                              >
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                              </select>
+                                onChange={(e) =>
+                                  handleChange({
+                                    target: {
+                                      name: "termsAgreement",
+                                      value: e.target.checked ? "yes" : "no",
+                                    },
+                                  })
+                                }
+                              />
                             </label>
                           </div>
                           <button
