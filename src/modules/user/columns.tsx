@@ -71,7 +71,9 @@ export const userColumns: ColumnDef<UserType>[] = [
     cell: ({ row }) => {
       const status: string = row.getValue("status");
       return (
-        <Badge variant={status === "Active" ? "green" : "red"}>
+        <Badge        className={`text-xs text-white ${
+            status === "Active" ? "bg-green-500" : "bg-red-500"
+          }`}>
           <p className="text-xs font-light">{status.toLocaleLowerCase()}</p>
         </Badge>
       );
