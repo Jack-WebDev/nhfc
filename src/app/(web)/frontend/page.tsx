@@ -20,6 +20,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -41,8 +47,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus } from "lucide-react";
+import { Download, Eye, Plus } from "lucide-react";
 import {
+  Badge,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -86,7 +93,7 @@ export default function Applications() {
       try {
         const [res1, res2] = await Promise.all([
           axios.get("/api/applications"),
-          axios.get("/api/applications/first-home")
+          axios.get("/api/applications/first-home"),
         ]);
 
         // console.log(res1.data,res2.data)
@@ -94,7 +101,7 @@ export default function Applications() {
         // Combine the results
         const combinedData = [...res1.data, ...res2.data];
         setData(combinedData);
-        console.log(combinedData)
+        console.log(combinedData);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -105,7 +112,7 @@ export default function Applications() {
 
   const handleViewApplication = (loan: LoanApplication) => {
     router.push(`/frontend/${loan.id}`);
-  }
+  };
 
   const LoanModal = ({ loan, closeDialog }: any) => {
     return (
@@ -167,9 +174,16 @@ export default function Applications() {
   const columns: ColumnDef<LoanApplication>[] = [
     {
       accessorKey: "LoanType",
-      header: "Loan Type",
+      header: "Finance Solution",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("LoanType")}</div>
+      ),
+    },
+    {
+      accessorKey: "applicationType",
+      header: "Application Type",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("applicationType")}</div>
       ),
     },
     {
@@ -192,7 +206,7 @@ export default function Applications() {
 
     {
       accessorKey: "LoanAmount",
-      header: () => <div>Loan Amount</div>,
+      header: () => <div>Application Amount</div>,
       cell: ({ row }) => {
         const loanAmount = row.getValue("LoanAmount");
 
@@ -202,14 +216,35 @@ export default function Applications() {
     {
       accessorKey: "LoanStatus",
       header: "Status",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("LoanStatus")}</div>
-      ),
+      cell: ({ row }) => {
+        const loanStatus: string = row.getValue("LoanStatus");
+        let variant
+
+        switch (loanStatus) {
+          case "Pending":
+            variant = "yellow";
+            break;
+          case "Approved":
+            variant = "green";
+            break;
+          case "Rejected":
+            variant = "red";
+            break;
+          default:
+            variant = "yelllow"; // Fallback variant
+        }
+
+        return (
+          <div className="capitalize">
+            <Badge className={`bg-${variant}-500 text-white`}>{loanStatus}</Badge>
+          </div>
+        );
+      },
     },
 
     {
       id: "actions",
-      header: "actions",
+      header: "Actions",
       enableHiding: false,
       cell: ({ row }) => {
         const loan = row.original;
@@ -223,17 +258,28 @@ export default function Applications() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleViewApplication(loan)}>
+              <DropdownMenuItem
+                onClick={() => handleViewApplication(loan)}
+                className="flex gap-x-2"
+              >
+                <Eye />
                 View Details
               </DropdownMenuItem>
               {/* <DropdownMenuItem>Edit Application</DropdownMenuItem> */}
-              <DropdownMenuItem>Generate PDF</DropdownMenuItem>
+              <DropdownMenuItem className="flex gap-x-2">
+                <Download /> Download File
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
       },
     },
   ];
+
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 1,
+    pageSize: 6,
+  });
 
   const table = useReactTable({
     data,
@@ -246,102 +292,130 @@ export default function Applications() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
     },
   });
 
+
   return (
-    <div className="w-full">
-      <h1 className="text-3xl font-semibold">My Loan Applications</h1>
-      <div className="flex justify-between items-baseline mb-8">
-        <h2>Applications List</h2>
-        <button
-          className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg"
-          onClick={() => router.push("/frontend/apply")}
-        >
-          <Plus /> Start New Application
-        </button>
-      </div>
-      <div className="rounded-xl border">
-        <Table className="bg-white rounded-xl">
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+    <>
+      <div className="w-full">
+        <h1 className="text-3xl font-semibold">My Applications</h1>
+        <div className="flex justify-between items-baseline mb-8">
+          <h2>Applications List</h2>
+          <button
+            className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg"
+            onClick={() => router.push("/frontend/apply")}
+          >
+            <Plus /> Start New Application
+          </button>
+        </div>
+        <div className="rounded-xl border">
+          <Table className="bg-white rounded-xl">
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        {isDialogOpen && selectedLoan && (
+          <LoanModal
+            loan={selectedLoan}
+            closeDialog={() => setDialogOpen(false)}
+          />
+        )}
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="space-x-2">
+      <div className="flex justify-center flex-col items-center gap-2 mt-12">
+        <div className="flex items-center gap-4">
           <Button
-            variant="outline"
-            size="sm"
+            
+            className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <ChevronsLeft />
+          </Button>
+          <Button
+            
+            className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            <ChevronLeft />
           </Button>
           <Button
-            variant="outline"
-            size="sm"
+            
+            className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            <ChevronRight />
+          </Button>
+          <Button
+            
+            className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            <ChevronsRight />
           </Button>
         </div>
+        <span className="flex items-center gap-1">
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount().toLocaleString()}
+          </strong>
+        </span>
       </div>
-      {isDialogOpen && selectedLoan && (
-        <LoanModal
-          loan={selectedLoan}
-          closeDialog={() => setDialogOpen(false)}
-        />
-      )}
-    </div>
+    </>
   );
 }

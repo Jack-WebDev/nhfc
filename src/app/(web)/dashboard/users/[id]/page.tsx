@@ -48,18 +48,14 @@ async function Page(props: UserPageProps) {
       label: "Role",
       value: () => (
         <Badge
-          variant={
+          className={`text-xs text-white ${
             user?.role === "Admin"
-              ? "green"
+              ? "bg-green-500"
               : user?.role === "Client"
-              ? "orange"
-              : user?.role === "Camera_Uploader"
-              ? "orange"
-              : "gray"
-          }
-          className="text-xs text-white"
+              ? "bg-orange-500"
+              : "bg-gray-500"
+          }`}
         >
-          {user?.role.split("_").join(" ")}
         </Badge>
       ),
     },
@@ -68,13 +64,15 @@ async function Page(props: UserPageProps) {
       label: "Status",
       value: () => (
         <Badge
-          variant={user?.status === "Active" ? "green" : "red"}
-          className="text-xs text-white"
+          className={`text-xs text-white ${
+            user?.status === "Active" ? "bg-green-500" : "bg-red-500"
+          }`}
         >
           {user?.status.toLowerCase()}
         </Badge>
       ),
     },
+    
   ];
 
   const personalDetails = [
