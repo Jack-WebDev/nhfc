@@ -16,8 +16,8 @@ export default function FormSections({
   handleChange,
 }: FormSectionProps) {
   return (
-    <div>
-    <h2 className="text-3xl font-semibold mb-4">{sectionTitle}</h2>
+    <div className="grid grid-cols-2 gap-8">
+    {/* <h2 className="text-3xl font-semibold mb-4">{sectionTitle}</h2> */}
     {fields.map((field) => (
       <div key={field.name} className="grid gap-y-2">
         <label className="mt-8">{field.label}</label>
