@@ -2,6 +2,12 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
 import {
   CaretSortIcon,
@@ -200,9 +206,16 @@ export default function Applications() {
   const columns: ColumnDef<LoanApplication>[] = [
     {
       accessorKey: "LoanType",
-      header: "Loan Type",
+      header: "Finance Solution",
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("LoanType")}</div>
+      ),
+    },
+    {
+      accessorKey: "ApplicationType",
+      header: "Application Type",
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("ApplicationType")}</div>
       ),
     },
     {
@@ -242,7 +255,7 @@ export default function Applications() {
 
     {
       id: "actions",
-      header: "actions",
+      header: "Actions",
       enableHiding: false,
       cell: ({ row }) => {
         const loan = row.original;
@@ -259,14 +272,18 @@ export default function Applications() {
               <DropdownMenuItem onClick={() => handleViewApplication(loan)}>
                 View Details
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => EligibilityChecker()}>Eligibility Check</DropdownMenuItem>
-              <DropdownMenuItem>Generate PDF</DropdownMenuItem>
+              <DropdownMenuItem>Download File</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
       },
     },
   ];
+
+  const [pagination, setPagination] = React.useState({
+    pageIndex: 1,
+    pageSize: 6,
+  });
 
   const table = useReactTable({
     data,
@@ -279,11 +296,13 @@ export default function Applications() {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
     },
   });
 
@@ -345,26 +364,6 @@ export default function Applications() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
       {isDialogOpen && selectedLoan && (
         <LoanModal
           loan={selectedLoan}
@@ -401,6 +400,49 @@ export default function Applications() {
             </div>
           </div>
         )}
+              <div className="flex justify-center flex-col items-center gap-2 mt-12">
+        <div className="flex items-center gap-4">
+          <Button
+            
+            className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <ChevronsLeft />
+          </Button>
+          <Button
+            
+            className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <ChevronLeft />
+          </Button>
+          <Button
+            
+            className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            <ChevronRight />
+          </Button>
+          <Button
+            
+            className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            <ChevronsRight />
+          </Button>
+        </div>
+        <span className="flex items-center gap-1">
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount().toLocaleString()}
+          </strong>
+        </span>
+      </div>
     </>
   );
 }

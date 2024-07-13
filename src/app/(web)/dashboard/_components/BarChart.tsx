@@ -73,7 +73,7 @@ const chartConfig = {
 
 export function BarChartComponent() {
   return (
-    <ChartContainer config={chartConfig} className="h-1/2 w-1/2 bg-white">
+    <ChartContainer config={chartConfig} className=" bg-white">
       <BarChart accessibilityLayer data={chartData}>
         <CartesianGrid vertical={false} />
         <XAxis

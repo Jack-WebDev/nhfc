@@ -34,6 +34,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Eye,
+  FileText,
   MoreHorizontal,
   Trash,
   Trash2,
@@ -41,7 +42,7 @@ import {
 import ViewProject from "./_components/ViewProject";
 import { useRouter } from "next/navigation";
 import axios, { AxiosError } from "axios";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, PageHeader } from "@/components";
 import { toast } from "react-toastify";
 
 type ProjectProps = {
@@ -159,7 +160,7 @@ export default function Timesheet() {
   ];
 
   const [pagination, setPagination] = useState({
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: 10,
   });
 
@@ -186,6 +187,7 @@ export default function Timesheet() {
 
   return (
     <>
+    <PageHeader Icon={FileText} title="Projects"/>
       <div className="timesheets-container w-[80%] mx-auto">
         <div className="w-full p-4 rounded-xl border-2 border-primary">
           <div className="flex items-center justify-between py-4">
@@ -203,7 +205,7 @@ export default function Timesheet() {
               className="max-w-sm rounded-xl"
             />
             <Button
-              variant={"default"}
+              className="bg-blue-500 text-white hover:bg-blue-700"
               onClick={() => router.push("/dashboard/projects/add-project")}
             >
               Add New Project
@@ -298,7 +300,7 @@ export default function Timesheet() {
           <span className="flex items-center gap-1">
             <div>Page</div>
             <strong>
-              {table.getState().pagination.pageIndex} of{" "}
+              {table.getState().pagination.pageIndex + 1} of{" "}
               {table.getPageCount().toLocaleString()}
             </strong>
           </span>
