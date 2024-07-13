@@ -96,9 +96,19 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
+  function generateUniqueId(length = 10) {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      result += chars[randomIndex];
+    }
+    return result;
+  }
   try {
     const data: FormData = await req.json();
-
+    const id = generateUniqueId();
     // Access the data here
     const {
       loanType,
@@ -123,6 +133,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const applicationData = await db.firstHomeLoan.create({
       data: {
+        id: id,
         LoanType: "First Home Finance",
         idNumber: personalData.idNumber,
         firstName: personalData.firstName,

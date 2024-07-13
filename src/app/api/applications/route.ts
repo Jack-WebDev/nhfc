@@ -12,14 +12,26 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
+  function generateUniqueId(length = 10) {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      result += chars[randomIndex];
+    }
+    return result;
+  }
   try {
 
     const data = await req.json();
     const {nameOfCompany, fullName, email, phone, address, city, province, postalCode,loanAmount,loanType,country, rate, docs, applicantType,investmentType, projectName,  idNumber} = data;
     console.log(nameOfCompany, fullName, email, phone, address, city, province, postalCode, loanAmount,loanType,country, rate, docs, applicantType,investmentType, projectName,  idNumber)
+    const id = generateUniqueId();
 
     const applicationData = await db.applications.create({
       data: {
+        id: id,
         NameOfCompany: nameOfCompany,
         ContactPerson: fullName,
         Email: email,
