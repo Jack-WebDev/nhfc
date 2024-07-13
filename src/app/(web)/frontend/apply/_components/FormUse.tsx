@@ -28,6 +28,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Applicant Type",
           type: "select",
           options: ["Type of Applicant","Organization/Business", "Individual"],
+        },{
+          name: "applicationType",
+          label: "Application Type",
+          type: "select",
+          options: ["Type of Application","Loan","Investment"],
         },
         { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "select", options:[
@@ -108,6 +113,12 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Type of Applicant","Organization/Business", "Individual"],
         },
+        {
+          name: "applicationType",
+          label: "Application Type",
+          type: "select",
+          options: ["Type of Application","Loan","Investment"],
+        },
         { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "select", options:[
           "Select Project",
@@ -186,6 +197,12 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Applicant Type",
           type: "select",
           options: ["Type of Applicant","Organization/Business", "Individual"],
+        },
+        {
+          name: "applicationType",
+          label: "Application Type",
+          type: "select",
+          options: ["Type of Application","Loan","Investment"],
         },
         { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "select", options:[
@@ -266,6 +283,12 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Type of Applicant","Organization/Business", "Individual"],
         },
+        {
+          name: "applicationType",
+          label: "Application Type",
+          type: "select",
+          options: ["Type of Application","Loan","Investment"],
+        },
         { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "select", options:[
           "Select Project",
@@ -345,6 +368,12 @@ export default function FormUse({ selectedOption }: TitleProp) {
           type: "select",
           options: ["Type of Applicant","Organization/Business", "Individual"],
         },
+        {
+          name: "applicationType",
+          label: "Application Type",
+          type: "select",
+          options: ["Type of Application","Loan","Investment"],
+        },
         { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "select", options:[
           "Select Project",
@@ -423,6 +452,12 @@ export default function FormUse({ selectedOption }: TitleProp) {
           label: "Applicant Type",
           type: "select",
           options: ["Type of Applicant","Organization/Business", "Individual"],
+        },
+        {
+          name: "applicationType",
+          label: "Application Type",
+          type: "select",
+          options: ["Type of Application","Loan","Investment"],
         },
         { name: "idNumber", label: "Id Number", type: "text" },
         { name: "projectName", label: "Project Name", type: "select", options:[
@@ -533,7 +568,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
 
       <button
         onClick={handleSubmit}
-        className="bg-blue-500 text-white py-2 px-8 rounded-lg"
+        className="bg-blue-500 text-white py-2 px-8 rounded-lg mt-8"
       >
         Submit
       </button>

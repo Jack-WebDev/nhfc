@@ -16,6 +16,7 @@ import FormUse from "./_components/FormUse";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 export default function ApplicationProcess() {
   const [selectedOption, setSelectedOption] = useState<string>("");
@@ -155,7 +156,10 @@ export default function ApplicationProcess() {
   };
   return (
     <div>
-      <h1>Application Process</h1>
+      <ArrowLeft
+        onClick={() => router.back()}
+        className="cursor-pointer mb-12"
+      />
 
       <div className="grid [grid-template-columns:.2fr_1fr] gap-4">
         <div>
@@ -325,7 +329,10 @@ export default function ApplicationProcess() {
                         itemsPerGroup={2}
                       />
 
-                      <h2>Apply Here:</h2>
+                      <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                        Apply Here:
+                      </h2>
+
                       <FormUse selectedOption={selectedOption} />
                     </div>
                   )}
@@ -341,7 +348,9 @@ export default function ApplicationProcess() {
                         ]}
                         itemsPerGroup={2}
                       />
-                      <h2>Apply Here:</h2>
+                      <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                        Apply Here:
+                      </h2>
                       <FormUse selectedOption={selectedOption} />
                     </>
                   )}
@@ -357,7 +366,9 @@ export default function ApplicationProcess() {
                         ]}
                         itemsPerGroup={2}
                       />
-                      <h2>Apply Here:</h2>
+                      <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                        Apply Here:
+                      </h2>
                       <FormUse selectedOption={selectedOption} />
                     </div>
                   )}
@@ -373,7 +384,9 @@ export default function ApplicationProcess() {
                         ]}
                         itemsPerGroup={2}
                       />
-                      <h2>Apply Here:</h2>
+                      <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                        Apply Here:
+                      </h2>
                       <FormUse selectedOption={selectedOption} />
                     </div>
                   )}
@@ -389,7 +402,9 @@ export default function ApplicationProcess() {
                         ]}
                         itemsPerGroup={2}
                       />
-                      <h2>Apply Here:</h2>
+                      <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                        Apply Here:
+                      </h2>
                       <FormUse selectedOption={selectedOption} />
                     </div>
                   )}
@@ -407,7 +422,9 @@ export default function ApplicationProcess() {
                         ]}
                         itemsPerGroup={2}
                       />
-                      <h2>Apply Here:</h2>
+                      <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                        Apply Here:
+                      </h2>
                       <FormUse selectedOption={selectedOption} />
                     </div>
                   )}
@@ -422,7 +439,9 @@ export default function ApplicationProcess() {
                         ]}
                         itemsPerGroup={2}
                       />
-                      <h2>Apply Here:</h2>
+                      <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                        Apply Here:
+                      </h2>
                       <FormUse selectedOption={selectedOption} />
                     </div>
                   )}
