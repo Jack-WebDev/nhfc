@@ -1,11 +1,38 @@
 "use client";
-
-import { useParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Check, Clock, FileText, History, Info, ListChecks, Lock, Mail, Play, ThumbsUp, TriangleAlert, User } from "lucide-react";
+import {
+  AlertTriangle,
+  ArrowLeft,
+  Check,
+  Clock,
+  FileText,
+  History,
+  Info,
+  ListChecks,
+  Lock,
+  Mail,
+  Play,
+  ThumbsUp,
+  TriangleAlert,
+  User,
+} from "lucide-react";
 import EligibilityCheck from "./EligibilityCheck";
 import { toast } from "react-toastify";
+import { Textarea } from "@/components";
 
 type LoanApplication = {
   id: string;
@@ -31,6 +58,7 @@ export default function ViewApplication() {
   const params = useParams();
   const applicationID = params.id;
   const [loanData, setLoanData] = useState<LoanApplication[]>([]);
+  const router = useRouter();
   console.log(loanData);
 
   useEffect(() => {
@@ -43,15 +71,16 @@ export default function ViewApplication() {
     fetchApplicationData();
   }, [applicationID]);
 
-  const handleApprove = async (loan:string) => {
+  const handleApprove = async (loan: string) => {
     const res = await axios.put(`/api/applications/${loan}`, {
       LoanStatus: "Approved",
     });
     toast.success("Application Approved Successfully");
-  }
+  };
 
   return (
     <>
+      <ArrowLeft onClick={() => router.back()} className=" cursor-pointer" />
       {loanData?.map((loan) => {
         const fomattedDate = loan.createdAt.split("T")[0];
         return (
@@ -72,20 +101,22 @@ export default function ViewApplication() {
                   Name: <span>{loan.ContactPerson}</span>
                 </p>
                 <hr />
-                <p className="flex justify-between items-center">ID Number: <span>{loan.IdNumber}</span></p>
-                 <hr />
+                <p className="flex justify-between items-center">
+                  ID Number: <span>{loan.IdNumber}</span>
+                </p>
+                <hr />
                 <p className="flex justify-between items-center">
                   Email: <span>{loan.Email}</span>
                 </p>
-                 <hr />
+                <hr />
                 <p className="flex justify-between items-center">
                   Phone Number: <span>{loan.PhoneNumber}</span>
                 </p>
-                 <hr />
+                <hr />
                 <p className="flex justify-between items-center">
                   Company Name: <span>{loan.NameOfCompany}</span>
                 </p>
-                 <hr />
+                <hr />
               </div>
             </div>
 
@@ -122,66 +153,131 @@ export default function ViewApplication() {
             </div>
 
             <div className="my-8">
-              <h3 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl"><FileText /> Application Documents</h3>
+              <h3 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl">
+                <FileText /> Application Documents
+              </h3>
               <div className="grid gap-y-2 my-8 px-4">
                 <p>
-                  <span className="text-blue-500 underline font-medium">Attachment 1</span>
+                  <span className="text-blue-500 underline font-medium">
+                    Attachment 1
+                  </span>
                 </p>
                 <p>
-                  <span className="text-blue-500 underline font-medium">Attachment 2</span>
+                  <span className="text-blue-500 underline font-medium">
+                    Attachment 2
+                  </span>
                 </p>
               </div>
             </div>
 
             <div className="my-8">
-              <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl"><History/> Applicant History</h2>
+              <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl">
+                <History /> Applicant History
+              </h2>
               <div className="grid gap-y-2 mt-4 px-4">
-                <p className="flex justify-between items-center">Previous Applications <span>2</span></p>
+                <p className="flex justify-between items-center">
+                  Previous Applications <span>2</span>
+                </p>
                 <hr />
-                <p className="flex justify-between items-center">Last Application Date: <span>2023-07-27</span></p>
+                <p className="flex justify-between items-center">
+                  Last Application Date: <span>2023-07-27</span>
+                </p>
                 <hr />
-                <p className="flex justify-between items-center">Last Application Outcome: <span>Declined</span></p>
+                <p className="flex justify-between items-center">
+                  Last Application Outcome: <span>Declined</span>
+                </p>
                 <hr />
               </div>
             </div>
 
             <div>
-              <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl"><Clock /> Eligibility Check</h2>
+              <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl">
+                <Clock /> Eligibility Check
+              </h2>
               <hr />
               <EligibilityCheck />
             </div>
 
             <div>
-              <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl"><ListChecks/> Application Stages</h2>
+              <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl">
+                <ListChecks /> Application Stages
+              </h2>
 
               <div className="grid gap-y-4 my-8 font-medium">
                 <div className="border-l-4 border-blue-700 bg-blue-200 p-4 rounded-lg flex items-center justify-between">
                   <h3>Initial Review</h3>
-                  <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg"><Check /> Completed</button>
+                  <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg">
+                    <Check /> Completed
+                  </button>
                 </div>
                 <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Detailed Assesment</h3>
-                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg"><Play/> Initiate</button>
+                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
+                    <Play /> Initiate
+                  </button>
                 </div>
                 <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Credit Committe Review</h3>
-                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg"><Lock/> Initiate</button>
+                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
+                    <Lock /> Initiate
+                  </button>
                 </div>
                 <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Final Decision</h3>
-                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg"><Lock/> Initiate</button>
+                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
+                    <Lock /> Initiate
+                  </button>
                 </div>
                 <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Loan Disbursement</h3>
-                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg"><Lock/> Initiate</button>
+                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
+                    <Lock /> Initiate
+                  </button>
                 </div>
               </div>
             </div>
 
             <div className="flex justify-around items-center">
-              <button className="flex items-center gap-x-4 py-2 px-4 rounded-lg text-white bg-red-500"><TriangleAlert/> Override Eligibility Decision</button>
-              <button className="flex items-center gap-x-4 py-2 px-4 rounded-lg text-white bg-blue-500"><Mail/> Request Additional Information</button>
-              <button className="flex items-center gap-x-4 py-2 px-4 rounded-lg text-white bg-green-500" onClick={() => handleApprove(loan.id)}><ThumbsUp/> Approve Application</button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="flex items-center gap-x-4 py-2 px-4 rounded-lg text-white bg-red-500 hover:bg-red-600">
+                    <AlertTriangle />
+                    Override Eligibility Decision
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Override Eligibility Decision</DialogTitle>
+                    <DialogDescription>
+                      Are you sure you want to override the eligibility
+                      decision?
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid items-center gap-4">
+                      <Label htmlFor="name">
+                        Provide a reason for overriding the eligibility decision
+                      </Label>
+                      <Textarea
+                        placeholder="Enter your reason here"
+                        className="col-span-3"
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button type="submit" className="bg-blue-500 text-white hover:bg-blue-700">Submit Eligibility Decision</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+              <button className="flex items-center gap-x-4 py-2 px-4 rounded-lg text-white bg-blue-500">
+                <Mail /> Request Additional Information
+              </button>
+              <button
+                className="flex items-center gap-x-4 py-2 px-4 rounded-lg text-white bg-green-500"
+                onClick={() => handleApprove(loan.id)}
+              >
+                <ThumbsUp /> Approve Application
+              </button>
             </div>
           </div>
         );
