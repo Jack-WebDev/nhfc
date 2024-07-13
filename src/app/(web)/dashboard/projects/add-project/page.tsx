@@ -1,6 +1,8 @@
 "use client";
 
 import axios, { AxiosError } from "axios";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type ProjectProps = {
@@ -53,6 +55,7 @@ export default function AddProject() {
     sportsField: "",
     implementationPartners: "",
   });
+  const router = useRouter();
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -66,6 +69,7 @@ export default function AddProject() {
       const res = await axios.post("/api/projects", 
         formData,
       );
+      router.push("/frontend/projects");
       console.log(res);
     } catch (error) {
       console.log(error as AxiosError);
@@ -73,7 +77,8 @@ export default function AddProject() {
   };
   return (
     <div>
-      <h1 className="text-3xl text-blue-500 font-medium">Add New Project</h1>
+      <ArrowLeft onClick={() => router.back()} className="cursor-pointer" />
+      <h1 className="text-3xl text-blue-500 font-medium text-center my-8">Add New Project</h1>
       <form className="bg-white rounded-xl p-4 grid justify-items-center w-[70%] mx-auto">
         <div className="flex items-center justify-between w-full gap-x-12">
           <div className="grid gap-y-2 w-full">

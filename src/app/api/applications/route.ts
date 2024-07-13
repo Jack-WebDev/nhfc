@@ -25,8 +25,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
 
     const data = await req.json();
-    const {nameOfCompany, fullName, email, phone, address, city, province, postalCode,loanAmount,loanType,country, rate, docs, applicantType,investmentType, projectName,  idNumber} = data;
-    console.log(nameOfCompany, fullName, email, phone, address, city, province, postalCode, loanAmount,loanType,country, rate, docs, applicantType,investmentType, projectName,  idNumber)
+    const {nameOfCompany, fullName, email, phone, address, city, province, postalCode,loanAmount,loanType,applicationType,country, rate, docs, applicantType,investmentType, projectName,  idNumber} = data;
+    console.log(nameOfCompany, fullName, email, phone, address, city, province,applicationType, postalCode, loanAmount,loanType,country, rate, docs, applicantType,investmentType, projectName,  idNumber)
     const id = generateUniqueId();
 
     const applicationData = await db.applications.create({
@@ -36,6 +36,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         ContactPerson: fullName,
         Email: email,
         PhoneNumber: phone,
+        ApplicationType: applicationType,
         Address: address,
         City: city,
         Rate: rate,
