@@ -1,5 +1,6 @@
 const PrismaClient = require("@prisma/client").PrismaClient;
-const { faker } = require('@faker-js/faker');
+const { faker } = require("@faker-js/faker");
+const bcrypt = require("bcrypt");
 
 const prisma = new PrismaClient();
 

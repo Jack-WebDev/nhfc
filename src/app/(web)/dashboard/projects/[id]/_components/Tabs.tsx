@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export function TabsComponent() {
   return (
     <Tabs defaultValue="deliverables">
-      <TabsList className="flex items-center justify-between py-4">
+      <TabsList className="flex items-center justify-between py-4 bg-transparent">
         <TabsTrigger value="deliverables">
           Deliverables / Outputs / Outcomes
         </TabsTrigger>
@@ -43,9 +43,7 @@ export function TabsComponent() {
               <li>1,500+ permanent jobs post-completion</li>
             </ul>
           </CardContent>
-          <CardFooter>
-            <Button>Save changes</Button>
-          </CardFooter>
+ 
         </Card>
       </TabsContent>
       <TabsContent value="implement">

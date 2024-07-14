@@ -7,6 +7,7 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  FileText,
 } from "lucide-react";
 
 import {
@@ -49,11 +50,13 @@ import {
 } from "@/components/ui/table";
 import { Plus } from "lucide-react";
 import {
+  Badge,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  PageHeader,
 } from "@/components";
 import axios from "axios";
 import ViewApplication from "../_components/ViewApplication";
@@ -248,10 +251,32 @@ export default function Applications() {
     {
       accessorKey: "LoanStatus",
       header: "Status",
-      cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("LoanStatus")}</div>
-      ),
+      cell: ({ row }) => {
+        const loanStatus: string = row.getValue("LoanStatus");
+        let variant
+
+        switch (loanStatus) {
+          case "Pending":
+            variant = "yellow";
+            break;
+          case "Approved":
+            variant = "green";
+            break;
+          case "Rejected":
+            variant = "red";
+            break;
+          default:
+            variant = "yelllow";
+        }
+
+        return (
+          <div className="capitalize">
+            <Badge className={`bg-${variant}-500 text-white`}>{loanStatus}</Badge>
+          </div>
+        );
+      },
     },
+
 
     {
       id: "actions",
@@ -309,9 +334,10 @@ export default function Applications() {
   return (
     <>
     <div className="w-full">
-      <h1 className="text-3xl font-semibold">Loan Applications</h1>
+      <PageHeader Icon={FileText} title="Applications"/>
+      {/* <h1 className="text-3xl font-semibold">Loan Applications</h1> */}
       <div className="flex justify-between items-baseline mb-8">
-        <h2>Applications List</h2>
+        {/* <h2>Applications List</h2> */}
 
       </div>
       <div className="rounded-xl border">

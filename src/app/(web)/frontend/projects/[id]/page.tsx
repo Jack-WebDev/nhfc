@@ -68,43 +68,47 @@ export default function ViewProject() {
               atque praesentium officia dolores voluptatibus! Doloremque, quia.
             </p>
 
-            <div className="cards mb-12">
-              <p className="text-gray-500">
-                Project Code <span>{project.projectCode}</span>
+            <div className="cards grid grid-cols-2 gap-8 mb-12">
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                Project Code: <span className="text-black">{project.projectCode}</span>
               </p>
-              <p className="text-gray-500">
-                {" "}
-                Municipality <span>{project.municipality}</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                Municipality: <span  className="text-black">{project.municipality}</span>
               </p>
-              <p className="text-gray-500">
-                Ward <span>{project.ward}</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                Ward: <span className="text-black">{project.ward}</span>
               </p>
-              <p className="text-gray-500">
-                ERF Number <span>ERF get5234</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                ERF Number: <span className="text-black">ERF get5234</span>
               </p>
-              <p className="text-gray-500">
-                Start Date <span>2023-07-27</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                Start Date: <span className="text-black">2023-07-27</span>
               </p>
-              <p className="text-gray-500">
-                End Date <span>2023-07-27</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                End Date: <span className="text-black">2023-07-27</span>
               </p>
-              <p className="text-gray-500">
-                Project Owner <span>{project.projectOwner}</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                Project Owner: <span className="text-black">{project.projectOwner}</span>
               </p>
-              <p className="text-gray-500">
-                Developer <span>{project.developer}</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                Developer: <span className="text-black">{project.developer}</span>
               </p>
-              <p className="text-gray-500">
-                Project Liason <span>{project.projectLiason}</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                Project Liason: <span className="text-black">{project.projectLiason}</span>
               </p>
-              <p className="text-gray-500">
-                Jobs Created <span>37000</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                Jobs Created: <span className="text-black">37000</span>
               </p>
-              <p className="text-gray-500">
-                People Trained <span>200</span>
+              <p className="bg-gray-100 text-gray-600 py-2 px-4 rounded-xl">
+                People Trained: <span className="text-black">200</span>
               </p>
-              <ProgressBar />
             </div>
+              <ProgressBar />
+              <div className="location my-12">
+                <h2 className="text-3xl font-semibold my-8">Project Location</h2>
+                <p>Address: {project.address}</p>
+                <p>GPS Coordinates: {project.gpscoordinates}</p>
+              </div>
             <TabsComponent />
           </div>
         </div>

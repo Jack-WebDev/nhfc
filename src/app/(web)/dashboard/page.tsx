@@ -5,6 +5,8 @@ import db from "@/utils/connect";
 import { PieChartComponent } from "./_components/PieChart";
 import { LineChartComponent } from "./_components/LineChart";
 import { FinanceSolutionsChartComponent } from "./_components/FinanceSolutionsChart";
+import { LayoutTemplateIcon } from "lucide-react";
+import { PageHeader } from "@/components";
 
 const Page = async () => {
   const totalApplications = await db.applications.count();
@@ -27,8 +29,9 @@ const Page = async () => {
   return (
     <div>
       <>
-        <h2 className="text-3xl font-semibold my-12">Dashboard Overview</h2>
-        <div className="grid grid-cols-4 grid-rows-2 gap-8">
+      <PageHeader Icon={LayoutTemplateIcon} title="Dashboard Overview"/>
+        {/* <h2 className="text-3xl font-semibold my-12">Dashboard Overview</h2> */}
+        <div className="grid grid-cols-4 grid-rows-2 gap-8 mt-12">
           <DashboardCard
             total={totalApplications}
             title="Total Applications"
