@@ -25,6 +25,7 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  FileText,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -55,6 +56,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  PageHeader,
 } from "@/components";
 import axios from "axios";
 
@@ -306,9 +308,10 @@ export default function Applications() {
   return (
     <>
       <div className="w-full">
-        <h1 className="text-3xl font-semibold">My Applications</h1>
+        {/* <h1 className="text-3xl font-semibold">My Applications</h1> */}
         <div className="flex justify-between items-baseline mb-8">
-          <h2>Applications List</h2>
+    <PageHeader Icon={FileText} title="My Applications"/>
+          {/* <h2>Applications List</h2> */}
           <button
             className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg"
             onClick={() => router.push("/frontend/apply")}

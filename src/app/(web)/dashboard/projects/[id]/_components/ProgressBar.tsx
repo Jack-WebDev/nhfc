@@ -18,7 +18,7 @@ export function ProgressBar() {
     <div className="grid gap-y-8">
 
     <div>
-    <Progress value={progress} className="w-[60%]"  />
+    <Progress  value={progress} className="w-[60%]"  />
     <span>{progress}% Complete</span>
     </div>
     <Button className="bg-blue-700 text-white grid w-fit">Download Project Brief</Button>

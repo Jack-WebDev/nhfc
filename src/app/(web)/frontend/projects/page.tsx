@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, Label } from "@/components";
+import { Button, Input, Label, PageHeader } from "@/components";
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import axios from "axios";
+import { ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -54,13 +55,15 @@ export default function Projects() {
 
   return (
     <>
+    <PageHeader Icon={ShoppingBag} title="Projects" />
+    <div className="grid grid-cols-3">
+
       {projects.map((project) => (
-        <Card className="w-[350px]" key={project.id}>
+        <Card className="w-[350px] mt-12" key={project.id}>
           <CardHeader>
             <CardTitle>{project.projectName}</CardTitle>
             <CardDescription>
-              A mixed-use development providing over 10,000 housing units in
-              Johannesburg.
+              {project.deliverablesSummary}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -74,12 +77,13 @@ export default function Projects() {
             </ul>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="default" className="bg-blue-500 text-white " onClick={() => router.push(`/frontend/projects/${project.id}`)}>
+            <Button variant="default" className="bg-blue-500 text-white hover:bg-blue-700" onClick={() => router.push(`/frontend/projects/${project.id}`)}>
               View Details
             </Button>
           </CardFooter>
         </Card>
       ))}
+    </div>
     </>
   );
 }

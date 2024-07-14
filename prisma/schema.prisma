@@ -140,12 +140,12 @@ model Projects {
   materialSupplier       String
   contractor             String
   deliverablesSummary    String
-  skilledWorkers         String
-  unskilledWorkers       String
-  schools                String
-  clinics                String
-  communityHalls         String
-  sportsField            String
+  skilledWorkers         Int
+  unskilledWorkers       Int
+  schools                Int
+  clinics                Int
+  communityHalls         Int
+  sportsField            Int
   implementationPartners String
 }
 

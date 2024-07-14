@@ -43,9 +43,6 @@ export function TabsComponent() {
               <li>1,500+ permanent jobs post-completion</li>
             </ul>
           </CardContent>
-          <CardFooter>
-            <Button>Save changes</Button>
-          </CardFooter>
         </Card>
       </TabsContent>
       <TabsContent value="implement">
