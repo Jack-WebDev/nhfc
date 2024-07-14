@@ -161,7 +161,7 @@ export default function Timesheet() {
 
   const [pagination, setPagination] = useState({
     pageIndex: 1,
-    pageSize: 10,
+    pageSize: 6,
   });
 
   const table = useReactTable({
@@ -188,7 +188,7 @@ export default function Timesheet() {
   return (
     <>
     <PageHeader Icon={FileText} title="Projects"/>
-      <div className="timesheets-container w-[80%] mx-auto">
+      <div className="timesheets-container w-[80%] mx-auto mt-12">
         <div className="w-full p-4 rounded-xl border-2 border-primary">
           <div className="flex items-center justify-between py-4">
             <Input
@@ -266,7 +266,7 @@ export default function Timesheet() {
           <div className="flex items-center gap-4">
             <Button
               variant={"default"}
-              className="border rounded p-1"
+              className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
               onClick={() => table.firstPage()}
               disabled={!table.getCanPreviousPage()}
             >
@@ -274,7 +274,7 @@ export default function Timesheet() {
             </Button>
             <Button
               variant={"default"}
-              className="border rounded p-1"
+              className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
@@ -282,7 +282,7 @@ export default function Timesheet() {
             </Button>
             <Button
               variant={"default"}
-              className="border rounded p-1"
+              className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
@@ -290,7 +290,7 @@ export default function Timesheet() {
             </Button>
             <Button
               variant={"default"}
-              className="border rounded p-1"
+              className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
               onClick={() => table.lastPage()}
               disabled={!table.getCanNextPage()}
             >

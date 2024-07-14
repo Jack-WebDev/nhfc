@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/db/seed.js", "src/app/(web)/dashboard/accidentReports/vehicleTypes", "src/modules/accidentReports/columns", "src/db/users.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/db/seeds/users.js", "src/app/(web)/dashboard/accidentReports/vehicleTypes", "src/modules/accidentReports/columns", "src/db/users.ts"],
   "exclude": ["node_modules"]
 }

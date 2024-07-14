@@ -1,23 +1,18 @@
-# Use postgres/example user/password credentials
-version: '3.9'
-
 services:
 
   db:
-    container_name: postgresDbBMM
-    image: postgres
+    container_name: NHFC
+    image: postgres:15-alpine
     ports:
-      - "5432:5432"
+      - "5433:5432"
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgresbmm
-
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+      POSTGRES_DB: nhfcc
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
 

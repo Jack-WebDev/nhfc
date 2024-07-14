@@ -19,24 +19,19 @@ export async function GET(
   }
 }
 
+
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    await req.json();
+    const project = await db.projects.delete({
+      where: {
+        id: params.id,
+      },
+    });
 
-    try {
-      await db.projects.delete({
-        where: {
-          id: params.id,
-        },
-      });
-    } catch (error) {
-      console.error("Error inserting data:", error);
-    }
-
-    return NextResponse.json("Yes", { status: 201 });
+    return NextResponse.json(project, { status: 201 });
   } catch (error) {
     return NextResponse.json(error, { status: 500 });
   }
