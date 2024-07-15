@@ -173,6 +173,20 @@ export default function Applications() {
     );
   };
 
+  const formatAmount = (amount: string) => {
+    // Convert the amount to a number and ensure it has two decimal places
+    let number = parseFloat(amount.replace(/[R,]/g, '')).toFixed(2);
+  
+    // Split the number into the integer part and the decimal part
+    let [integerPart, decimalPart] = number.split('.');
+  
+    // Add commas as thousand separators
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  
+    // Combine the integer part and decimal part
+    return 'R' + integerPart + '.' + decimalPart;
+  }
+
   const columns: ColumnDef<LoanApplication>[] = [
     {
       accessorKey: "LoanType",
@@ -210,9 +224,9 @@ export default function Applications() {
       accessorKey: "LoanAmount",
       header: () => <div>Application Amount</div>,
       cell: ({ row }) => {
-        const loanAmount = row.getValue("LoanAmount");
+        const loanAmount:string = row.getValue("LoanAmount");
+        return <div className="font-medium">{`${formatAmount(loanAmount)}`}</div>;
 
-        return <div className="font-medium">{`R ${loanAmount}`}</div>;
       },
     },
     {

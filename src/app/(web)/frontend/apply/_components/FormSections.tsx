@@ -37,7 +37,7 @@ export default function FormSections({
             name={field.name}
             value={values[field.name] || ''}
             onChange={handleChange}
-            className="border border-gray-200 rounded-lg p-2 w-full m"
+            className="border border-gray-200 rounded-lg p-2 w-full"
           />
         )}
       </div>
