@@ -23,35 +23,26 @@ export default function FormUse({ selectedOption }: TitleProp) {
     {
       title: "Social Housing Finance",
       fields: [
-        {
-          name: "applicantType",
-          label: "Applicant Type",
-          type: "select",
-          options: ["Type of Applicant", "Organization/Business", "Individual"],
-        },
-        {
-          name: "applicationType",
-          label: "Application Type",
-          type: "select",
-          options: ["Type of Application", "Loan", "Investment"],
-        },
+        { name: "fullName", label: "Contact Person", type: "text" },
+
         { name: "idNumber", label: "Id Number", type: "text" },
+        { name: "email", label: "Email", type: "email" },
+        { name: "phone", label: "Phone", type: "tel" },
+        { name: "address", label: "Address of Development", type: "textarea" },
+        { name: "city", label: "City", type: "text" },
+        { name: "postalCode", label: "Postal Code", type: "text" },
         {
-          name: "projectName",
-          label: "Project Name",
+          name: "country",
+          label: "Country",
           type: "select",
           options: [
-            "Select Project",
-            "Fleurhof Integrated Housing Development",
-            "Belhar Social Housing Project",
-            "Westgate Social Housing Project",
-            "Devland Gardens",
-            "Southernwood Square",
-            "Thembelihle Village",
+            "Select Country",
+            "South Africa",
+            "Nigeria",
+            "Ghana",
+            "Botswana",
           ],
         },
-        { name: "nameOfCompany", label: "Name of Company", type: "text" },
-        { name: "fullName", label: "Contact Person", type: "text" },
         {
           name: "province",
           label: "Province",
@@ -72,13 +63,41 @@ export default function FormUse({ selectedOption }: TitleProp) {
           ],
         },
         {
+          name: "applicantType",
+          label: "Applicant Type",
+          type: "select",
+          options: ["Type of Applicant", "Organization/Business", "Individual"],
+        },
+        {
+          name: "applicationType",
+          label: "Application Type",
+          type: "select",
+          options: ["Type of Application", "Loan", "Investment"],
+        },
+        {
+          name: "projectName",
+          label: "Project Name",
+          type: "select",
+          options: [
+            "Select Project",
+            "Fleurhof Integrated Housing Development",
+            "Belhar Social Housing Project",
+            "Westgate Social Housing Project",
+            "Devland Gardens",
+            "Southernwood Square",
+            "Thembelihle Village",
+          ],
+        },
+        { name: "nameOfCompany", label: "Name of Company", type: "text" },
+
+        { name: "loanAmount", label: "Investment Amount", type: "text" },
+        {
           name: "investmentType",
           label: "Investment Type",
           type: "select",
           options: ["Select Investment Type", "Quasi Equity", "Equity", "Loan"],
         },
 
-        { name: "loanAmount", label: "Investment Amount", type: "text" },
         {
           name: "rate",
           label: "Rate",
@@ -96,24 +115,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
             "8.9%",
           ],
         },
-        { name: "email", label: "Email", type: "email" },
-        { name: "phone", label: "Phone", type: "tel" },
-        { name: "address", label: "Address of Development", type: "textarea" },
-        { name: "city", label: "City", type: "text" },
-        { name: "postalCode", label: "Postal Code", type: "text" },
-        {
-          name: "country",
-          label: "Country",
-          type: "select",
-          options: [
-            "Select Country",
-            "South Africa",
-            "Nigeria",
-            "Ghana",
-            "Botswana",
-          ],
-        },
-        { name: "docs", label: "Attach Documents", type: "file" },
+
+        // { name: "docs", label: "Attach Documents", type: "file" },
       ],
     },
     {
@@ -632,6 +635,32 @@ export default function FormUse({ selectedOption }: TitleProp) {
         values={formData}
         handleChange={handleChange}
       />
+
+      {formData.investmentType === "Quasi Equity" && (
+        <label className="grid">
+          <span className="text-gray-700">Equity Amount:</span>
+          <input
+            type="text"
+            name="equityAmount"
+            className="border border-gray-200 rounded-lg p-2 w-1/2"
+            value={formData.equityAmount || ""}
+            onChange={handleChange}
+            placeholder="Enter Equity Amount"
+          />
+        </label>
+      )}
+
+      <label htmlFor="docs" className="block">
+        <span className="text-gray-700">Attach Documents:</span>
+        <input
+          type="file"
+          name="docs"
+          className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+          value={formData.docs || ""}
+          onChange={handleChange}
+          placeholder="Enter Equity Amount"
+        />
+      </label>
 
       <button
         onClick={handleSubmit}
