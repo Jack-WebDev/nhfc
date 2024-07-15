@@ -1135,7 +1135,7 @@ export default function ApplicationProcess() {
                         </div>
                       )}
                       {currentStep === 7 && (
-                        <div className="p-6 bg-white rounded-lg shadow-md">
+                        <div className="grid p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
                             Previous Employment
                           </h2>
@@ -1306,14 +1306,14 @@ export default function ApplicationProcess() {
                               />
                             </label>
 
-                            <label className="block col-span-2">
+                            <label className="flex gap-x-4">
                               <span className="text-gray-700">
                                 Do you agree to the Terms and Conditions?
                               </span>
                               <input
                                 type="checkbox"
                                 name="termsAgreement"
-                                className="mt-1 block rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            
                                 checked={
                                   formData.previousEmploymentData
                                     .termsAgreement === "yes"
@@ -1331,14 +1331,14 @@ export default function ApplicationProcess() {
                           </div>
                           <button
                             type="submit"
-                            className="py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
+                            className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
                           >
                             Submit
                           </button>
                         </div>
                       )}
 
-                      <div>
+                      <div className="flex gap-x-4 mt-4">
                         {currentStep > 1 && (
                           <button
                             className="py-2 px-6 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition ease-in-out duration-200"

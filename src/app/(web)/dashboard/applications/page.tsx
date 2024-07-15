@@ -241,7 +241,7 @@ export default function Applications() {
 
     {
       accessorKey: "LoanAmount",
-      header: () => <div>Loan Amount</div>,
+      header: () => <div>Application Amount</div>,
       cell: ({ row }) => {
         const loanAmount = row.getValue("LoanAmount");
 
