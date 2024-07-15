@@ -17,6 +17,7 @@ import axios from "axios";
 import {
   AlertTriangle,
   ArrowLeft,
+  Ban,
   Check,
   Clock,
   FileText,
@@ -78,11 +79,58 @@ export default function ViewApplication() {
     toast.success("Application Approved Successfully");
   };
 
+  const renderEligibilityResults = (loan: LoanApplication) => {
+    if (loan.LoanStatus === "Approved") {
+      return (
+        <div className="my-8 grid gap-y-2">
+          <h3 className="font-semibold text-xl">
+            Eligibility Results
+          </h3>
+          <p className="pl-2">Checking credit score... Passed</p>
+          <p className="pl-2">Verifying income... Passed</p>
+          <p className="pl-2">Checking employment status... Passed</p>
+          <p className="pl-2">Validating identity... Passed</p>
+          <p className="pl-2">Reviewing application history... Passed</p>
+          <p className="pl-2">Overall Result: <span className="text-green-500 font-bold text-xl">Eligible</span></p>
+        </div>
+      );
+    } else if (loan.LoanStatus === "Rejected") {
+      return (
+        <div className="my-8 grid gap-y-2">
+          <h3 className="font-semibold text-xl">
+            Eligibility Results
+          </h3>
+          <p className="pl-2">Checking credit score... Passed</p>
+          <p className="pl-2">Verifying income... Passed</p>
+          <p className="pl-2">Checking employment status... Failed</p>
+          <p className="pl-2">Validating identity... Passed</p>
+          <p className="pl-2">Reviewing application history... Passed</p>
+          <p className="pl-2">Overall Result: <span className="text-red-500 font-bold text-xl">Not Eligible</span></p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
       <ArrowLeft onClick={() => router.back()} className=" cursor-pointer" />
       {loanData?.map((loan) => {
         const fomattedDate = loan.createdAt.split("T")[0];
+        const buttonContent =
+          loan.LoanStatus === "Approved" ? (
+            <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg">
+              <Check /> Completed
+            </button>
+          ) : loan.LoanStatus === "Rejected" ? (
+            <button className="flex items-center gap-x-2 bg-red-500 text-white py-2 px-4 rounded-lg">
+              <Ban /> Rejected
+            </button>
+          ) : (
+            <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
+              <Play /> Initiate
+            </button>
+          );
         return (
           <div
             key={loan.id}
@@ -189,13 +237,13 @@ export default function ViewApplication() {
                 <hr />
               </div>
             </div>
-
             <div>
               <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl">
                 <Clock /> Eligibility Check
               </h2>
               <hr />
-              <EligibilityCheck />
+              {loan.LoanStatus === "Pending" && <EligibilityCheck />}
+              {loan.LoanStatus !== "Pending" && renderEligibilityResults(loan)}
             </div>
 
             <div>
@@ -208,31 +256,25 @@ export default function ViewApplication() {
                   <h3>Initial Review</h3>
                   <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg">
                     <Check /> Completed
-                  </button>
+                  </button>{" "}
                 </div>
-                <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
-                  <h3>Detailed Assesment</h3>
-                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
-                    <Play /> Initiate
-                  </button>
+                <div className="border-l-4 border-blue-700 bg-blue-200 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
+                  <h3>Detailed Assessment</h3>
+                  <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg">
+                    <Check /> Completed
+                  </button>{" "}
                 </div>
-                <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
-                  <h3>Credit Committe Review</h3>
-                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
-                    <Lock /> Initiate
-                  </button>
+                <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
+                  <h3>Credit Committee Review</h3>
+                  {buttonContent}
                 </div>
-                <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
+                <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Final Decision</h3>
-                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
-                    <Lock /> Initiate
-                  </button>
+                  {buttonContent}
                 </div>
-                <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
+                <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Loan Disbursement</h3>
-                  <button className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-4 rounded-lg">
-                    <Lock /> Initiate
-                  </button>
+                  {buttonContent}
                 </div>
               </div>
             </div>
@@ -265,7 +307,12 @@ export default function ViewApplication() {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button type="submit" className="bg-blue-500 text-white hover:bg-blue-700">Submit Eligibility Decision</Button>
+                    <Button
+                      type="submit"
+                      className="bg-blue-500 text-white hover:bg-blue-700"
+                    >
+                      Submit Eligibility Decision
+                    </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
