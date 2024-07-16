@@ -17,6 +17,7 @@ type TitleProp = {
 export default function FormUse({ selectedOption }: TitleProp) {
   const [formData, setFormData] = useState<FormData>({});
   const [currentSection, setCurrentSection] = useState<number>(0);
+  
   const router = useRouter();
 
   const sections = [
@@ -604,6 +605,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
   const handleChange = (e: any) => {
     const { name, value, type, files } = e.target;
 
+
     if (type === "file") {
       setFormData((prevData) => ({ ...prevData, [name]: files?.[0].name }));
     } else {
@@ -637,7 +639,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
       />
 
       {formData.investmentType === "Quasi Equity" && (
-        <label className="grid">
+        <label className="grid my-8">
           <span className="text-gray-700">Equity Amount:</span>
           <input
             type="text"
@@ -650,15 +652,15 @@ export default function FormUse({ selectedOption }: TitleProp) {
         </label>
       )}
 
-      <label htmlFor="docs" className="block">
-        <span className="text-gray-700">Attach Documents:</span>
+      <label htmlFor="docs" className="grid mt-8">
+        <span className="text-red-600 text-lg font-semibold">Attach All Required Documents (see above):</span>
         <input
           type="file"
           name="docs"
           className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-          value={formData.docs || ""}
           onChange={handleChange}
           placeholder="Enter Equity Amount"
+          multiple
         />
       </label>
 
