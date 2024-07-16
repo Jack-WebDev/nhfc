@@ -174,6 +174,9 @@ export default function Applications() {
   };
 
   function formatAmount(amount:string) {
+    if(amount === ""){
+      return "0.00"
+    }
     // Remove any spaces from the input amount and ensure it has two decimal places
     let number = parseFloat(amount.replace(/[R,\s]/g, '')).toFixed(2);
   

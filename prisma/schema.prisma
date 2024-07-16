@@ -99,6 +99,7 @@ model FirstHomeLoan {
   femaleChildren18To24               String
   maleChildren18To24                 String
   otherDependents                    String
+  employmentStatus                   String?
   currentCompanyName                 String
   currentCompanyAddress              String
   currentCompanySuburb               String

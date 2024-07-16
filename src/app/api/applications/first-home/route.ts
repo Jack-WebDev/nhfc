@@ -44,6 +44,7 @@ type DependentsData = {
   otherDependents: string;
 };
 
+
 type CurrentEmployerData = {
   companyName: string;
   address: string;
@@ -81,6 +82,7 @@ type FormData = {
   supportData: SupportData;
   qualificationData: QualificationData;
   dependentsData: DependentsData;
+  employmentStatus: string;
   currentEmployerData: CurrentEmployerData;
   previousEmploymentData: PreviousEmploymentData;
 };
@@ -111,24 +113,25 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const id = generateUniqueId();
     // Access the data here
     const {
-      loanType,
       personalData,
       addressData,
       supportData,
       qualificationData,
       dependentsData,
+      employmentStatus,
       currentEmployerData,
       previousEmploymentData,
     } = data;
     console.log(
-      loanType,
       personalData,
       addressData,
       supportData,
       qualificationData,
       dependentsData,
+      employmentStatus,
       currentEmployerData,
       previousEmploymentData
+      
     );
 
     const applicationData = await db.firstHomeLoan.create({
@@ -164,6 +167,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         femaleChildren18To24: dependentsData.femaleChildren18To24,
         maleChildren18To24: dependentsData.maleChildren18To24,
         otherDependents: dependentsData.otherDependents,
+        employmentStatus: employmentStatus,
         currentCompanyName: currentEmployerData.companyName,
         currentCompanyAddress: currentEmployerData.address,
         currentCompanySuburb: currentEmployerData.suburb,
