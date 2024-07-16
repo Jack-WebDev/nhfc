@@ -446,7 +446,36 @@ export default function ApplicationProcess() {
                     </div>
                   )}
                   {selectedOption === "First Home Finance" && (
-                    <div className="grid">
+                    <>
+                      <div className="grid">
+
+
+                        <Criteria
+                          items={[
+                            "South African citizen with a valid ID; or permanent resident with a valid permit;",
+                            "Over 18 years and competent to legally contract;",
+                            "Have never benefited from a Government Housing Subsidy Scheme (GEHS) before;",
+                            "Have never owned a home as checked from the Deeds Register;",
+                            "Have an Approved of in Principle Approval of a home loan from a NCR registered bank or non-bank lenders or other Policy approved partners such as community based organisations; and",
+                            "Total household income must be within the income range of R3 501 up to R22 000 per month.",
+                          ]}
+                          documents={[
+                            "Smart Card or a bar-coded identity document of every adult member of the household.",
+                            "Birth certificates, bearing the thirteen-digit identity number, for every child member of the household that does not have a bar-coded identity document.",
+                            "Proof of South African citizenship.",
+                            "Marriage certificate for any union solemnised in terms of civil law.",
+                            "Divorce settlement agreement, to prove .custodianship.",
+                            "Court order or order issued by the Commissioner of Child Welfare, to prove guardianship; and,",
+                            "Proof of sources of income.",
+                            "Permission-To-Occupy in the case of applicants in rural areas.",
+                            "Affidavit for any union solemnised in terms of customary law.",
+                          ]}
+                          itemsPerGroup={2}
+                        />
+                        <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                          Apply Here:
+                        </h2>
+                      </div>
                       {currentStep === 1 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
@@ -461,7 +490,7 @@ export default function ApplicationProcess() {
                                 type="text"
                                 name="idNumber"
                                 placeholder="Enter your RSA ID Number"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
                                 value={formData.personalData.idNumber}
                                 onChange={handleChange}
                               />
@@ -471,10 +500,10 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="firstName"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                placeholder="Enter your First Name"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
                                 value={formData.personalData.firstName}
                                 onChange={handleChange}
-                                placeholder="Enter your First Name"
                               />
                             </label>
                             <label className="block">
@@ -482,10 +511,10 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="lastName"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                placeholder="Enter your Last Name"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
                                 value={formData.personalData.lastName}
                                 onChange={handleChange}
-                                placeholder="Enter your Last Name"
                               />
                             </label>
                             <label className="block">
@@ -494,7 +523,7 @@ export default function ApplicationProcess() {
                                 type="email"
                                 name="email"
                                 placeholder="Enter your Email"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
                                 value={formData.personalData.email}
                                 onChange={handleChange}
                               />
@@ -507,7 +536,7 @@ export default function ApplicationProcess() {
                                 type="text"
                                 name="phoneNumber"
                                 placeholder="Enter your Phone Number"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
                                 value={formData.personalData.phoneNumber}
                                 onChange={handleChange}
                               />
@@ -518,9 +547,11 @@ export default function ApplicationProcess() {
                                 name="gender"
                                 value={formData.personalData.gender}
                                 onChange={handleChange}
-                                className="border border-gray-500 rounded-lg p-1 bg-white"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                               >
-                                <option value="">Select Gender</option>
+                                <option value="" disabled>
+                                  Select Gender
+                                </option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Non-Binary">Non-Binary</option>
@@ -528,10 +559,9 @@ export default function ApplicationProcess() {
                             </label>
                             <label className="block">
                               <span className="text-gray-700">Race:</span>
-
                               <select
                                 name="race"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.personalData.race}
                                 onChange={handleChange}
                               >
@@ -559,7 +589,7 @@ export default function ApplicationProcess() {
                               <span className="text-gray-700">Address:</span>
                               <textarea
                                 name="address"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.addressData.address}
                                 onChange={handleChange}
                                 placeholder="Enter your Address"
@@ -570,7 +600,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="suburb"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.addressData.suburb}
                                 placeholder="Enter your Suburb"
                                 onChange={handleChange}
@@ -582,7 +612,7 @@ export default function ApplicationProcess() {
                                 type="text"
                                 name="city"
                                 placeholder="Enter your City"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.addressData.city}
                                 onChange={handleChange}
                               />
@@ -592,7 +622,7 @@ export default function ApplicationProcess() {
 
                               <select
                                 name="province"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.addressData.province}
                                 onChange={handleChange}
                               >
@@ -626,7 +656,7 @@ export default function ApplicationProcess() {
                                 type="text"
                                 name="postalCode"
                                 placeholder="Enter your Postal Code"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.addressData.postalCode}
                                 onChange={handleChange}
                               />
@@ -636,15 +666,17 @@ export default function ApplicationProcess() {
                       )}
 
                       {currentStep === 3 && (
-                        <div className="grid grid-cols-2 gap-y-2">
-                          <h2>First Home Finance, Project and Typology</h2>
+                        <div className="p-6 bg-white rounded-lg shadow-md">
+                          <h2 className="text-2xl font-semibold mb-6">First Home Finance, Project and Typology</h2>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
                           <label>
                             First Home Finance
                             <select
                               name="supportType"
                               value={formData.supportData.supportType}
                               onChange={handleChange}
-                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                             >
                               <option value="">
                                 Select First Home Finance Type
@@ -668,7 +700,7 @@ export default function ApplicationProcess() {
                               name="province"
                               value={formData.supportData.province}
                               onChange={handleChange}
-                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                             >
                               <option value="">Select Province</option>
                               <option value="easternCape">Eastern Cape</option>
@@ -692,7 +724,7 @@ export default function ApplicationProcess() {
                               name="municipalityMetro"
                               value={formData.supportData.municipalityMetro}
                               onChange={handleChange}
-                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                             >
                               <option value="">
                                 Select Municipality/ Metro
@@ -740,7 +772,7 @@ export default function ApplicationProcess() {
                               name="projectName"
                               value={formData.supportData.projectName}
                               onChange={handleChange}
-                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                             >
                               <option value="">Select Project</option>
                               <option value="fleurhofIntegratedHousingDevelopment">
@@ -769,10 +801,9 @@ export default function ApplicationProcess() {
 
                             <select
                               name="product"
-                              className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                               value={formData.supportData.product}
                               onChange={handleChange}
-                              
                             >
                               <option value="" disabled>
                                 Select Typology
@@ -788,6 +819,7 @@ export default function ApplicationProcess() {
                               </option>
                             </select>
                           </label>
+                          </div>
                         </div>
                       )}
 
@@ -803,7 +835,7 @@ export default function ApplicationProcess() {
                               </span>
                               <select
                                 name="isCitizenOrResident"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.qualificationData.isCitizenOrResident
                                 }
@@ -819,7 +851,7 @@ export default function ApplicationProcess() {
                               </span>
                               <select
                                 name="isOver18"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.qualificationData.isOver18}
                                 onChange={handleChange}
                               >
@@ -833,7 +865,7 @@ export default function ApplicationProcess() {
                               </span>
                               <select
                                 name="isFirstTimeBuyer"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.qualificationData.isFirstTimeBuyer
                                 }
@@ -849,7 +881,7 @@ export default function ApplicationProcess() {
                               </span>
                               <select
                                 name="hasDependents"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.qualificationData.hasDependents}
                                 onChange={handleChange}
                               >
@@ -864,7 +896,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="monthlyIncomeApplicant"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.qualificationData
                                     .monthlyIncomeApplicant
@@ -879,7 +911,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="monthlyIncomeSpouse"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.qualificationData.monthlyIncomeSpouse
                                 }
@@ -894,7 +926,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="combinedMonthlyIncome"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.qualificationData
                                     .combinedMonthlyIncome
@@ -919,7 +951,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="femaleChildrenUnder18"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.dependentsData.femaleChildrenUnder18
                                 }
@@ -933,7 +965,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="maleChildrenUnder18"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.dependentsData.maleChildrenUnder18
                                 }
@@ -947,7 +979,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="femaleChildren18To24"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.dependentsData.femaleChildren18To24
                                 }
@@ -961,7 +993,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="maleChildren18To24"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.dependentsData.maleChildren18To24
                                 }
@@ -975,7 +1007,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="otherDependents"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.dependentsData.otherDependents}
                                 onChange={handleChange}
                               />
@@ -996,7 +1028,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="companyName"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.currentEmployerData.companyName}
                                 onChange={handleChange}
                               />
@@ -1005,7 +1037,7 @@ export default function ApplicationProcess() {
                               <span className="text-gray-700">Address:</span>
                               <textarea
                                 name="address"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.currentEmployerData.address}
                                 onChange={handleChange}
                               />
@@ -1015,7 +1047,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="suburb"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.currentEmployerData.suburb}
                                 onChange={handleChange}
                               />
@@ -1025,7 +1057,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="city"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.currentEmployerData.city}
                                 onChange={handleChange}
                               />
@@ -1035,7 +1067,7 @@ export default function ApplicationProcess() {
 
                               <select
                                 name="province"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.currentEmployerData.province}
                                 onChange={handleChange}
                               >
@@ -1068,7 +1100,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="postalCode"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.currentEmployerData.postalCode}
                                 onChange={handleChange}
                               />
@@ -1080,7 +1112,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="employmentDate"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.currentEmployerData.employmentDate
                                 }
@@ -1094,7 +1126,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="contactPersonName"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.currentEmployerData.contactPersonName
                                 }
@@ -1108,7 +1140,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="contactPersonPhone"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.currentEmployerData
                                     .contactPersonPhone
@@ -1123,7 +1155,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="contactPersonEmail"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.currentEmployerData
                                     .contactPersonEmail
@@ -1147,7 +1179,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="companyName"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.previousEmploymentData.companyName
                                 }
@@ -1158,7 +1190,7 @@ export default function ApplicationProcess() {
                               <span className="text-gray-700">Address:</span>
                               <textarea
                                 name="address"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.previousEmploymentData.address}
                                 onChange={handleChange}
                               />
@@ -1168,7 +1200,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="suburb"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.previousEmploymentData.suburb}
                                 onChange={handleChange}
                               />
@@ -1178,7 +1210,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="city"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.previousEmploymentData.city}
                                 onChange={handleChange}
                               />
@@ -1188,7 +1220,7 @@ export default function ApplicationProcess() {
 
                               <select
                                 name="province"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={formData.previousEmploymentData.province}
                                 onChange={handleChange}
                               >
@@ -1222,7 +1254,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="contactPersonName"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.previousEmploymentData
                                     .contactPersonName
@@ -1237,7 +1269,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="contactPersonPhone"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.previousEmploymentData
                                     .contactPersonPhone
@@ -1252,7 +1284,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="contactPersonEmail"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.previousEmploymentData
                                     .contactPersonEmail
@@ -1268,7 +1300,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="postalCode"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.previousEmploymentData.postalCode
                                 }
@@ -1282,7 +1314,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="employmentStartDate"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.previousEmploymentData
                                     .employmentStartDate
@@ -1297,7 +1329,7 @@ export default function ApplicationProcess() {
                               <input
                                 type="text"
                                 name="employmentEndDate"
-                                className="mt-1 block w-full rounded-md border border-gray-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                                 value={
                                   formData.previousEmploymentData
                                     .employmentEndDate
@@ -1313,7 +1345,6 @@ export default function ApplicationProcess() {
                               <input
                                 type="checkbox"
                                 name="termsAgreement"
-                            
                                 checked={
                                   formData.previousEmploymentData
                                     .termsAgreement === "yes"
@@ -1358,7 +1389,7 @@ export default function ApplicationProcess() {
                           </button>
                         )}
                       </div>
-                    </div>
+                    </>
                   )}
                 </div>
               )}

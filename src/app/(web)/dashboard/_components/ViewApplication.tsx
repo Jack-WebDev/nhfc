@@ -112,6 +112,20 @@ export default function ViewApplication() {
     return null;
   };
 
+  const formatAmount = (amount: string) => {
+    // Convert the amount to a number and ensure it has two decimal places
+    let number = parseFloat(amount.replace(/[R,]/g, '')).toFixed(2);
+  
+    // Split the number into the integer part and the decimal part
+    let [integerPart, decimalPart] = number.split('.');
+  
+    // Add commas as thousand separators
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  
+    // Combine the integer part and decimal part
+    return 'R' + integerPart + '.' + decimalPart;
+  }
+
   return (
     <>
       <ArrowLeft onClick={() => router.back()} className=" cursor-pointer" />
@@ -174,11 +188,11 @@ export default function ViewApplication() {
               </h2>
               <div className="grid gap-y-2 mt-4 px-4">
                 <p className="flex justify-between items-center">
-                  Loan Type: <span>{loan.LoanType}</span>
+                  Application Type: <span>{loan.LoanType}</span>
                 </p>
                 <hr />
                 <p className="flex justify-between items-center">
-                  Loan Amount: <span>{loan.LoanAmount}</span>
+                  Application Amount: <span>{formatAmount(loan.LoanAmount)}</span>
                 </p>
                 <hr />
                 <p className="flex justify-between items-center">
@@ -252,13 +266,13 @@ export default function ViewApplication() {
               </h2>
 
               <div className="grid gap-y-4 my-8 font-medium">
-                <div className="border-l-4 border-blue-700 bg-blue-200 p-4 rounded-lg flex items-center justify-between">
+                <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Initial Review</h3>
                   <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg">
                     <Check /> Completed
                   </button>{" "}
                 </div>
-                <div className="border-l-4 border-blue-700 bg-blue-200 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
+                <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Detailed Assessment</h3>
                   <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg">
                     <Check /> Completed

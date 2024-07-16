@@ -56,7 +56,7 @@ export default function Projects() {
   return (
     <>
     <PageHeader Icon={ShoppingBag} title="Projects" />
-    <div className="grid grid-cols-3">
+    <div className="flex flex-wrap justify-center gap-8">
 
       {projects.map((project) => (
         <Card className="w-[350px] mt-12" key={project.id}>

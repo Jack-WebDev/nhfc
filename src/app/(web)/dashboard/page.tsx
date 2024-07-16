@@ -79,11 +79,11 @@ const Page = async () => {
         </div>
       </>
       <>
-        <h2 className="text-3xl font-semibold my-12">Queries</h2>
+        <h2 className="text-3xl font-semibold my-12">Messaging Center Metrics</h2>
         <div className="grid grid-cols-4 gap-x-8">
-          <DashboardCard total={2134} title="Total Queries" />
-          <DashboardCard total={1261} title="Open Queries" />
-          <DashboardCard total={874} title="Closed Queries" />
+          <DashboardCard total={2134} title="Total Messages" />
+          <DashboardCard total={1261} title="Open Messages" />
+          <DashboardCard total={874} title="Closed Messages" />
           <DashboardCard total={"40%"} title="Turn Around Time" />
         </div>
         <div className="grid grid-cols-2 gap-8 my-12">

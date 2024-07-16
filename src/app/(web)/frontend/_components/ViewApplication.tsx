@@ -103,6 +103,20 @@ export default function ViewApplication() {
     </>
   );
 
+  const formatAmount = (amount: string) => {
+    // Convert the amount to a number and ensure it has two decimal places
+    let number = parseFloat(amount.replace(/[R,]/g, '')).toFixed(2);
+  
+    // Split the number into the integer part and the decimal part
+    let [integerPart, decimalPart] = number.split('.');
+  
+    // Add commas as thousand separators
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  
+    // Combine the integer part and decimal part
+    return 'R' + integerPart + '.' + decimalPart;
+  }
+
   const rejectedSteps = (
     <>
       <div className="flex items-center gap-4 mb-4">
@@ -234,9 +248,9 @@ export default function ViewApplication() {
             <h2>Application Details</h2>
 
             <div className="grid grid-cols-3 gap-4 my-8">
-              <p>Loan Type: {loan.LoanType}</p>
+              <p>Application Type: {loan.LoanType}</p>
               <p>Submitted Date: {fomattedDate}</p>
-              <p>Loan Amount: {loan.LoanAmount}</p>
+              <p>Application Amount: {formatAmount(loan.LoanAmount)}</p>
               <p>Contact Person: {loan.ContactPerson}</p>
               <p>Email: {loan.Email}</p>
               <p>Phone Number: {loan.PhoneNumber}</p>
