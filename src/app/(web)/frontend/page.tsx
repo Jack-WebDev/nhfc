@@ -173,9 +173,9 @@ export default function Applications() {
     );
   };
 
-  const formatAmount = (amount: string) => {
-    // Convert the amount to a number and ensure it has two decimal places
-    let number = parseFloat(amount.replace(/[R,]/g, '')).toFixed(2);
+  function formatAmount(amount:string) {
+    // Remove any spaces from the input amount and ensure it has two decimal places
+    let number = parseFloat(amount.replace(/[R,\s]/g, '')).toFixed(2);
   
     // Split the number into the integer part and the decimal part
     let [integerPart, decimalPart] = number.split('.');
@@ -225,6 +225,7 @@ export default function Applications() {
       header: () => <div>Application Amount</div>,
       cell: ({ row }) => {
         const loanAmount:string = row.getValue("LoanAmount");
+        console.log(loanAmount)
         return <div className="font-medium">{`${formatAmount(loanAmount)}`}</div>;
 
       },

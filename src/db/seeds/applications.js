@@ -85,6 +85,12 @@ async function insertData() {
     NameOfCompany: faker.company.name(),
     ContactPerson: faker.person.fullName(),
     Email: faker.internet.email(),
+    EquityAmount: faker.finance.amount({
+      min: 10000,
+      max: 1000000,
+      decimalPlaces: 0,
+      symbols: "R",
+    }),
     PhoneNumber: faker.phone.number(),
     Address: faker.location.streetAddress(),
     City: faker.location.city(),
