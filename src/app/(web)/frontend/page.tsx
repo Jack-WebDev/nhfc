@@ -173,7 +173,7 @@ export default function Applications() {
     );
   };
 
-  function formatAmount(amount) {
+  function formatAmount(amount:string) {
     // Remove any spaces from the input amount and ensure it has two decimal places
     let number = parseFloat(amount.replace(/[R,\s]/g, '')).toFixed(2);
   
