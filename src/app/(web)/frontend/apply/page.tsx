@@ -17,10 +17,14 @@ import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { formatAmount, isNumeric } from "@/utils/amountFormat";
 
 export default function ApplicationProcess() {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isIncomeInRange, setIsIncomeInRange] = useState(true); // State to track if income is in range
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  const [error, setError] = useState<string>(""); // State to manage error message
 
   const router = useRouter();
 
@@ -133,16 +137,57 @@ export default function ApplicationProcess() {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData; // Assuming formData is your form data state
+    let newValue = value;
+
+    if (isNumeric(value.replace(/,/g, ""))) {
+      newValue = formatAmount(value.replace(/,/g, ""));
+      // console.log(newValue);
+    }
+    const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData;
+    const updatedQualificationData = {
+      ...formData.qualificationData,
+      [name]: newValue,
+    };
+    const applicantIncome =
+      parseFloat(
+        updatedQualificationData.monthlyIncomeApplicant.replace(/,/g, "")
+      ) || 0;
+    const spouseIncome =
+      parseFloat(
+        updatedQualificationData.monthlyIncomeSpouse.replace(/,/g, "")
+      ) || 0;
+    const combinedIncome = applicantIncome + spouseIncome;
+
+    // Update combinedMonthlyIncome with formatted result
+    updatedQualificationData.combinedMonthlyIncome = formatAmount(
+      combinedIncome.toString()
+    );
+
+    // Update formData state
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [stepDataKey]: {
-        ...prevFormData[stepDataKey],
-        [name as keyof (typeof prevFormData)[typeof stepDataKey]]: value, // Type assertion here
-      },
+      qualificationData: updatedQualificationData,
     }));
-    setSelectedProject(value ? projectDetails[value] : null);
+    const isCombinedIncomeInRange =
+      combinedIncome >= 10000 && combinedIncome <= 20000;
+    setIsIncomeInRange(isCombinedIncomeInRange);
+    setIsSubmitDisabled(!isCombinedIncomeInRange); // Disable submit if not in range
 
+    // Show toast notification if income is not in range
+    if (!isCombinedIncomeInRange) {
+      setError("Combined monthly income must be between R10,000 and R20,000.");
+    } else {
+      setError("");
+    }
+
+    // setFormData((prevFormData) => ({
+    //   ...prevFormData,
+    //   [stepDataKey]: {
+    //     ...prevFormData[stepDataKey],
+    //     [name as keyof (typeof prevFormData)[typeof stepDataKey]]: newValue, // Type assertion here
+    //   },
+    // }));
+    setSelectedProject(value ? projectDetails[value] : null);
   };
 
   const getStepDataKey = (step: any) => {
@@ -485,8 +530,6 @@ export default function ApplicationProcess() {
                   {selectedOption === "First Home Finance" && (
                     <>
                       <div className="grid">
-
-
                         <Criteria
                           items={[
                             "South African citizen with a valid ID; or permanent resident with a valid permit;",
@@ -704,167 +747,174 @@ export default function ApplicationProcess() {
 
                       {currentStep === 3 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
-                          <h2 className="text-2xl font-semibold mb-6">First Home Finance, Project and Typology</h2>
+                          <h2 className="text-2xl font-semibold mb-6">
+                            First Home Finance, Project and Typology
+                          </h2>
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <label>
+                              First Home Finance
+                              <select
+                                name="supportType"
+                                value={formData.supportData.supportType}
+                                onChange={handleChange}
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                              >
+                                <option value="">
+                                  Select First Home Finance Type
+                                </option>
+                                <option value="socialHousing">
+                                  Social Housing
+                                </option>
+                                <option value="affordableHousing">
+                                  Affordable Housing
+                                </option>
+                                <option value="rentalHousing">
+                                  Rental Housing
+                                </option>
+                                <option value="gapHousing">GAP Housing</option>
+                              </select>
+                            </label>
 
-                          <label>
-                            First Home Finance
-                            <select
-                              name="supportType"
-                              value={formData.supportData.supportType}
-                              onChange={handleChange}
-                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                            >
-                              <option value="">
-                                Select First Home Finance Type
-                              </option>
-                              <option value="socialHousing">
-                                Social Housing
-                              </option>
-                              <option value="affordableHousing">
-                                Affordable Housing
-                              </option>
-                              <option value="rentalHousing">
-                                Rental Housing
-                              </option>
-                              <option value="gapHousing">GAP Housing</option>
-                            </select>
-                          </label>
+                            <label>
+                              Province:
+                              <select
+                                name="province"
+                                value={formData.supportData.province}
+                                onChange={handleChange}
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                              >
+                                <option value="">Select Province</option>
+                                <option value="easternCape">
+                                  Eastern Cape
+                                </option>
+                                <option value="freeState">Free State</option>
+                                <option value="gauteng">Gauteng</option>
+                                <option value="kwazuluNatal">
+                                  KwaZulu-Natal
+                                </option>
+                                <option value="limpopo">Limpopo</option>
+                                <option value="mpumalanga">Mpumalanga</option>
+                                <option value="northWest">North West</option>
+                                <option value="northernCape">
+                                  Northern Cape
+                                </option>
+                                <option value="westernCape">
+                                  Western Cape
+                                </option>
+                              </select>
+                            </label>
+                            <label>
+                              Municipality/ Metro:
+                              <select
+                                name="municipalityMetro"
+                                value={formData.supportData.municipalityMetro}
+                                onChange={handleChange}
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                              >
+                                <option value="">
+                                  Select Municipality/ Metro
+                                </option>
+                                <option value="buffaloCity">
+                                  Buffalo City
+                                </option>
+                                <option value="nelsonMandelaBay">
+                                  Nelson Mandela Bay
+                                </option>
+                                <option value="orTambo">OR Tambo</option>
+                                <option value="chrisHani">Chris Hani</option>
+                                <option value="amathole">Amathole</option>
+                                <option value="joeGqabi">Joe Gqabi</option>
+                                <option value="alfredNzo">Alfred Nzo</option>
+                                <option value="sarahBaartman">
+                                  Sarah Baartman
+                                </option>
+                                <option value="mangaung">Mangaung</option>
+                                <option value="fezileDabi">Fezile Dabi</option>
+                                <option value="lejweleputswa">
+                                  Lejweleputswa
+                                </option>
+                                <option value="thaboMofutsanyana">
+                                  Thabo Mofutsanyana
+                                </option>
+                                <option value="xhariep">Xhariep</option>
+                                <option value="cityOfJohannesburg">
+                                  City of Johannesburg
+                                </option>
+                                <option value="cityOfTshwane">
+                                  City of Tshwane
+                                </option>
+                                <option value="ekurhuleni">Ekurhuleni</option>
+                                <option value="sedibeng">Sedibeng</option>
+                                <option value="westRand">West Rand</option>
+                                <option value="ethekwini">eThekwini</option>
+                                <option value="umgungundlovu">
+                                  uMgungundlovu
+                                </option>
+                              </select>
+                            </label>
 
-                          <label>
-                            Province:
-                            <select
-                              name="province"
-                              value={formData.supportData.province}
-                              onChange={handleChange}
-                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                            >
-                              <option value="">Select Province</option>
-                              <option value="easternCape">Eastern Cape</option>
-                              <option value="freeState">Free State</option>
-                              <option value="gauteng">Gauteng</option>
-                              <option value="kwazuluNatal">
-                                KwaZulu-Natal
-                              </option>
-                              <option value="limpopo">Limpopo</option>
-                              <option value="mpumalanga">Mpumalanga</option>
-                              <option value="northWest">North West</option>
-                              <option value="northernCape">
-                                Northern Cape
-                              </option>
-                              <option value="westernCape">Western Cape</option>
-                            </select>
-                          </label>
-                          <label>
-                            Municipality/ Metro:
-                            <select
-                              name="municipalityMetro"
-                              value={formData.supportData.municipalityMetro}
-                              onChange={handleChange}
-                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                            >
-                              <option value="">
-                                Select Municipality/ Metro
-                              </option>
-                              <option value="buffaloCity">Buffalo City</option>
-                              <option value="nelsonMandelaBay">
-                                Nelson Mandela Bay
-                              </option>
-                              <option value="orTambo">OR Tambo</option>
-                              <option value="chrisHani">Chris Hani</option>
-                              <option value="amathole">Amathole</option>
-                              <option value="joeGqabi">Joe Gqabi</option>
-                              <option value="alfredNzo">Alfred Nzo</option>
-                              <option value="sarahBaartman">
-                                Sarah Baartman
-                              </option>
-                              <option value="mangaung">Mangaung</option>
-                              <option value="fezileDabi">Fezile Dabi</option>
-                              <option value="lejweleputswa">
-                                Lejweleputswa
-                              </option>
-                              <option value="thaboMofutsanyana">
-                                Thabo Mofutsanyana
-                              </option>
-                              <option value="xhariep">Xhariep</option>
-                              <option value="cityOfJohannesburg">
-                                City of Johannesburg
-                              </option>
-                              <option value="cityOfTshwane">
-                                City of Tshwane
-                              </option>
-                              <option value="ekurhuleni">Ekurhuleni</option>
-                              <option value="sedibeng">Sedibeng</option>
-                              <option value="westRand">West Rand</option>
-                              <option value="ethekwini">eThekwini</option>
-                              <option value="umgungundlovu">
-                                uMgungundlovu
-                              </option>
-                            </select>
-                          </label>
+                            <label>
+                              Project Name:
+                              <select
+                                name="projectName"
+                                value={formData.supportData.projectName}
+                                onChange={handleChange}
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                              >
+                                <option value="">Select Project</option>
+                                <option value="fleurhofIntegratedHousingDevelopment">
+                                  Fleurhof Integrated Housing Development
+                                </option>
+                                <option value="belharSocialHousingProject">
+                                  Belhar Social Housing Project
+                                </option>
+                                <option value="westgateSocialHousingProject">
+                                  Westgate Social Housing Project
+                                </option>
+                                <option value="devlandGardens">
+                                  Devland Gardens
+                                </option>
+                                <option value="southernwoodSquare">
+                                  Southernwood Square
+                                </option>
+                                <option value="thembelihleVillage">
+                                  Thembelihle Village
+                                </option>
+                              </select>
+                            </label>
+                            {selectedProject && (
+                              <div className="mt-4 p-4 border rounded-lg bg-gray-100">
+                                <h2 className="text-xl font-semibold">
+                                  {selectedProject.name}
+                                </h2>
+                                <p>{selectedProject.summary}</p>
+                                <button>View Project Details</button>
+                              </div>
+                            )}
 
-                          <label>
-                                Project Name:
-                                <select
-                                  name="projectName"
-                                  value={formData.supportData.projectName}
-                                  onChange={handleChange}
-                                  className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                >
-                                  <option value="">Select Project</option>
-                                  <option value="fleurhofIntegratedHousingDevelopment">
-                                    Fleurhof Integrated Housing Development
-                                  </option>
-                                  <option value="belharSocialHousingProject">
-                                    Belhar Social Housing Project
-                                  </option>
-                                  <option value="westgateSocialHousingProject">
-                                    Westgate Social Housing Project
-                                  </option>
-                                  <option value="devlandGardens">
-                                    Devland Gardens
-                                  </option>
-                                  <option value="southernwoodSquare">
-                                    Southernwood Square
-                                  </option>
-                                  <option value="thembelihleVillage">
-                                    Thembelihle Village
-                                  </option>
-                                </select>
-                              </label>
-                              {selectedProject && (
-                                <div className="mt-4 p-4 border rounded-lg bg-gray-100">
-                                  <h2 className="text-xl font-semibold">
-                                    {selectedProject.name}
-                                  </h2>
-                                  <p>{selectedProject.summary}</p>
-                                  <button>View Project Details</button>
-                                </div>
-                              )}
+                            <label className="block">
+                              <span>Typology:</span>
 
-                          <label className="block">
-                            <span>Typology:</span>
-
-                            <select
-                              name="product"
-                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                              value={formData.supportData.product}
-                              onChange={handleChange}
-                            >
-                              <option value="" disabled>
-                                Select Typology
-                              </option>
-                              <option value="Housing Finance - 2 Bedroom">
-                                Housing Finance - 2 Bedroom
-                              </option>
-                              <option value="Housing Finance - 3 Bedroom">
-                                Housing Finance - 3 Bedroom
-                              </option>
-                              <option value="Housing Finance - 4 Bedroom">
-                                Housing Finance - 4 Bedroom
-                              </option>
-                            </select>
-                          </label>
+                              <select
+                                name="product"
+                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                value={formData.supportData.product}
+                                onChange={handleChange}
+                              >
+                                <option value="" disabled>
+                                  Select Typology
+                                </option>
+                                <option value="Housing Finance - 2 Bedroom">
+                                  Housing Finance - 2 Bedroom
+                                </option>
+                                <option value="Housing Finance - 3 Bedroom">
+                                  Housing Finance - 3 Bedroom
+                                </option>
+                                <option value="Housing Finance - 4 Bedroom">
+                                  Housing Finance - 4 Bedroom
+                                </option>
+                              </select>
+                            </label>
                           </div>
                         </div>
                       )}
@@ -977,8 +1027,13 @@ export default function ApplicationProcess() {
                                   formData.qualificationData
                                     .combinedMonthlyIncome
                                 }
-                                onChange={handleChange}
+                                readOnly
                               />
+                              {!isIncomeInRange && (
+                                <p className="text-red-500 text-xs mt-1">
+                                  {error}
+                                </p>
+                              )}
                             </label>
                           </div>
                         </div>
@@ -1430,6 +1485,7 @@ export default function ApplicationProcess() {
                             className="py-2 px-6 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition ease-in-out duration-200"
                             type="button"
                             onClick={handleNext}
+                            disabled={isSubmitDisabled}
                           >
                             Next
                           </button>
