@@ -27,7 +27,6 @@ export default function ApplicationProcess() {
   const [error, setError] = useState<string>(""); // State to manage error message
   const [employmentStatus, setEmploymentStatus] = useState("");
 
-
   const router = useRouter();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,10 +145,10 @@ export default function ApplicationProcess() {
     const { name, value } = e.target;
     let newValue = value;
 
-    if (isNumeric(value.replace(/,/g, ""))) {
+    if (currentStep === 4 && isNumeric(value.replace(/,/g, ""))) {
       newValue = formatAmount(value.replace(/,/g, ""));
-      // console.log(newValue);
     }
+
     const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData;
     const updatedQualificationData = {
       ...formData.qualificationData,
@@ -177,25 +176,20 @@ export default function ApplicationProcess() {
       ...prevFormData,
       [stepDataKey]: qualificationData,
     }));
-    const isCombinedIncomeInRange =
-      combinedIncome >= 10000 && combinedIncome <= 20000;
-    setIsIncomeInRange(isCombinedIncomeInRange);
-    setIsSubmitDisabled(!isCombinedIncomeInRange); // Disable submit if not in range
-
-    // Show toast notification if income is not in range
-    if (!isCombinedIncomeInRange) {
-      setError("Combined monthly income must be between R10,000 and R20,000.");
-    } else {
-      setError("");
+    if (currentStep === 4) {
+      const isCombinedIncomeInRange =
+        combinedIncome >= 10000 && combinedIncome <= 20000;
+      setIsIncomeInRange(isCombinedIncomeInRange);
+      setIsSubmitDisabled(!isCombinedIncomeInRange);
+      if (!isCombinedIncomeInRange) {
+        setError(
+          "Combined monthly income must be between R10,000 and R20,000."
+        );
+      } else {
+        setError("");
+      }
     }
 
-    // setFormData((prevFormData) => ({
-    //   ...prevFormData,
-    //   [stepDataKey]: {
-    //     ...prevFormData[stepDataKey],
-    //     [name as keyof (typeof prevFormData)[typeof stepDataKey]]: newValue, // Type assertion here
-    //   },
-    // }));
     setSelectedProject(value ? projectDetails[value] : null);
   };
 
@@ -233,7 +227,7 @@ export default function ApplicationProcess() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", { ...formData, loanType: selectedOption });
+    console.log("Form submitted:", { formData });
     try {
       const res = await axios.post("/api/applications/first-home", {
         ...formData,
