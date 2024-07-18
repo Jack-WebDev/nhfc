@@ -20,6 +20,8 @@ import { ArrowLeft } from "lucide-react";
 
 export default function ApplicationProcess() {
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const [selectedProject, setSelectedProject] = useState(null);
+
   const router = useRouter();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,6 +98,39 @@ export default function ApplicationProcess() {
     },
   });
 
+  const projectDetails = {
+    fleurhofIntegratedHousingDevelopment: {
+      name: "Fleurhof Integrated Housing Development",
+      summary:
+        "A comprehensive housing project aimed at providing affordable housing in Fleurhof.",
+    },
+    belharSocialHousingProject: {
+      name: "Belhar Social Housing Project",
+      summary:
+        "A social housing initiative to support low-income families in Belhar.",
+    },
+    westgateSocialHousingProject: {
+      name: "Westgate Social Housing Project",
+      summary:
+        "An affordable housing project located in Westgate for low and middle-income families.",
+    },
+    devlandGardens: {
+      name: "Devland Gardens",
+      summary:
+        "A housing development project focused on providing quality living spaces in Devland.",
+    },
+    southernwoodSquare: {
+      name: "Southernwood Square",
+      summary:
+        "A mixed-use development offering residential and commercial spaces in Southernwood.",
+    },
+    thembelihleVillage: {
+      name: "Thembelihle Village",
+      summary:
+        "An integrated village offering affordable housing and community amenities in Thembelihle.",
+    },
+  };
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData; // Assuming formData is your form data state
@@ -106,6 +141,8 @@ export default function ApplicationProcess() {
         [name as keyof (typeof prevFormData)[typeof stepDataKey]]: value, // Type assertion here
       },
     }));
+    setSelectedProject(value ? projectDetails[value] : null);
+
   };
 
   const getStepDataKey = (step: any) => {
@@ -767,34 +804,43 @@ export default function ApplicationProcess() {
                           </label>
 
                           <label>
-                            Project Name:
-                            <select
-                              name="projectName"
-                              value={formData.supportData.projectName}
-                              onChange={handleChange}
-                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                            >
-                              <option value="">Select Project</option>
-                              <option value="fleurhofIntegratedHousingDevelopment">
-                                Fleurhof Integrated Housing Development
-                              </option>
-                              <option value="belharSocialHousingProject">
-                                Belhar Social Housing Project
-                              </option>
-                              <option value="westgateSocialHousingProject">
-                                Westgate Social Housing Project
-                              </option>
-                              <option value="devlandGardens">
-                                Devland Gardens
-                              </option>
-                              <option value="southernwoodSquare">
-                                Southernwood Square
-                              </option>
-                              <option value="thembelihleVillage">
-                                Thembelihle Village
-                              </option>
-                            </select>
-                          </label>
+                                Project Name:
+                                <select
+                                  name="projectName"
+                                  value={formData.supportData.projectName}
+                                  onChange={handleChange}
+                                  className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                >
+                                  <option value="">Select Project</option>
+                                  <option value="fleurhofIntegratedHousingDevelopment">
+                                    Fleurhof Integrated Housing Development
+                                  </option>
+                                  <option value="belharSocialHousingProject">
+                                    Belhar Social Housing Project
+                                  </option>
+                                  <option value="westgateSocialHousingProject">
+                                    Westgate Social Housing Project
+                                  </option>
+                                  <option value="devlandGardens">
+                                    Devland Gardens
+                                  </option>
+                                  <option value="southernwoodSquare">
+                                    Southernwood Square
+                                  </option>
+                                  <option value="thembelihleVillage">
+                                    Thembelihle Village
+                                  </option>
+                                </select>
+                              </label>
+                              {selectedProject && (
+                                <div className="mt-4 p-4 border rounded-lg bg-gray-100">
+                                  <h2 className="text-xl font-semibold">
+                                    {selectedProject.name}
+                                  </h2>
+                                  <p>{selectedProject.summary}</p>
+                                  <button>View Project Details</button>
+                                </div>
+                              )}
 
                           <label className="block">
                             <span>Typology:</span>
