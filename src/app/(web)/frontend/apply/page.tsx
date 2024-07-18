@@ -25,11 +25,17 @@ export default function ApplicationProcess() {
   const [isIncomeInRange, setIsIncomeInRange] = useState(true); // State to track if income is in range
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [error, setError] = useState<string>(""); // State to manage error message
+  const [employmentStatus, setEmploymentStatus] = useState("");
+
 
   const router = useRouter();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
+  };
+
+  const handleStatusChange = (e: any) => {
+    setEmploymentStatus(e.target.value);
   };
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -74,6 +80,7 @@ export default function ApplicationProcess() {
       maleChildren18To24: "",
       otherDependents: "",
     },
+    employmentStatus: "",
     currentEmployerData: {
       companyName: "",
       address: "",
@@ -163,10 +170,12 @@ export default function ApplicationProcess() {
       combinedIncome.toString()
     );
 
+    let qualificationData = updatedQualificationData;
+
     // Update formData state
     setFormData((prevFormData) => ({
       ...prevFormData,
-      qualificationData: updatedQualificationData,
+      [stepDataKey]: qualificationData,
     }));
     const isCombinedIncomeInRange =
       combinedIncome >= 10000 && combinedIncome <= 20000;
@@ -1119,355 +1128,475 @@ export default function ApplicationProcess() {
                       {currentStep === 6 && (
                         <div className="p-6 bg-white rounded-lg shadow-md">
                           <h2 className="text-2xl font-semibold mb-4">
-                            Applicant Current Employer
+                            Employment Status
                           </h2>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="grid">
                             <label className="block">
                               <span className="text-gray-700">
-                                Company Name:
+                                Employment Status:
                               </span>
-                              <input
-                                type="text"
-                                name="companyName"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.currentEmployerData.companyName}
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block col-span-2">
-                              <span className="text-gray-700">Address:</span>
-                              <textarea
-                                name="address"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.currentEmployerData.address}
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">Suburb:</span>
-                              <input
-                                type="text"
-                                name="suburb"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.currentEmployerData.suburb}
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">City:</span>
-                              <input
-                                type="text"
-                                name="city"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.currentEmployerData.city}
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">Province:</span>
-
                               <select
-                                name="province"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.currentEmployerData.province}
-                                onChange={handleChange}
+                                className="mt-1 block w-1/2 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                value={employmentStatus}
+                                onChange={handleStatusChange}
                               >
-                                <option value="" disabled>
-                                  Select your Province
+                                <option value="">Select...</option>
+                                <option value="self-employed">
+                                  Self-employed
                                 </option>
-                                <option value="Gauteng">Gauteng</option>
-                                <option value="Western Cape">
-                                  Western Cape
-                                </option>
-                                <option value="KwaZulu-Natal">
-                                  KwaZulu-Natal
-                                </option>
-                                <option value="Eastern Cape">
-                                  Eastern Cape
-                                </option>
-                                <option value="Free State">Free State</option>
-                                <option value="Limpopo">Limpopo</option>
-                                <option value="Mpumalanga">Mpumalanga</option>
-                                <option value="North West">North West</option>
-                                <option value="Northern Cape">
-                                  Northern Cape
-                                </option>
+                                <option value="employed">Employed</option>
                               </select>
                             </label>
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Postal Code:
-                              </span>
-                              <input
-                                type="text"
-                                name="postalCode"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.currentEmployerData.postalCode}
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Employment Date:
-                              </span>
-                              <input
-                                type="text"
-                                name="employmentDate"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.currentEmployerData.employmentDate
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Contact Person Name:
-                              </span>
-                              <input
-                                type="text"
-                                name="contactPersonName"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.currentEmployerData.contactPersonName
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block col-span-2">
-                              <span className="text-gray-700">
-                                Contact Person Phone:
-                              </span>
-                              <input
-                                type="text"
-                                name="contactPersonPhone"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.currentEmployerData
-                                    .contactPersonPhone
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block col-span-2">
-                              <span className="text-gray-700">
-                                Contact Person Email:
-                              </span>
-                              <input
-                                type="text"
-                                name="contactPersonEmail"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.currentEmployerData
-                                    .contactPersonEmail
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
+                            {employmentStatus === "employed" && (
+                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <label className="block">
+                                  <span className="text-gray-700">
+                                    Company Name:
+                                  </span>
+                                  <input
+                                    type="text"
+                                    name="companyName"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={
+                                      formData.currentEmployerData.companyName
+                                    }
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                                <label className="block col-span-2">
+                                  <span className="text-gray-700">
+                                    Address:
+                                  </span>
+                                  <textarea
+                                    name="address"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={formData.currentEmployerData.address}
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                                <label className="block">
+                                  <span className="text-gray-700">Suburb:</span>
+                                  <input
+                                    type="text"
+                                    name="suburb"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={formData.currentEmployerData.suburb}
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                                <label className="block">
+                                  <span className="text-gray-700">City:</span>
+                                  <input
+                                    type="text"
+                                    name="city"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={formData.currentEmployerData.city}
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                                <label className="block">
+                                  <span className="text-gray-700">
+                                    Province:
+                                  </span>
+
+                                  <select
+                                    name="province"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={
+                                      formData.currentEmployerData.province
+                                    }
+                                    onChange={handleChange}
+                                  >
+                                    <option value="" disabled>
+                                      Select your Province
+                                    </option>
+                                    <option value="Gauteng">Gauteng</option>
+                                    <option value="Western Cape">
+                                      Western Cape
+                                    </option>
+                                    <option value="KwaZulu-Natal">
+                                      KwaZulu-Natal
+                                    </option>
+                                    <option value="Eastern Cape">
+                                      Eastern Cape
+                                    </option>
+                                    <option value="Free State">
+                                      Free State
+                                    </option>
+                                    <option value="Limpopo">Limpopo</option>
+                                    <option value="Mpumalanga">
+                                      Mpumalanga
+                                    </option>
+                                    <option value="North West">
+                                      North West
+                                    </option>
+                                    <option value="Northern Cape">
+                                      Northern Cape
+                                    </option>
+                                  </select>
+                                </label>
+                                <label className="block">
+                                  <span className="text-gray-700">
+                                    Postal Code:
+                                  </span>
+                                  <input
+                                    type="text"
+                                    name="postalCode"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={
+                                      formData.currentEmployerData.postalCode
+                                    }
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                                <label className="block">
+                                  <span className="text-gray-700">
+                                    Employment Date:
+                                  </span>
+                                  <input
+                                    type="text"
+                                    name="employmentDate"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={
+                                      formData.currentEmployerData
+                                        .employmentDate
+                                    }
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                                <label className="block">
+                                  <span className="text-gray-700">
+                                    Contact Person Name:
+                                  </span>
+                                  <input
+                                    type="text"
+                                    name="contactPersonName"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={
+                                      formData.currentEmployerData
+                                        .contactPersonName
+                                    }
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                                <label className="block col-span-2">
+                                  <span className="text-gray-700">
+                                    Contact Person Phone:
+                                  </span>
+                                  <input
+                                    type="text"
+                                    name="contactPersonPhone"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={
+                                      formData.currentEmployerData
+                                        .contactPersonPhone
+                                    }
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                                <label className="block col-span-2">
+                                  <span className="text-gray-700">
+                                    Contact Person Email:
+                                  </span>
+                                  <input
+                                    type="text"
+                                    name="contactPersonEmail"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    value={
+                                      formData.currentEmployerData
+                                        .contactPersonEmail
+                                    }
+                                    onChange={handleChange}
+                                  />
+                                </label>
+                              </div>
+                            )}
                           </div>
+                          {employmentStatus === "self-employed" && (
+                            <p className="my-8 text-2xl font-medium">
+                              Click Next
+                            </p>
+                          )}
                         </div>
                       )}
                       {currentStep === 7 && (
-                        <div className="grid p-6 bg-white rounded-lg shadow-md">
-                          <h2 className="text-2xl font-semibold mb-4">
-                            Previous Employment
-                          </h2>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Company Name:
-                              </span>
-                              <input
-                                type="text"
-                                name="companyName"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.previousEmploymentData.companyName
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block col-span-2">
-                              <span className="text-gray-700">Address:</span>
-                              <textarea
-                                name="address"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.previousEmploymentData.address}
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">Suburb:</span>
-                              <input
-                                type="text"
-                                name="suburb"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.previousEmploymentData.suburb}
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">City:</span>
-                              <input
-                                type="text"
-                                name="city"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.previousEmploymentData.city}
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">Province:</span>
-
-                              <select
-                                name="province"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={formData.previousEmploymentData.province}
-                                onChange={handleChange}
+                        <>
+                          {employmentStatus === "self-employed" ? (
+                            <div className="flex justify-between items-end mb-8 p-6 bg-white rounded-lg shadow-md">
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Attach All Required Documents (see above):
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    placeholder="Enter Equity Amount"
+                                    multiple
+                                  />
+                                </label>
+                                <label className="flex gap-x-4">
+                                  <span className="text-gray-700">
+                                    Do you agree to the Terms and Conditions?
+                                  </span>
+                                  <input
+                                    type="checkbox"
+                                    name="termsAgreement"
+                                    checked={
+                                      formData.previousEmploymentData
+                                        .termsAgreement === "yes"
+                                    }
+                                    onChange={(e) =>
+                                      handleChange({
+                                        target: {
+                                          name: "termsAgreement",
+                                          value: e.target.checked
+                                            ? "yes"
+                                            : "no",
+                                        },
+                                      })
+                                    }
+                                  />
+                                </label>
+                              </div>
+                              <button
+                                type="submit"
+                                className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
                               >
-                                <option value="" disabled>
-                                  Select your Province
-                                </option>
-                                <option value="Gauteng">Gauteng</option>
-                                <option value="Western Cape">
-                                  Western Cape
-                                </option>
-                                <option value="KwaZulu-Natal">
-                                  KwaZulu-Natal
-                                </option>
-                                <option value="Eastern Cape">
-                                  Eastern Cape
-                                </option>
-                                <option value="Free State">Free State</option>
-                                <option value="Limpopo">Limpopo</option>
-                                <option value="Mpumalanga">Mpumalanga</option>
-                                <option value="North West">North West</option>
-                                <option value="Northern Cape">
-                                  Northern Cape
-                                </option>
-                              </select>
-                            </label>
+                                Submit
+                              </button>
+                            </div>
+                          ) : (
+                            <>
+                              <div className="grid p-6 bg-white rounded-lg shadow-md">
+                                <h2 className="text-2xl font-semibold mb-4">
+                                  Previous Employment
+                                </h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Company Name:
+                                    </span>
+                                    <input
+                                      type="text"
+                                      name="companyName"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData
+                                          .companyName
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+                                  <label className="block col-span-2">
+                                    <span className="text-gray-700">
+                                      Address:
+                                    </span>
+                                    <textarea
+                                      name="address"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData.address
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Suburb:
+                                    </span>
+                                    <input
+                                      type="text"
+                                      name="suburb"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData.suburb
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+                                  <label className="block">
+                                    <span className="text-gray-700">City:</span>
+                                    <input
+                                      type="text"
+                                      name="city"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData.city
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Province:
+                                    </span>
 
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Contact Person Name:
-                              </span>
-                              <input
-                                type="text"
-                                name="contactPersonName"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.previousEmploymentData
-                                    .contactPersonName
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Contact Person Phone:
-                              </span>
-                              <input
-                                type="text"
-                                name="contactPersonPhone"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.previousEmploymentData
-                                    .contactPersonPhone
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Contact Person Email:
-                              </span>
-                              <input
-                                type="text"
-                                name="contactPersonEmail"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.previousEmploymentData
-                                    .contactPersonEmail
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
+                                    <select
+                                      name="province"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData.province
+                                      }
+                                      onChange={handleChange}
+                                    >
+                                      <option value="" disabled>
+                                        Select your Province
+                                      </option>
+                                      <option value="Gauteng">Gauteng</option>
+                                      <option value="Western Cape">
+                                        Western Cape
+                                      </option>
+                                      <option value="KwaZulu-Natal">
+                                        KwaZulu-Natal
+                                      </option>
+                                      <option value="Eastern Cape">
+                                        Eastern Cape
+                                      </option>
+                                      <option value="Free State">
+                                        Free State
+                                      </option>
+                                      <option value="Limpopo">Limpopo</option>
+                                      <option value="Mpumalanga">
+                                        Mpumalanga
+                                      </option>
+                                      <option value="North West">
+                                        North West
+                                      </option>
+                                      <option value="Northern Cape">
+                                        Northern Cape
+                                      </option>
+                                    </select>
+                                  </label>
 
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Postal Code:
-                              </span>
-                              <input
-                                type="text"
-                                name="postalCode"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.previousEmploymentData.postalCode
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Employment Start Date:
-                              </span>
-                              <input
-                                type="text"
-                                name="employmentStartDate"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.previousEmploymentData
-                                    .employmentStartDate
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
-                            <label className="block">
-                              <span className="text-gray-700">
-                                Employment End Date:
-                              </span>
-                              <input
-                                type="text"
-                                name="employmentEndDate"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                value={
-                                  formData.previousEmploymentData
-                                    .employmentEndDate
-                                }
-                                onChange={handleChange}
-                              />
-                            </label>
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Contact Person Name:
+                                    </span>
+                                    <input
+                                      type="text"
+                                      name="contactPersonName"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData
+                                          .contactPersonName
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Contact Person Phone:
+                                    </span>
+                                    <input
+                                      type="text"
+                                      name="contactPersonPhone"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData
+                                          .contactPersonPhone
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Contact Person Email:
+                                    </span>
+                                    <input
+                                      type="text"
+                                      name="contactPersonEmail"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData
+                                          .contactPersonEmail
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
 
-                            <label className="flex gap-x-4">
-                              <span className="text-gray-700">
-                                Do you agree to the Terms and Conditions?
-                              </span>
-                              <input
-                                type="checkbox"
-                                name="termsAgreement"
-                                checked={
-                                  formData.previousEmploymentData
-                                    .termsAgreement === "yes"
-                                }
-                                onChange={(e) =>
-                                  handleChange({
-                                    target: {
-                                      name: "termsAgreement",
-                                      value: e.target.checked ? "yes" : "no",
-                                    },
-                                  })
-                                }
-                              />
-                            </label>
-                          </div>
-                          <button
-                            type="submit"
-                            className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
-                          >
-                            Submit
-                          </button>
-                        </div>
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Postal Code:
+                                    </span>
+                                    <input
+                                      type="text"
+                                      name="postalCode"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData
+                                          .postalCode
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Employment Start Date:
+                                    </span>
+                                    <input
+                                      type="text"
+                                      name="employmentStartDate"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData
+                                          .employmentStartDate
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+                                  <label className="block">
+                                    <span className="text-gray-700">
+                                      Employment End Date:
+                                    </span>
+                                    <input
+                                      type="text"
+                                      name="employmentEndDate"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      value={
+                                        formData.previousEmploymentData
+                                          .employmentEndDate
+                                      }
+                                      onChange={handleChange}
+                                    />
+                                  </label>
+
+                                  <label className="flex gap-x-4">
+                                    <span className="text-gray-700">
+                                      Do you agree to the Terms and Conditions?
+                                    </span>
+                                    <input
+                                      type="checkbox"
+                                      name="termsAgreement"
+                                      checked={
+                                        formData.previousEmploymentData
+                                          .termsAgreement === "yes"
+                                      }
+                                      onChange={(e) =>
+                                        handleChange({
+                                          target: {
+                                            name: "termsAgreement",
+                                            value: e.target.checked
+                                              ? "yes"
+                                              : "no",
+                                          },
+                                        })
+                                      }
+                                    />
+                                  </label>
+                                </div>
+                                <button
+                                  type="submit"
+                                  className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            </>
+                          )}
+                        </>
                       )}
 
                       <div className="flex gap-x-4 mt-4">
