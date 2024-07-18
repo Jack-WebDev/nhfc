@@ -43,6 +43,11 @@ type ProjectProps = {
 export default function Projects() {
   const [projects, setProjects] = useState<ProjectProps[]>([]);
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredProjects = projects.filter((project) =>
+    project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -55,35 +60,100 @@ export default function Projects() {
 
   return (
     <>
-    <PageHeader Icon={ShoppingBag} title="Projects" />
-    <div className="flex flex-wrap justify-center gap-8">
+      <PageHeader Icon={ShoppingBag} title="Projects" />
+      <div className="grid">
 
-      {projects.map((project) => (
-        <Card className="w-[350px] mt-12" key={project.id}>
-          <CardHeader>
-            <CardTitle>{project.projectName}</CardTitle>
-            <CardDescription>
-              {project.deliverablesSummary}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul>
-              <li>Location: Johannesburg, {project.province}</li>
-              <li>Units: 10,000+</li>
+        <div className="flex justify-evenly items-center">
+          <div>
+            <label htmlFor="search">Search:</label>
+            <input
+              type="text"
+              placeholder="Search projects"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="border p-2 mb-4"
+            />
+          </div>
 
-              <div>
-                <h2>Project Values: R3.5 Billion</h2>
-              </div>
-            </ul>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="default" className="bg-blue-500 text-white hover:bg-blue-700" onClick={() => router.push(`/frontend/projects/${project.id}`)}>
-              View Details
-            </Button>
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
+          <div>
+            <label htmlFor="province">Province:</label>
+            <select
+              name="province"
+              // value={formData.province || ""}
+              // onChange={handleChange}
+              className="border border-gray-200 rounded-lg p-2 bg-white"
+            >
+              <option value="" disabled>
+                Select Province
+              </option>
+              <option value="Gauteng">Gauteng</option>
+              <option value="Western Cape">Western Cape</option>
+              <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+              <option value="Eastern Cape">Eastern Cape</option>
+              <option value="Free State">Free State</option>
+              <option value="Limpopo">Limpopo</option>
+              <option value="Mpumalanga">Mpumalanga</option>
+              <option value="North West">North West</option>
+              <option value="Northern Cape">Northern Cape</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="projectName">Project Name:</label>
+            <select
+              name="projectName"
+              // value={formData.projectName || ""}
+              // onChange={handleChange}
+              className="border border-gray-200 rounded-lg p-2 bg-white"
+            >
+              <option value="" disabled>
+                Select Project
+              </option>
+              <option value="Fleurhof Integrated Housing Development">
+                Fleurhof Integrated Housing Development
+              </option>
+              <option value="Belhar Social Housing Project">
+                Belhar Social Housing Project
+              </option>
+              <option value="Westgate Social Housing Project">
+                Westgate Social Housing Project
+              </option>
+              <option value="Devland Gardens">Devland Gardens</option>
+              <option value="Southernwood Square">Southernwood Square</option>
+              <option value="Thembelihle Village">Thembelihle Village</option>
+            </select>
+          </div>
+        </div>
+      <div className="flex flex-wrap justify-center gap-8">
+
+        {filteredProjects.map((project) => (
+          <Card className="w-[350px] mt-12" key={project.id}>
+            <CardHeader>
+              <CardTitle>{project.projectName}</CardTitle>
+              <CardDescription>{project.deliverablesSummary}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul>
+                <li>Location: Johannesburg, {project.province}</li>
+                <li>Units: 10,000+</li>
+
+                <div>
+                  <h2>Project Values: R3.5 Billion</h2>
+                </div>
+              </ul>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button
+                variant="default"
+                className="bg-blue-500 text-white hover:bg-blue-700"
+                onClick={() => router.push(`/frontend/projects/${project.id}`)}
+              >
+                View Details
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+      </div>
     </>
   );
 }
