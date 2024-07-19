@@ -44,15 +44,19 @@ export default function Projects() {
   const [projects, setProjects] = useState<ProjectProps[]>([]);
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedProvince, setSelectedProvince] = useState<string>("");
+
 
   const filteredProjects = projects.filter((project) =>
-    project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+    project.projectName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+    (selectedProvince === "" || project.province === selectedProvince)
   );
 
   useEffect(() => {
     const fetchProjects = async () => {
       const res = await axios.get("/api/projects");
       setProjects(res.data);
+      console.log(res.data)
     };
 
     fetchProjects();
@@ -76,27 +80,25 @@ export default function Projects() {
           </div>
 
           <div>
-            <label htmlFor="province">Province:</label>
-            <select
-              name="province"
-              // value={formData.province || ""}
-              // onChange={handleChange}
-              className="border border-gray-200 rounded-lg p-2 bg-white"
-            >
-              <option value="" disabled>
-                Select Province
-              </option>
-              <option value="Gauteng">Gauteng</option>
-              <option value="Western Cape">Western Cape</option>
-              <option value="KwaZulu-Natal">KwaZulu-Natal</option>
-              <option value="Eastern Cape">Eastern Cape</option>
-              <option value="Free State">Free State</option>
-              <option value="Limpopo">Limpopo</option>
-              <option value="Mpumalanga">Mpumalanga</option>
-              <option value="North West">North West</option>
-              <option value="Northern Cape">Northern Cape</option>
-            </select>
-          </div>
+        <label htmlFor="province">Province:</label>
+        <select
+          name="province"
+          value={selectedProvince}
+          onChange={(e) => setSelectedProvince(e.target.value)}
+          className="border border-gray-200 rounded-lg p-2 bg-white"
+        >
+          <option value="">Select Province</option>
+          <option value="Gauteng">Gauteng</option>
+          <option value="Western Cape">Western Cape</option>
+          <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+          <option value="Eastern Cape">Eastern Cape</option>
+          <option value="Free State">Free State</option>
+          <option value="Limpopo">Limpopo</option>
+          <option value="Mpumalanga">Mpumalanga</option>
+          <option value="North West">North West</option>
+          <option value="Northern Cape">Northern Cape</option>
+        </select>
+      </div>
           <div>
             <label htmlFor="projectName">Project Name:</label>
             <select
