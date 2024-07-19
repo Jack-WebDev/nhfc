@@ -356,8 +356,58 @@ export default function FormUse({ selectedOption }: TitleProp) {
         </div>
       </div>
 
+      
+
+
+
+
+
       <label htmlFor="docs" className="block">
-        <span className="text-gray-700">Attach Documents:</span>
+        <span className="text-gray-700">Certificate of Incorporation or Registration:</span>
+        <input
+          type="file"
+          name="docs"
+          className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+          value={formData.docs || ""}
+          onChange={handleChange}
+          placeholder="Enter Equity Amount"
+        />
+      </label>
+      <label htmlFor="docs" className="block">
+        <span className="text-gray-700">Memorandum of Incorporation (MOI):</span>
+        <input
+          type="file"
+          name="docs"
+          className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+          value={formData.docs || ""}
+          onChange={handleChange}
+          placeholder="Enter Equity Amount"
+        />
+      </label>
+      <label htmlFor="docs" className="block">
+        <span className="text-gray-700">Registration documents as a Non-Profit Company (if applicable):</span>
+        <input
+          type="file"
+          name="docs"
+          className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+          value={formData.docs || ""}
+          onChange={handleChange}
+          placeholder="Enter Equity Amount"
+        />
+      </label>
+      <label htmlFor="docs" className="block">
+        <span className="text-gray-700">Accreditation documents as a Social Housing Institution (SHI) or Other Developmental Agency (ODA):</span>
+        <input
+          type="file"
+          name="docs"
+          className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+          value={formData.docs || ""}
+          onChange={handleChange}
+          placeholder="Enter Equity Amount"
+        />
+      </label>
+      <label htmlFor="docs" className="block">
+        <span className="text-gray-700">Certificate or official documentation confirming the allocation of a Community Credit Guarantee (CCG):</span>
         <input
           type="file"
           name="docs"
