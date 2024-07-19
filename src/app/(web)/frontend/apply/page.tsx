@@ -21,7 +21,7 @@ import { formatAmount, isNumeric } from "@/utils/amountFormat";
 
 export default function ApplicationProcess() {
   const [selectedOption, setSelectedOption] = useState<string>("");
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isIncomeInRange, setIsIncomeInRange] = useState(true); // State to track if income is in range
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [error, setError] = useState<string>(""); // State to manage error message
@@ -108,7 +108,7 @@ export default function ApplicationProcess() {
     },
   });
 
-  const projectDetails = {
+  const projectDetails:any = {
     fleurhofIntegratedHousingDevelopment: {
       name: "Fleurhof Integrated Housing Development",
       summary:
