@@ -1,7 +1,11 @@
+// src/app/(web)/frontend/_components/NewQueryForm.tsx
 "use client";
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import { toast } from "react-toastify";
+import { useNotificationContext } from "./NotificationContext";
 
 type NewQueryFormProps = {
   onClose: () => void;
@@ -10,29 +14,53 @@ type NewQueryFormProps = {
 
 const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose, addQuery }) => {
   const [queryType, setQueryType] = useState("General");
-  const [appliedLoan, setAppliedLoan] = useState(
-    "#9458 Private Housing Finance"
-  );
+  const [appliedLoan, setAppliedLoan] = useState("#9458 Private Housing Finance");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const { addNotification } = useNotificationContext();
 
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newQuery = {
-      referenceNo: (Math.floor(Math.random() * 900000) + 100000).toString(),
-      fullName: "Linda Mangena",
-      queryType,
-      queryDate: new Date().toLocaleString(),
-      queryStatus: "Open",
-      appliedLoan,
-      description,
-      file,
-    };
-    addQuery(newQuery);
-    onClose();
-    router.push("/frontend/queries");
+    const formData = new FormData();
+    const referenceNo = (Math.floor(Math.random() * 900000) + 100000).toString();
+    formData.append("referenceNo", referenceNo);
+    formData.append("fullName", "Linda Mangena");
+    formData.append("queryType", queryType);
+    formData.append("queryDate", new Date().toLocaleString());
+    formData.append("queryStatus", "Open");
+    formData.append("appliedLoan", appliedLoan);
+    formData.append("description", description);
+    if (file) {
+      formData.append("file", file);
+    }
+
+    const res = await fetch('/api/userqueries', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (res.ok) {
+      const newQuery = await res.json();
+      addQuery(newQuery);
+      toast.success("Query created successfully!");
+      addNotification({
+        message: "New query created successfully!",
+        referenceNo,
+        fullName: "Linda Mangena",
+        queryType,
+        queryDate: new Date().toLocaleString(),
+        queryStatus: "Open",
+        description,
+        attachments: file ? URL.createObjectURL(file) : undefined,
+      });
+      onClose();
+      router.push("/frontend/queries");
+    } else {
+      console.error("Failed to submit query");
+      toast.error("Failed to submit query");
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +73,7 @@ const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose, addQuery }) => {
     <form onSubmit={handleSubmit}>
       <h2 className="text-xl font-bold mb-4">New Query</h2>
       <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="queryType"
-        >
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="queryType">
           Query Type
         </label>
         <select
@@ -66,10 +91,7 @@ const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose, addQuery }) => {
         </select>
       </div>
       <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="appliedLoan"
-        >
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="appliedLoan">
           Applied Loans
         </label>
         <select
@@ -88,10 +110,7 @@ const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose, addQuery }) => {
         </select>
       </div>
       <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="description"
-        >
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
           Describe
         </label>
         <textarea
@@ -103,10 +122,7 @@ const NewQueryForm: React.FC<NewQueryFormProps> = ({ onClose, addQuery }) => {
         />
       </div>
       <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="file"
-        >
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="file">
           Attachments
         </label>
         <input
