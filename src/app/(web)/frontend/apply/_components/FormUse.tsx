@@ -5,6 +5,7 @@ import FormSections from "./FormSections";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { formatAmount, isNumeric } from "@/utils/amountFormat";
 
 type FormData = {
   [key: string]: any;
@@ -18,13 +19,26 @@ export default function FormUse({ selectedOption }: TitleProp) {
   const [formData, setFormData] = useState<FormData>({});
   const router = useRouter();
 
+  const excludeFields = [
+    "phone",
+    "idNumber",
+    "address",
+    "postalCode"
+  ];
+
   const handleChange = (e: any) => {
     const { name, value, type, files } = e.target;
+    let newValue = value;
+
+    if (!excludeFields.includes(name) && isNumeric(value.replace(/,/g, ""))) {
+      newValue = formatAmount(value.replace(/,/g, ""));
+    }
+
 
     if (type === "file") {
       setFormData((prevData) => ({ ...prevData, [name]: files?.[0].name }));
     } else {
-      setFormData((prevData) => ({ ...prevData, [name]: value }));
+      setFormData((prevData) => ({ ...prevData, [name]: newValue }));
     }
   };
 
@@ -55,6 +69,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             value={formData.fullName || ""}
             onChange={handleChange}
             placeholder="Enter Contact Person"
+            className="border border-gray-200 rounded-lg p-2 w-full"
           />
         </div>
         <div className="grid gap-y-4">
@@ -65,6 +80,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             value={formData.idNumber || ""}
             onChange={handleChange}
             placeholder="Enter Id Number"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           />
         </div>
       </div>
@@ -77,6 +93,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             value={formData.email || ""}
             onChange={handleChange}
             placeholder="Enter Email"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           />
         </div>
         <div className="grid gap-y-4">
@@ -87,6 +104,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             value={formData.phone || ""}
             onChange={handleChange}
             placeholder="Enter Phone Number"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           />
         </div>
       </div>
@@ -99,6 +117,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             value={formData.address || ""}
             onChange={handleChange}
             placeholder="Enter Address"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           />
         </div>
         <div className="grid gap-y-4">
@@ -109,6 +128,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             value={formData.city || ""}
             onChange={handleChange}
             placeholder="Enter City"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           />
         </div>
       </div>
@@ -119,8 +139,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="country"
             value={formData.country || ""}
             onChange={handleChange}
-            className="border border-gray-200 rounded-lg p-2 bg-white"
-          >
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"          >
             <option value="" disabled>
               Select Country
             </option>
@@ -136,8 +155,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="province"
             value={formData.province || ""}
             onChange={handleChange}
-            className="border border-gray-200 rounded-lg p-2 bg-white"
-          >
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"          >
             <option value="" disabled>
               Select Province
             </option>
@@ -160,6 +178,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             value={formData.postalCode || ""}
             onChange={handleChange}
             placeholder="Enter Postal Code"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           />
         </div>
       </div>
@@ -170,8 +189,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="projectName"
             value={formData.projectName || ""}
             onChange={handleChange}
-            className="border border-gray-200 rounded-lg p-2 bg-white"
-          >
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"          >
             <option value="" disabled>
               Select Project
             </option>
@@ -195,8 +213,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="applicantType"
             value={formData.applicantType || ""}
             onChange={handleChange}
-            className="border border-gray-200 rounded-lg p-2 bg-white"
-          >
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"          >
             <option value="" disabled>
               Select Applicant Type
             </option>
@@ -214,6 +231,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                 value={formData.nameOfCompany || ""}
                 onChange={handleChange}
                 placeholder="Enter Name of Company"
+                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
               />
             </div>
           </>
@@ -227,8 +245,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="applicationType"
             value={formData.applicationType || ""}
             onChange={handleChange}
-            className="border border-gray-200 rounded-lg p-2 bg-white"
-          >
+            className="mt-1 block w-1/2 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"            >
             <option value="" disabled>
               Select Application Type
             </option>
@@ -245,8 +262,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                   name="investmentType"
                   value={formData.investmentType || ""}
                   onChange={handleChange}
-                  className="border border-gray-200 rounded-lg p-2 bg-white"
-                >
+                  className="mt-1 block w-1/2 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"                >
                   <option value="" disabled>
                     Select Investment Type
                   </option>
@@ -265,6 +281,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       value={formData.investmentAmount || ""}
                       onChange={handleChange}
                       placeholder="Enter Investment Amount"
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
                   </div>
                   <div className="grid gap-y-4">
@@ -275,6 +292,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       value={formData.equityAmount || ""}
                       onChange={handleChange}
                       placeholder="Enter Equity Amount"
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
                   </div>
                 </div>
@@ -288,6 +306,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       value={formData.investmentAmount || ""}
                       onChange={handleChange}
                       placeholder="Enter Investment Amount"
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
                   </div>
                 </>
@@ -305,6 +324,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                 value={formData.loanAmount || ""}
                 onChange={handleChange}
                 placeholder="Enter Amount"
+                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
               />
             </div>
           )}
