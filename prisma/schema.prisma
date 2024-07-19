@@ -57,6 +57,8 @@ model Applications {
   City           String
   Province       String
   PostalCode     String
+  sourceOfFunds  String?
+  purposeOfInvestment String?
   LoanType       String
   Rate           String?
   Docs           String?

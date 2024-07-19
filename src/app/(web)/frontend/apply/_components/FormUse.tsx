@@ -356,6 +356,45 @@ export default function FormUse({ selectedOption }: TitleProp) {
         </div>
       </div>
 
+      <div className="flex justify-between items-center">
+        <div>
+          <label htmlFor="sourceOfFunds">Source of Funds:</label>
+          <select
+            name="sourceOfFunds"
+            value={formData.sourceOfFunds || ""}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
+            <option value="" disabled>
+              Select Source of Funds
+            </option>
+            <option value="gifts">Gifts / inheritance / winnings</option>
+            <option value="trade">Trade / business</option>
+            <option value="credit">Credit</option>
+            <option value="child">Child / spousal support payments</option>
+            <option value="tax">Tax refund</option>
+            <option value="savings"> Savings</option>
+            <option value="salary">Salary / bonus</option>
+            <option value="retirement">Retirement / insurance pay out</option>
+            <option value="passiveIncome">Passive income (Rental, Dividends, Interest)</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="purposeOfInvestment">Purpose of Investment:</label>
+          <select name="purposeOfInvestment" value={formData.purposeOfInvestment || ""} onChange={handleChange} className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white">
+            <option value="" disabled>
+              Select Purpose of Investment
+            </option>
+            <option value="startBusiness">Start and expand a business</option>
+            <option value="educationSavings">Education savings</option>
+            <option value="foreignExchangeHedging">Foreign exchange hedging</option>
+            <option value="saveForRetirement">Save for retirement / financial goals</option>
+            <option value="windingUpEstate">Winding up estate</option>
+          </select>
+        </div>
+      </div>
+
       
 
 
