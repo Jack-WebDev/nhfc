@@ -6,8 +6,10 @@ import NewQueryForm from "./NewQueryForm";
 import ViewQuery from "./ViewQuery";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "lucide-react";
+import axios from "axios";
 
 type Query = {
+  id: string; // Assuming you have an id field for the query
   referenceNo: string;
   fullName: string;
   queryType: string;
@@ -18,42 +20,6 @@ type Query = {
   replyTo?: string;
   attachments?: string[];
 };
-
-const initialQueries: Query[] = [
-  {
-    referenceNo: "100250",
-    fullName: "Linda Mangena",
-    queryType: "Complaint",
-    queryDate: "18 Aug 2023 11h35",
-    queryStatus: "Open",
-    description: "Description for Complaint",
-    appliedLoan: "#123456 Loan 1",
-    replyTo: "",
-    attachments: []
-  },
-  {
-    referenceNo: "100560",
-    fullName: "Linda Mangena",
-    queryType: "Enquiry",
-    queryDate: "18 Aug 2023 11h35",
-    queryStatus: "Open",
-    description: "Description for Enquiry",
-    appliedLoan: "#123457 Loan 2",
-    replyTo: "",
-    attachments: []
-  },
-  {
-    referenceNo: "102350",
-    fullName: "Linda Mangena",
-    queryType: "Case",
-    queryDate: "18 Aug 2023 11h35",
-    queryStatus: "Closed",
-    description: "Description for Case",
-    appliedLoan: "#123458 Loan 3",
-    replyTo: "",
-    attachments: []
-  },
-];
 
 const statusStyles: { [key in Query["queryStatus"]]: string } = {
   Open: "bg-green-200 text-green-800",
@@ -70,29 +36,17 @@ const QueriesList: React.FC = () => {
   const [selectedQuery, setSelectedQuery] = useState<Query | null>(null);
 
   useEffect(() => {
-    const savedQueries = localStorage.getItem("queries");
-    if (savedQueries) {
+    const fetchQueries = async () => {
       try {
-        const parsedQueries = JSON.parse(savedQueries);
-        if (Array.isArray(parsedQueries)) {
-          setQueries(parsedQueries);
-        } else {
-          setQueries(initialQueries);
-        }
+        const response = await axios.get("/api/userqueries");
+        setQueries(response.data);
       } catch (error) {
-        console.error("Error parsing saved queries from localStorage:", error);
-        setQueries(initialQueries);
+        console.error("Error fetching queries:", error);
       }
-    } else {
-      setQueries(initialQueries);
-    }
-  }, []);
+    };
 
-  useEffect(() => {
-    if (queries.length > 0) {
-      localStorage.setItem("queries", JSON.stringify(queries));
-    }
-  }, [queries]);
+    fetchQueries();
+  }, []);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -112,22 +66,45 @@ const QueriesList: React.FC = () => {
     setSelectedQuery(null);
   };
 
-  const addQuery = (newQuery: Query) => {
-    setQueries((prevQueries) => {
-      const updatedQueries = [...prevQueries, newQuery];
-      localStorage.setItem("queries", JSON.stringify(updatedQueries));
-      return updatedQueries;
-    });
+  const addQuery = async (newQuery: Query) => {
+    try {
+      const response = await axios.post("/api/userqueries", newQuery);
+      setQueries((prevQueries) => [...prevQueries, response.data]);
+    } catch (error) {
+      console.error("Error adding query:", error);
+    }
   };
 
-  const saveQuery = (updatedQuery: Query) => {
-    setQueries((prevQueries) => {
-      const updatedQueries = prevQueries.map((query) =>
-        query.referenceNo === updatedQuery.referenceNo ? updatedQuery : query
+  const saveQuery = async (updatedQuery: Query) => {
+    try {
+      const response = await axios.patch(
+        `/api/userqueries/${updatedQuery.id}`,
+        updatedQuery
       );
-      localStorage.setItem("queries", JSON.stringify(updatedQueries));
-      return updatedQueries;
-    });
+      setQueries((prevQueries) =>
+        prevQueries.map((query) =>
+          query.id === updatedQuery.id ? response.data : query
+        )
+      );
+    } catch (error) {
+      console.error("Error saving query:", error);
+    }
+  };
+
+  const closeQuery = async (query: Query) => {
+    try {
+      const response = await axios.patch(`/api/userqueries`, {
+        id: query.id,
+        queryStatus: "Closed",
+      });
+      setQueries((prevQueries) =>
+        prevQueries.map((q) =>
+          q.id === query.id ? { ...q, queryStatus: "Closed" } : q
+        )
+      );
+    } catch (error) {
+      console.error("Error closing query:", error);
+    }
   };
 
   return (
@@ -272,15 +249,7 @@ const QueriesList: React.FC = () => {
                                       ? "bg-gray-100 text-gray-900"
                                       : "text-gray-700"
                                   } group flex items-center px-4 py-2 text-sm w-full`}
-                                  onClick={() =>
-                                    setQueries((prevQueries) =>
-                                      prevQueries.map((q) =>
-                                        q.referenceNo === query.referenceNo
-                                          ? { ...q, queryStatus: "Closed" }
-                                          : q
-                                      )
-                                    )
-                                  }
+                                  onClick={() => closeQuery(query)}
                                 >
                                   Close Query
                                 </button>

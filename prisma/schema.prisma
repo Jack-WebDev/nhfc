@@ -57,15 +57,11 @@ model Applications {
   City           String
   Province       String
   PostalCode     String
-  sourceOfFunds  String?
-  purposeOfInvestment String?
   LoanType       String
   Rate           String?
   Docs           String?
   Country        String?
   LoanAmount     String
-  EquityAmount   String?
-  InvestmentAmount String?
   LoanStatus     String   @default("Pending")
   createdAt      DateTime @default(now())
 }
