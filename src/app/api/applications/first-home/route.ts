@@ -72,8 +72,6 @@ type PreviousEmploymentData = {
   contactPersonEmail: string;
 };
 
-
-
 type FormData = {
   loanType: string;
   personalData: PersonalData;
@@ -111,7 +109,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const id = generateUniqueId();
     // Access the data here
     const {
-      loanType,
       personalData,
       addressData,
       supportData,
@@ -121,7 +118,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       previousEmploymentData,
     } = data;
     console.log(
-      loanType,
       personalData,
       addressData,
       supportData,

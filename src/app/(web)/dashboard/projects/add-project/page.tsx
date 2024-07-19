@@ -1,7 +1,7 @@
 "use client";
 
 import axios, { AxiosError } from "axios";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -29,6 +29,19 @@ type ProjectProps = {
   sportsField: string;
   implementationPartners: string;
 };
+type Row = {
+  typology: string;
+  description: string;
+  qty: number;
+  sellingPrice: number;
+  income: number;
+};
+
+const initialRows: Row[] = [
+  { typology: 'Type A', description: 'Description A', qty: 10, sellingPrice: 50, income: 500 },
+  { typology: 'Type B', description: 'Description B', qty: 20, sellingPrice: 30, income: 600 },
+  { typology: 'Type C', description: 'Description C', qty: 15, sellingPrice: 40, income: 600 },
+];
 
 export default function AddProject() {
   const [formData, setFormData] = useState<ProjectProps>({
@@ -56,6 +69,20 @@ export default function AddProject() {
     implementationPartners: "",
   });
   const router = useRouter();
+  const [rows, setRows] = useState<Row[]>(initialRows);
+
+  const addRow = (e:any) => {
+    e.preventDefault();
+
+    const newRow: Row = {
+      typology: '',
+      description: '',
+      qty: 0,
+      sellingPrice: 0,
+      income: 0,
+    };
+    setRows([...rows, newRow]);
+  };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -64,11 +91,9 @@ export default function AddProject() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Form Data:",  formData );
+    console.log("Form Data:", formData);
     try {
-      const res = await axios.post("/api/projects", 
-        formData,
-      );
+      const res = await axios.post("/api/projects", formData);
       router.push("/frontend/projects");
       console.log(res);
     } catch (error) {
@@ -78,8 +103,10 @@ export default function AddProject() {
   return (
     <div>
       <ArrowLeft onClick={() => router.back()} className="cursor-pointer" />
-      <h1 className="text-3xl text-blue-500 font-medium text-center my-8">Add New Project</h1>
-      <form className="bg-white rounded-xl p-4 grid justify-items-center w-[70%] mx-auto">
+      <h1 className="text-3xl text-blue-500 font-medium text-center my-8">
+        Add New Project
+      </h1>
+      <form className="bg-white rounded-xl p-8 grid justify-items-center w-[70%] mx-auto">
         <div className="flex items-center justify-between w-full gap-x-12">
           <div className="grid gap-y-2 w-full">
             <label>Project Name</label>
@@ -88,7 +115,7 @@ export default function AddProject() {
               name="projectName"
               value={formData.projectName}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
           <div className="grid gap-y-2 w-full">
@@ -98,7 +125,7 @@ export default function AddProject() {
               name="projectCode"
               value={formData.projectCode}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
         </div>
@@ -109,7 +136,7 @@ export default function AddProject() {
               name="programme"
               value={formData.programme}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Project Program</option>
               <option value="Agriculture">Agriculture</option>
@@ -126,7 +153,7 @@ export default function AddProject() {
               name="projectStatus"
               value={formData.projectStatus}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Project Status</option>
               <option value="Active">Active</option>
@@ -135,6 +162,7 @@ export default function AddProject() {
             </select>
           </div>
         </div>
+        <h2 className="text-2xl font-semibold my-8">Project Location</h2>
         <div className="flex items-center justify-between w-full gap-x-12">
           <div className="grid gap-y-2 w-full">
             <label>Province</label>
@@ -142,7 +170,7 @@ export default function AddProject() {
               name="province"
               value={formData.province}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Province</option>
               <option value="Gauteng">Gauteng</option>
@@ -163,7 +191,7 @@ export default function AddProject() {
               name="municipality"
               value={formData.municipality}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Municipality</option>
               <option value="Buffalo City">Buffalo City</option>
@@ -194,7 +222,7 @@ export default function AddProject() {
               name="ward"
               value={formData.ward}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Ward</option>
               <option value="Buffalo City">Buffalo City</option>
@@ -210,7 +238,7 @@ export default function AddProject() {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
         </div>
@@ -222,7 +250,7 @@ export default function AddProject() {
             name="gpscoordinates"
             value={formData.gpscoordinates}
             onChange={handleChange}
-            className="border border-gray-500 rounded-lg"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           />
         </div>
 
@@ -233,7 +261,7 @@ export default function AddProject() {
               name="projectOwner"
               value={formData.projectOwner}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Project Owner</option>
               <option value="Buffalo City">Buffalo City</option>
@@ -248,7 +276,7 @@ export default function AddProject() {
               name="developer"
               value={formData.developer}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Developer</option>
               <option value="Buffalo City">Buffalo City</option>
@@ -265,7 +293,7 @@ export default function AddProject() {
             name="projectLiason"
             value={formData.projectLiason}
             onChange={handleChange}
-            className="border border-gray-500 rounded-lg p-1 bg-white"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           >
             <option value="">Select Project Liason</option>
             <option value="Buffalo City">Buffalo City</option>
@@ -275,6 +303,10 @@ export default function AddProject() {
           </select>
         </div>
 
+        <h2 className="text-2xl font-semibold my-8">
+          Local Businesses Impacted
+        </h2>
+
         <div className="flex items-center justify-between w-full gap-x-12">
           <div className="grid w-full">
             <label htmlFor="materialSupplier">Material Supplier</label>
@@ -282,7 +314,7 @@ export default function AddProject() {
               name="materialSupplier"
               value={formData.materialSupplier}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Material Supplier</option>
               <option value="Buffalo City">Buffalo City</option>
@@ -297,7 +329,7 @@ export default function AddProject() {
               name="contractor"
               value={formData.contractor}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg p-1 bg-white"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             >
               <option value="">Select Contractor</option>
               <option value="Buffalo City">Buffalo City</option>
@@ -307,17 +339,69 @@ export default function AddProject() {
             </select>
           </div>
         </div>
+        <h2 className="text-2xl font-semibold my-8">
+          Deliverables / Outputs / Outcomes
+        </h2>
         <div className="grid justify-self-start w-full">
           <label htmlFor="deliverablesSummary">Deliverables Summary</label>
           <textarea
             name="deliverablesSummary"
             value={formData.deliverablesSummary}
             onChange={handleChange}
-            className="border border-gray-500 rounded-lg"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           ></textarea>
         </div>
-
-        <div className="grid grid-cols-2 gap-4">
+        <h2 className="text-2xl font-semibold my-8">Outcomes / Outputs</h2>
+        <div>
+      <table className="border border-gray-300 rounded-xl">
+        <thead className="bg-gray-300">
+          <tr>
+            <th>Typology</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Selling Price</th>
+            <th>Income</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr key={index} className="border-b-2 border-gray-300">
+              <td><input type="text" value={row.typology} onChange={(e) => {
+                const newRows = [...rows];
+                newRows[index].typology = e.target.value;
+                setRows(newRows);
+              }} /></td>
+              <td><input type="text" value={row.description} onChange={(e) => {
+                const newRows = [...rows];
+                newRows[index].description = e.target.value;
+                setRows(newRows);
+              }} /></td>
+              <td><input type="number" value={row.qty} onChange={(e) => {
+                const newRows = [...rows];
+                newRows[index].qty = Number(e.target.value);
+                setRows(newRows);
+              }} /></td>
+              <td><input type="number" value={row.sellingPrice} onChange={(e) => {
+                const newRows = [...rows];
+                newRows[index].sellingPrice = Number(e.target.value);
+                setRows(newRows);
+              }} /></td>
+              <td>{row.qty * row.sellingPrice}</td>
+              <td>
+                <button onClick={() => {
+                  const newRows = rows.filter((_, i) => i !== index);
+                  setRows(newRows);
+                }}><Trash2 size={18} className="text-red-500" /></button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button onClick={addRow} className="bg-blue-500 text-white rounded-lg py-2 px-4 mt-8">Add Outcome</button>
+    </div>
+        <h2 className="text-2xl font-semibold my-8">Job Creations</h2>
+        <div className="grid grid-cols-2 gap-4 w-full">
           <div className="grid gap-y-2">
             <label htmlFor="skilledWorkers">Skilled Workers</label>
             <input
@@ -325,7 +409,7 @@ export default function AddProject() {
               name="skilledWorkers"
               value={formData.skilledWorkers}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
           <div className="grid gap-y-2">
@@ -335,10 +419,14 @@ export default function AddProject() {
               name="unskilledWorkers"
               value={formData.unskilledWorkers}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
-
+        </div>
+          <h2 className="text-2xl font-semibold my-8">
+            Community Infrastructure
+          </h2>
+        <div className="grid grid-cols-2 gap-4 w-full">
           <div className="grid gap-y-2">
             <label htmlFor="schools">Schools</label>
             <input
@@ -346,7 +434,7 @@ export default function AddProject() {
               name="schools"
               value={formData.schools}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
           <div className="grid gap-y-2">
@@ -356,7 +444,7 @@ export default function AddProject() {
               name="clinics"
               value={formData.clinics}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
 
@@ -367,7 +455,7 @@ export default function AddProject() {
               name="communityHalls"
               value={formData.communityHalls}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
           <div className="grid gap-y-2">
@@ -377,12 +465,12 @@ export default function AddProject() {
               name="sportsField"
               value={formData.sportsField}
               onChange={handleChange}
-              className="border border-gray-500 rounded-lg"
+              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
             />
           </div>
         </div>
 
-        <div className="grid justify-self-start">
+        <div className="grid justify-self-center my-8">
           <label htmlFor="implementationPartners">
             Implementation Partners
           </label>
@@ -390,7 +478,7 @@ export default function AddProject() {
             name="implementationPartners"
             value={formData.implementationPartners}
             onChange={handleChange}
-            className="border border-gray-500 rounded-lg p-1 bg-white"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
           >
             <option value="">Select Implementation Partners</option>
             <option value="Buffalo City">Buffalo City</option>
@@ -402,9 +490,9 @@ export default function AddProject() {
 
         <button
           onClick={handleSubmit}
-          className="bg-blue-500 text-white py-2 px-8 rounded-lg"
+          className="bg-blue-500 text-white py-2 px-8 rounded-lg grid justify-self-end"
         >
-          Submit
+          Add Project
         </button>
       </form>
     </div>

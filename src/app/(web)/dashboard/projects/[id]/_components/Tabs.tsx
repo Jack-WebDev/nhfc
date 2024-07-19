@@ -7,10 +7,71 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function TabsComponent() {
+  const typologys = [
+    {
+      typology: "INV001",
+      description: "Paid",
+      qty: "R250.00",
+      sellingPrice: "3765",
+      income: "R1400533"
+    },
+    {
+      typology: "INV002",
+      description: "Pending",
+      qty: "R150.00",
+      sellingPrice: "32986",
+      income: "R1400533"
+    },
+    {
+      typology: "INV003",
+      description: "Unpaid",
+      qty: "R350.00",
+      sellingPrice: "2000",
+      income: "R1400533"
+    },
+    {
+      typology: "INV004",
+      description: "Paid",
+      qty: "R450.00",
+      sellingPrice: "3765",
+      income: "R1400533"
+    },
+    {
+      typology: "INV005",
+      description: "Paid",
+      qty: "R550.00",
+      sellingPrice: "32986",
+      income: "R1400533"
+    },
+    {
+      typology: "INV006",
+      description: "Pending",
+      qty: "R200.00",
+      sellingPrice: "2000",
+      income: "R1400533"
+    },
+    {
+      typology: "INV007",
+      description: "Unpaid",
+      qty: "R300.00",
+      sellingPrice: "3765",
+      income: "R1400533"
+    },
+  ];
   return (
     <Tabs defaultValue="deliverables">
       <TabsList className="flex items-center justify-between py-4 bg-transparent">
@@ -28,22 +89,43 @@ export function TabsComponent() {
             <CardTitle>Deliverables / Outputs / Outcomes</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <ul className="list-disc list-inside">
-              <li>
-                10,000+ housing units (mix of social housing, RDP houses, and
-                bonded units)
-              </li>
-              <li>4 schools (2 primary, 2 secondary)</li>
-              <li>2 clinics</li>
-              <li>5 recreational facilities</li>
-              <li>1 shopping center</li>
-              <li>20 hectares of green spaces and parks</li>
-              <li>Improved public transport infrastructure</li>
-              <li>8,000+ temporary jobs during construction</li>
-              <li>1,500+ permanent jobs post-completion</li>
-            </ul>
+            Deliverables Summary:
+            <br />
+            This project aims to provide 10,000+ housing units, including a mix
+            of social housing, RDP houses, and bonded units. The project also
+            includes the construction of 4 schools, 2 clinics, 5 recreational
+            facilities, and a shopping center, spread across 20 hectares of
+            green spaces and parks.
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Typology</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Qty</TableHead>
+                  <TableHead >Selling Price</TableHead>
+                  <TableHead >Income</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {typologys.map((typology) => (
+                  <TableRow key={typology.typology}>
+                    <TableCell className="font-medium">
+                      {typology.typology}
+                    </TableCell>
+                    <TableCell>{typology.description}</TableCell>
+                    <TableCell>{typology.sellingPrice}</TableCell>
+                    <TableCell>
+                      {typology.qty}
+                    </TableCell>
+                    <TableCell>
+                      {typology.income}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+
+            </Table>
           </CardContent>
- 
         </Card>
       </TabsContent>
       <TabsContent value="implement">
@@ -52,23 +134,15 @@ export function TabsComponent() {
             <CardTitle>Implement Partners</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <ul className="list-disc ">
-              <li>
-                National Housing Finance Corporation (NHFC) - Project Owner
-              </li>
-              <li>Calgro M3 - Developer</li>
-              <li>City of Johannesburg - Municipal Partner</li>
-              <li>
-                Gauteng Department of Human Settlements - Provincial Partner
-              </li>
-              <li>
-                Department of Water and Sanitation - Infrastructure Support
-              </li>
-              <li>Eskom - Electricity Provider</li>
-              <li>Johannesburg Water - Water and Sanitation</li>
-              <li>Johannesburg Roads Agency - Road Infrastructure</li>
-              <li>Local Community Organizations - Community Engagement</li>
-            </ul>
+              <h2>Partners:</h2>
+              <br/>
+              <div className="flex justify-evenly items-center flex-wrap  gap-2">
+
+              <span className="bg-gray-100 text-black p-2 rounded-xl">Eskom</span>
+              <span className="bg-gray-100 text-black p-2 rounded-xl">City of Johannesburg</span>
+              <span className="bg-gray-100 text-black p-2 rounded-xl">Gauteng Department of Human Settlements</span>
+              <span className="bg-gray-100 text-black p-2 rounded-xl">Department of Water and Sanitation</span>
+              </div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -78,20 +152,35 @@ export function TabsComponent() {
             <CardTitle>Risk and Assumption</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <ul className="list-disc list-inside">
-              <h2>Risks</h2>
-              <li>Delays in construction due to unforeseen circumstances</li>
-              <li>Budget overruns</li>
-              <li>Community resistance or conflicts</li>
-              <li>Changes in government policies or regulations</li>
-              <li>Environmental challenges</li>
-              <h2>Assumptions</h2>
-              <li>Continued government support and funding</li>
-              <li>Stable economic conditions</li>
-              <li>Availability of skilled labor</li>
-              <li>Timely delivery of materials and resources</li>
-              <li>Positive community engagement and acceptance</li>
-            </ul>
+          <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Typology</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Qty</TableHead>
+                  <TableHead >Selling Price</TableHead>
+                  <TableHead >Income</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {typologys.map((typology) => (
+                  <TableRow key={typology.typology}>
+                    <TableCell className="font-medium">
+                      {typology.typology}
+                    </TableCell>
+                    <TableCell>{typology.description}</TableCell>
+                    <TableCell>{typology.sellingPrice}</TableCell>
+                    <TableCell>
+                      {typology.qty}
+                    </TableCell>
+                    <TableCell>
+                      {typology.income}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+
+            </Table>
           </CardContent>
         </Card>
       </TabsContent>
@@ -101,9 +190,9 @@ export function TabsComponent() {
             <CardTitle>Finance</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <ul className="list-disc list-inside">
               <h2>Total Project Value: R3.5 Billion</h2>
-              <li>Funding Sources:</li>
+              Funding Sources:
+            <ul className="grid grid-cols-2 list-disc list-inside">
               <li>NHFC Loan: R1.5 Billion</li>
               <li>Government Subsidy: R1 Billion</li>
               <li>Private Sector Investment: R800 Million</li>
