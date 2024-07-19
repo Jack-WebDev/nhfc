@@ -8,6 +8,12 @@ import { toast } from "react-toastify";
 import { formatAmount, isNumeric } from "@/utils/amountFormat";
 
 type FormData = {
+  applicationType?: string;
+  investmentType?: string;
+  investmentAmount?: string;
+  loanAmount?: string;
+  equityAmount?: string;
+  docs?: string;
   [key: string]: any;
 };
 
@@ -34,12 +40,19 @@ export default function FormUse({ selectedOption }: TitleProp) {
       newValue = formatAmount(value.replace(/,/g, ""));
     }
 
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [name]: newValue };
 
-    if (type === "file") {
-      setFormData((prevData) => ({ ...prevData, [name]: files?.[0].name }));
-    } else {
-      setFormData((prevData) => ({ ...prevData, [name]: newValue }));
-    }
+      if (updatedData.investmentAmount && updatedData.equityAmount) {
+        const investmentAmount = parseFloat(updatedData.investmentAmount.replace(/,/g, ""));
+        const equityAmount = parseFloat(updatedData.equityAmount.replace(/,/g, ""));
+        const loanAmount = (investmentAmount - equityAmount).toFixed(2);
+
+        updatedData.loanAmount = formatAmount(loanAmount.toString());
+      }
+
+      return updatedData;
+    });
   };
 
   const handleSubmit = async (e: any) => {
@@ -238,7 +251,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
         ) : null}
       </div>
 
-      <div>
+      <div className="flex justify-between items-center">
         <div>
           <label htmlFor="applicationType">Application Type:</label>
           <select
@@ -284,6 +297,18 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
                   </div>
+                  <div>
+                    <label htmlFor="loanAmount">Loan Amount:</label>
+                    <input
+                      type="text"
+                      name="loanAmount"
+                      value={formData.loanAmount || ""}
+                      onChange={handleChange}
+                      readOnly
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                    />
+                  </div>
+                
                   <div className="grid gap-y-4">
                     <label htmlFor="equityAmount">Equity Amount:</label>
                     <input

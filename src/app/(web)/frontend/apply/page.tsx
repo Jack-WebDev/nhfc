@@ -108,7 +108,7 @@ export default function ApplicationProcess() {
     },
   });
 
-  const projectDetails:any = {
+  const projectDetails: any = {
     fleurhofIntegratedHousingDevelopment: {
       name: "Fleurhof Integrated Housing Development",
       summary:
@@ -178,7 +178,7 @@ export default function ApplicationProcess() {
     }));
     if (currentStep === 4) {
       const isCombinedIncomeInRange =
-        combinedIncome >= 10000 && combinedIncome <= 20000;
+        combinedIncome >= 3500 && combinedIncome <= 22000;
       setIsIncomeInRange(isCombinedIncomeInRange);
       setIsSubmitDisabled(!isCombinedIncomeInRange);
       if (!isCombinedIncomeInRange) {
@@ -411,6 +411,13 @@ export default function ApplicationProcess() {
                           "The SHI or ODA must be allocated a CCG",
                           "The project feasability must be financially viable per NHFC criteria.",
                         ]}
+                        documents={[
+                          "Certificate of Incorporation or Registration",
+                          "Memorandum of Incorporation (MOI)",
+                          "Registration documents as a Non-Profit Company (if applicable)",
+                          "Accreditation documents as a Social Housing Institution (SHI) or Other Developmental Agency (ODA)",
+                          "Certificate or official documentation confirming the allocation of a Community Credit Guarantee (CCG)",
+                        ]}
                         itemsPerGroup={2}
                       />
 
@@ -431,6 +438,10 @@ export default function ApplicationProcess() {
                           "Cashflow projections must be financially viable per NHFC criteria",
                           "Equity contribution is required and is determined on a case by case basis to enable acceptable gearing levels.",
                         ]}
+                        documents={[
+                          "Registration certificate with the National Credit Regulator (NCR)",
+                          "Documentation showing supplementary registration as a developmental credit provider (if applicable)",
+                        ]}
                         itemsPerGroup={2}
                       />
                       <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
@@ -448,6 +459,15 @@ export default function ApplicationProcess() {
                           "Must be registered with the NHBRC and have a CIDB grading and",
                           "The project feasibility must be financially viable per NHFC criteria",
                           "Equity contribution is required and is determined on a case by case basis to enable acceptable gearing levels.",
+                        ]}
+                        documents={[
+                          "NHBRC registration certificate",
+                          "CIDB grading certificate",
+                          "Procurement strategy document",
+                          "Training and support plan for small contractors",
+                          "Financial projections (income statement, balance sheet, cash flow statement)",
+                          "Feasibility study report",
+                          "Audited financial statements (past 3-5 years)",
                         ]}
                         itemsPerGroup={2}
                       />
@@ -467,6 +487,12 @@ export default function ApplicationProcess() {
                           "The project feasability must be financially viable per NHFC criteria.",
                           "The proposed development must address core NHFC mandate and",
                         ]}
+                        documents={[
+                          "Financial projections (income statement, balance sheet, cash flow statement)",
+                          "Feasibility study report",
+                          "Audited financial statements (past 3-5 years)",
+                          "NHFC-specific financial viability criteria documentation",
+                        ]}
                         itemsPerGroup={2}
                       />
                       <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
@@ -477,13 +503,19 @@ export default function ApplicationProcess() {
                   )}
                   {selectedOption === "Private Rental Housing Finance" && (
                     <div>
-                      {" "}
                       <Criteria
                         items={[
                           "The borrowing entity must be a registered legal entity",
                           "The project feasability must be financially viable per NHFC criteria.",
                           "The proposed development must address core NHFC mandate and",
                           "Equity contribution is required and is determined on a case-by-case basis to enable acceptable gearing levels",
+                        ]}
+                        documents={[
+                          "Detailed business plan",
+                          "Financial projections (income statement, balance sheet, cash flow statement)",
+                          "Feasibility study report",
+                          "Audited financial statements (past 3-5 years)",
+                          "NHFC-specific financial viability criteria documentation",
                         ]}
                         itemsPerGroup={2}
                       />
@@ -505,6 +537,17 @@ export default function ApplicationProcess() {
                           "NHFC is willing to submit unsolicited proposals well as respond to invitation",
                           "The project feasability must be financially viable per NHFC criteria.",
                         ]}
+                        documents={[
+                          "Award letter or contract from a governmental department or private sector",
+                          "NHBRC registration certificate",
+                          "CIDB grading certificate",
+                          "Procurement strategy document",
+                          "Training and support plan for small contractors",
+                          "Agreements for working capital financing solutions",
+                          "Documentation of capital budget transfer to NHFC",
+                          "Approvals from the National Treasury (if applicable)",
+                          "NHFC service fee agreement",
+                        ]}
                         itemsPerGroup={2}
                       />
                       <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
@@ -521,6 +564,14 @@ export default function ApplicationProcess() {
                           "There must be a demonstrable market opportunity aligned with the NHFC mandate",
                           "A financial co-partnership arrangement must be demonstrated through the project sponsor contributing material risk capital to the project/venture",
                           "The project feasibility must be financially viable per NHFC criteria.",
+                        ]}
+                        documents={[
+                          "BEE certificate",
+                          "Documentation showing the involvement of youth and women in leadership positions",
+                          "Demonstrable market opportunity report aligned with NHFC mandate",
+                          "Documentation showing the source and amount of equity contribution",
+                          "Bank statements or proof of funds",
+                          "Equity investment agreements or letters of commitment",
                         ]}
                         itemsPerGroup={2}
                       />
@@ -855,6 +906,7 @@ export default function ApplicationProcess() {
                                 </option>
                               </select>
                             </label>
+                            <div className="grid">
 
                             <label>
                               Project Name:
@@ -887,13 +939,15 @@ export default function ApplicationProcess() {
                             </label>
                             {selectedProject && (
                               <div className="mt-4 p-4 border rounded-lg bg-gray-100">
-                                <h2 className="text-xl font-semibold">
+                                <Image src={"/toek_1.jpeg"} alt="project" width={200} height={200} style={{width: "100%", height: "auto"}} />
+                                <h2 className="text-xl font-semibold mt-4">
                                   {selectedProject.name}
                                 </h2>
                                 <p>{selectedProject.summary}</p>
-                                <button>View Project Details</button>
+                                <button className="bg-blue-500 text-white py-2 px-8 rounded-lg mt-4">View Project Details</button>
                               </div>
                             )}
+                            </div>
 
                             <label className="block">
                               <span>Typology:</span>
@@ -1019,8 +1073,8 @@ export default function ApplicationProcess() {
                             </label>
                             <label className="block col-span-2">
                               <span className="text-gray-700">
-                                Combined Monthly Household Income (between R6000
-                                - R12000):
+                                Combined Monthly Household Income (between R3500
+                                - R22000):
                               </span>
                               <input
                                 type="text"

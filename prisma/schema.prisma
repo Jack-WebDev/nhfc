@@ -62,6 +62,8 @@ model Applications {
   Docs           String?
   Country        String?
   LoanAmount     String
+  EquityAmount   String?
+  InvestmentAmount String?
   LoanStatus     String   @default("Pending")
   createdAt      DateTime @default(now())
 }
