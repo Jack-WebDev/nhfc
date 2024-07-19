@@ -907,46 +907,53 @@ export default function ApplicationProcess() {
                               </select>
                             </label>
                             <div className="grid">
-
-                            <label>
-                              Project Name:
-                              <select
-                                name="projectName"
-                                value={formData.supportData.projectName}
-                                onChange={handleChange}
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                              >
-                                <option value="">Select Project</option>
-                                <option value="fleurhofIntegratedHousingDevelopment">
-                                  Fleurhof Integrated Housing Development
-                                </option>
-                                <option value="belharSocialHousingProject">
-                                  Belhar Social Housing Project
-                                </option>
-                                <option value="westgateSocialHousingProject">
-                                  Westgate Social Housing Project
-                                </option>
-                                <option value="devlandGardens">
-                                  Devland Gardens
-                                </option>
-                                <option value="southernwoodSquare">
-                                  Southernwood Square
-                                </option>
-                                <option value="thembelihleVillage">
-                                  Thembelihle Village
-                                </option>
-                              </select>
-                            </label>
-                            {selectedProject && (
-                              <div className="mt-4 p-4 border rounded-lg bg-gray-100">
-                                <Image src={"/toek_1.jpeg"} alt="project" width={200} height={200} style={{width: "100%", height: "auto"}} />
-                                <h2 className="text-xl font-semibold mt-4">
-                                  {selectedProject.name}
-                                </h2>
-                                <p>{selectedProject.summary}</p>
-                                <button className="bg-blue-500 text-white py-2 px-8 rounded-lg mt-4">View Project Details</button>
-                              </div>
-                            )}
+                              <label>
+                                Project Name:
+                                <select
+                                  name="projectName"
+                                  value={formData.supportData.projectName}
+                                  onChange={handleChange}
+                                  className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                >
+                                  <option value="">Select Project</option>
+                                  <option value="fleurhofIntegratedHousingDevelopment">
+                                    Fleurhof Integrated Housing Development
+                                  </option>
+                                  <option value="belharSocialHousingProject">
+                                    Belhar Social Housing Project
+                                  </option>
+                                  <option value="westgateSocialHousingProject">
+                                    Westgate Social Housing Project
+                                  </option>
+                                  <option value="devlandGardens">
+                                    Devland Gardens
+                                  </option>
+                                  <option value="southernwoodSquare">
+                                    Southernwood Square
+                                  </option>
+                                  <option value="thembelihleVillage">
+                                    Thembelihle Village
+                                  </option>
+                                </select>
+                              </label>
+                              {selectedProject && (
+                                <div className="mt-4 p-4 border rounded-lg bg-gray-100">
+                                  <Image
+                                    src={"/toek_1.jpeg"}
+                                    alt="project"
+                                    width={200}
+                                    height={200}
+                                    style={{ width: "100%", height: "auto" }}
+                                  />
+                                  <h2 className="text-xl font-semibold mt-4">
+                                    {selectedProject.name}
+                                  </h2>
+                                  <p>{selectedProject.summary}</p>
+                                  <button className="bg-blue-500 text-white py-2 px-8 rounded-lg mt-4">
+                                    View Project Details
+                                  </button>
+                                </div>
+                              )}
                             </div>
 
                             <label className="block">
@@ -1374,47 +1381,132 @@ export default function ApplicationProcess() {
                               <div className="grid gap-y-8">
                                 <label htmlFor="docs" className="grid mt-8">
                                   <span className="text-red-600 text-lg font-semibold">
-                                    Attach All Required Documents (see above):
+                                    Smart Card or a bar-coded identity document
+                                    of every adult member of the household.
                                   </span>
                                   <input
                                     type="file"
                                     name="docs"
                                     className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
                                     onChange={handleChange}
-                                    placeholder="Enter Equity Amount"
                                     multiple
                                   />
                                 </label>
-                                <label className="flex gap-x-4">
-                                  <span className="text-gray-700">
-                                    Do you agree to the Terms and Conditions?
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Birth certificates, bearing the
+                                    thirteen-digit identity number, for every
+                                    child member of the household that does not
+                                    have a bar-coded identity document.
                                   </span>
                                   <input
-                                    type="checkbox"
-                                    name="termsAgreement"
-                                    checked={
-                                      formData.previousEmploymentData
-                                        .termsAgreement === "yes"
-                                    }
-                                    onChange={(e) =>
-                                      handleChange({
-                                        target: {
-                                          name: "termsAgreement",
-                                          value: e.target.checked
-                                            ? "yes"
-                                            : "no",
-                                        },
-                                      })
-                                    }
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
                                   />
                                 </label>
                               </div>
-                              <button
-                                type="submit"
-                                className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
-                              >
-                                Submit
-                              </button>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Proof of Sources of Income
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Affidavit for any union solemnised in terms
+                                    of customary law.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Permission-To-Occupy in the case of
+                                    applicants in rural areas.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Marriage certificate for any union
+                                    solemnised in terms of civil law.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Divorce settlement agreement, to prove
+                                    .custodianship.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Court order or order issued by the
+                                    Commissioner of Child Welfare, to prove
+                                    guardianship;
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
                             </div>
                           ) : (
                             <>
@@ -1646,6 +1738,44 @@ export default function ApplicationProcess() {
                           )}
                         </>
                       )}
+                      {currentStep === 8 && (
+                        <div>
+                          <div>
+                            <textarea
+                              name=""
+                              id=""
+                              placeholder="Describe and or give reasons for why you seek this financial solution from NHFC....."
+                            ></textarea>
+                          </div>
+                          <label className="flex gap-x-4">
+                            <span className="text-gray-700">
+                              Do you agree to the Terms and Conditions?
+                            </span>
+                            <input
+                              type="checkbox"
+                              name="termsAgreement"
+                              checked={
+                                formData.previousEmploymentData
+                                  .termsAgreement === "yes"
+                              }
+                              onChange={(e) =>
+                                handleChange({
+                                  target: {
+                                    name: "termsAgreement",
+                                    value: e.target.checked ? "yes" : "no",
+                                  },
+                                })
+                              }
+                            />
+                          </label>
+                          <button
+                            type="submit"
+                            className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      )}
 
                       <div className="flex gap-x-4 mt-4">
                         {currentStep > 1 && (
@@ -1657,7 +1787,7 @@ export default function ApplicationProcess() {
                             Previous
                           </button>
                         )}
-                        {currentStep < 7 && (
+                        {currentStep < 8 && (
                           <button
                             className="py-2 px-6 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition ease-in-out duration-200"
                             type="button"
