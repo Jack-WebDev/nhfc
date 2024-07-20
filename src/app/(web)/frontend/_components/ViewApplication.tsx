@@ -32,7 +32,12 @@ type LoanApplication = {
   Country: string;
   LoanType: string;
   LoanAmount: string;
+  InvestmentAmount: string;
+  EquityAmount: string;
+  ApplicationType: string;
   LoanStatus: string;
+  sourceOfFunds: string;
+  purposeOfInvestment: string;
   createdAt: any;
 };
 
@@ -104,18 +109,22 @@ export default function ViewApplication() {
   );
 
   const formatAmount = (amount: string) => {
+    if (amount === null || amount === undefined) {
+      return "n/a";
+    }
+
     // Convert the amount to a number and ensure it has two decimal places
-    let number = parseFloat(amount.replace(/[R,]/g, '')).toFixed(2);
-  
+    let number = parseFloat(amount.replace(/[R,]/g, "")).toFixed(2);
+
     // Split the number into the integer part and the decimal part
-    let [integerPart, decimalPart] = number.split('.');
-  
+    let [integerPart, decimalPart] = number.split(".");
+
     // Add commas as thousand separators
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
     // Combine the integer part and decimal part
-    return 'R' + integerPart + '.' + decimalPart;
-  }
+    return "R" + integerPart + "." + decimalPart;
+  };
 
   const rejectedSteps = (
     <>
@@ -217,7 +226,6 @@ export default function ViewApplication() {
     </>
   );
 
-
   return (
     <>
       <ArrowLeft onClick={() => router.back()} className="0 cursor-pointer" />
@@ -250,7 +258,28 @@ export default function ViewApplication() {
             <div className="grid grid-cols-3 gap-4 my-8">
               <p>Application Type: {loan.LoanType}</p>
               <p>Submitted Date: {fomattedDate}</p>
-              <p>Application Amount: {formatAmount(loan.LoanAmount)}</p>
+              <p>Investment Type: {loan.InvestmentType}</p>
+              {loan.LoanAmount !== "null" ? (
+                <p>Loan Amount: {formatAmount(loan.LoanAmount)}</p>
+              ) : null}
+              {loan.ApplicationType === "Investment" ? (
+                <>
+                  {loan.InvestmentAmount !== "null" ? (
+                    <p>
+                      Investment Amount: {formatAmount(loan.InvestmentAmount)}
+                    </p>
+                  ) : null}
+                  {loan.EquityAmount !== "null" ? (
+                    <p>Equity Amount: {formatAmount(loan.EquityAmount)}</p>
+                  ) : null}
+                  {loan.sourceOfFunds !== "null" ? (
+                    <p>Source of Funds: {loan.sourceOfFunds}</p>
+                  ) : null}
+                  {loan.purposeOfInvestment !== "null" ? (
+                    <p>Purpose of Investment: {loan.purposeOfInvestment}</p>
+                  ) : null}
+                </>
+              ) : null}
               <p>Contact Person: {loan.ContactPerson}</p>
               <p>Email: {loan.Email}</p>
               <p>Phone Number: {loan.PhoneNumber}</p>
@@ -289,7 +318,11 @@ export default function ViewApplication() {
               Application Timeline
             </h3>
 
-            {loan.LoanStatus === "Approved" ? approvedSteps : loan.LoanStatus === "Rejected" ? rejectedSteps : defaultSteps}
+            {loan.LoanStatus === "Approved"
+              ? approvedSteps
+              : loan.LoanStatus === "Rejected"
+              ? rejectedSteps
+              : defaultSteps}
 
             <div className="flex gap-x-4 items-center my-8">
               <button className="bg-blue-500 text-white py-2 px-8 rounded-xl">
