@@ -41,17 +41,22 @@ type LoanApplication = {
   ContactPerson: string;
   Email: string;
   PhoneNumber: string;
-  IdNumber: string;
-  InvestmentType: string;
-  ProjectName: string;
   Address: string;
   City: string;
   Province: string;
   PostalCode: string;
+  ProjectName: string;
+  IdNumber: string;
+  InvestmentType: string;
   Country: string;
   LoanType: string;
   LoanAmount: string;
+  InvestmentAmount: string;
+  EquityAmount: string;
+  ApplicationType: string;
   LoanStatus: string;
+  sourceOfFunds: string;
+  purposeOfInvestment: string;
   createdAt: any;
 };
 
@@ -83,29 +88,31 @@ export default function ViewApplication() {
     if (loan.LoanStatus === "Approved") {
       return (
         <div className="my-8 grid gap-y-2">
-          <h3 className="font-semibold text-xl">
-            Eligibility Results
-          </h3>
+          <h3 className="font-semibold text-xl">Eligibility Results</h3>
           <p className="pl-2">Checking credit score... Passed</p>
           <p className="pl-2">Verifying income... Passed</p>
           <p className="pl-2">Checking employment status... Passed</p>
           <p className="pl-2">Validating identity... Passed</p>
           <p className="pl-2">Reviewing application history... Passed</p>
-          <p className="pl-2">Overall Result: <span className="text-green-500 font-bold text-xl">Eligible</span></p>
+          <p className="pl-2">
+            Overall Result:{" "}
+            <span className="text-green-500 font-bold text-xl">Eligible</span>
+          </p>
         </div>
       );
     } else if (loan.LoanStatus === "Rejected") {
       return (
         <div className="my-8 grid gap-y-2">
-          <h3 className="font-semibold text-xl">
-            Eligibility Results
-          </h3>
+          <h3 className="font-semibold text-xl">Eligibility Results</h3>
           <p className="pl-2">Checking credit score... Passed</p>
           <p className="pl-2">Verifying income... Passed</p>
           <p className="pl-2">Checking employment status... Failed</p>
           <p className="pl-2">Validating identity... Passed</p>
           <p className="pl-2">Reviewing application history... Passed</p>
-          <p className="pl-2">Overall Result: <span className="text-red-500 font-bold text-xl">Not Eligible</span></p>
+          <p className="pl-2">
+            Overall Result:{" "}
+            <span className="text-red-500 font-bold text-xl">Not Eligible</span>
+          </p>
         </div>
       );
     }
@@ -113,18 +120,22 @@ export default function ViewApplication() {
   };
 
   const formatAmount = (amount: string) => {
+    if (amount === null || amount === undefined) {
+      return "n/a";
+    }
+
     // Convert the amount to a number and ensure it has two decimal places
-    let number = parseFloat(amount.replace(/[R,]/g, '')).toFixed(2);
-  
+    let number = parseFloat(amount.replace(/[R,]/g, "")).toFixed(2);
+
     // Split the number into the integer part and the decimal part
-    let [integerPart, decimalPart] = number.split('.');
-  
+    let [integerPart, decimalPart] = number.split(".");
+
     // Add commas as thousand separators
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
     // Combine the integer part and decimal part
-    return 'R' + integerPart + '.' + decimalPart;
-  }
+    return "R" + integerPart + "." + decimalPart;
+  };
 
   return (
     <>
@@ -188,17 +199,56 @@ export default function ViewApplication() {
               </h2>
               <div className="grid gap-y-2 mt-4 px-4">
                 <p className="flex justify-between items-center">
-                  Application Type: <span>{loan.LoanType}</span>
+                  Financial Solution: <span>{loan.LoanType}</span>
                 </p>
                 <hr />
                 <p className="flex justify-between items-center">
-                  Application Amount: <span>{formatAmount(loan.LoanAmount)}</span>
+                  Application Type: <span>{loan.ApplicationType}</span>
                 </p>
                 <hr />
-                <p className="flex justify-between items-center">
+
+                {loan.ApplicationType === "Loan" ? (
+                  <>
+                  <p className="flex justify-between items-center">Loan Amount: <span>{formatAmount(loan.LoanAmount)}</span></p>
+                  <hr />
+
+                  </>
+                ) : null}
+                {loan.ApplicationType === "Investment" ? (
+                  <>
+                                  <p className="flex justify-between items-center">
                   Investment Type: <span>{loan.InvestmentType}</span>
                 </p>
                 <hr />
+                    {loan.InvestmentAmount !== "null" ? (
+                      <>
+                        <p className="flex justify-between items-center">
+                          Investment Amount:
+                          <span>{formatAmount(loan.InvestmentAmount)}</span>
+                        </p>
+                        <hr />
+                      </>
+                    ) : null}
+                    {loan.EquityAmount !== "null" ? (
+                      <>
+                        <p className="flex justify-between items-center">Equity Amount: <span>{formatAmount(loan.EquityAmount)}</span></p>
+                        <hr />
+                      </>
+                    ) : null}
+                    {loan.sourceOfFunds !== "null" ? (
+                      <>
+                        <p className="flex justify-between items-center">Source of Funds: <span>{loan.sourceOfFunds}</span></p>
+                        <hr />
+                      </>
+                    ) : null}
+                    {loan.purposeOfInvestment !== "null" ? (
+                      <>
+                        <p className="flex justify-between items-center">Purpose of Investment: <span>{loan.purposeOfInvestment}</span></p>
+                      </>
+                    ) : null}
+                <hr />
+                  </>
+                ) : null}{" "}
                 <p className="flex justify-between items-center">
                   Project Name: <span>{loan.ProjectName}</span>
                 </p>

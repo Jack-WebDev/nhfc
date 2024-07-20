@@ -25,12 +25,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
   const [formData, setFormData] = useState<FormData>({});
   const router = useRouter();
 
-  const excludeFields = [
-    "phone",
-    "idNumber",
-    "address",
-    "postalCode"
-  ];
+  const excludeFields = ["phone", "idNumber", "address", "postalCode"];
 
   const handleChange = (e: any) => {
     const { name, value, type, files } = e.target;
@@ -44,8 +39,12 @@ export default function FormUse({ selectedOption }: TitleProp) {
       const updatedData = { ...prevData, [name]: newValue };
 
       if (updatedData.investmentAmount && updatedData.equityAmount) {
-        const investmentAmount = parseFloat(updatedData.investmentAmount.replace(/,/g, ""));
-        const equityAmount = parseFloat(updatedData.equityAmount.replace(/,/g, ""));
+        const investmentAmount = parseFloat(
+          updatedData.investmentAmount.replace(/,/g, "")
+        );
+        const equityAmount = parseFloat(
+          updatedData.equityAmount.replace(/,/g, "")
+        );
         const loanAmount = (investmentAmount - equityAmount).toFixed(2);
 
         updatedData.loanAmount = formatAmount(loanAmount.toString());
@@ -152,7 +151,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="country"
             value={formData.country || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"          >
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
             <option value="" disabled>
               Select Country
             </option>
@@ -168,7 +168,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="province"
             value={formData.province || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"          >
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
             <option value="" disabled>
               Select Province
             </option>
@@ -202,7 +203,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="projectName"
             value={formData.projectName || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"          >
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
             <option value="" disabled>
               Select Project
             </option>
@@ -226,7 +228,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="applicantType"
             value={formData.applicantType || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"          >
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
             <option value="" disabled>
               Select Applicant Type
             </option>
@@ -258,7 +261,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
             name="applicationType"
             value={formData.applicationType || ""}
             onChange={handleChange}
-            className="mt-1 block w-1/2 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"            >
+            className="mt-1 block w-1/2 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
             <option value="" disabled>
               Select Application Type
             </option>
@@ -275,7 +279,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
                   name="investmentType"
                   value={formData.investmentType || ""}
                   onChange={handleChange}
-                  className="mt-1 block w-1/2 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"                >
+                  className="mt-1 block w-1/2 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                >
                   <option value="" disabled>
                     Select Investment Type
                   </option>
@@ -308,7 +313,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
                   </div>
-                
+
                   <div className="grid gap-y-4">
                     <label htmlFor="equityAmount">Equity Amount:</label>
                     <input
@@ -320,9 +325,127 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
                   </div>
+                  <div>
+                    <label htmlFor="sourceOfFunds">Source of Funds:</label>
+                    <select
+                      name="sourceOfFunds"
+                      value={formData.sourceOfFunds || ""}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                    >
+                      <option value="" disabled>
+                        Select Source of Funds
+                      </option>
+                      <option value="gifts">
+                        Gifts / inheritance / winnings
+                      </option>
+                      <option value="trade">Trade / business</option>
+                      <option value="credit">Credit</option>
+                      <option value="child">
+                        Child / spousal support payments
+                      </option>
+                      <option value="tax">Tax refund</option>
+                      <option value="savings"> Savings</option>
+                      <option value="salary">Salary / bonus</option>
+                      <option value="retirement">
+                        Retirement / insurance pay out
+                      </option>
+                      <option value="passiveIncome">
+                        Passive income (Rental, Dividends, Interest)
+                      </option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="purposeOfInvestment">
+                      Purpose of Investment:
+                    </label>
+                    <select
+                      name="purposeOfInvestment"
+                      value={formData.purposeOfInvestment || ""}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                    >
+                      <option value="" disabled>
+                        Select Purpose of Investment
+                      </option>
+                      <option value="startBusiness">
+                        Start and expand a business
+                      </option>
+                      <option value="educationSavings">
+                        Education savings
+                      </option>
+                      <option value="foreignExchangeHedging">
+                        Foreign exchange hedging
+                      </option>
+                      <option value="saveForRetirement">
+                        Save for retirement / financial goals
+                      </option>
+                      <option value="windingUpEstate">Winding up estate</option>
+                    </select>
+                  </div>
                 </div>
               ) : (
-                <>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <label htmlFor="sourceOfFunds">Source of Funds:</label>
+                    <select
+                      name="sourceOfFunds"
+                      value={formData.sourceOfFunds || ""}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                    >
+                      <option value="" disabled>
+                        Select Source of Funds
+                      </option>
+                      <option value="gifts">
+                        Gifts / inheritance / winnings
+                      </option>
+                      <option value="trade">Trade / business</option>
+                      <option value="credit">Credit</option>
+                      <option value="child">
+                        Child / spousal support payments
+                      </option>
+                      <option value="tax">Tax refund</option>
+                      <option value="savings"> Savings</option>
+                      <option value="salary">Salary / bonus</option>
+                      <option value="retirement">
+                        Retirement / insurance pay out
+                      </option>
+                      <option value="passiveIncome">
+                        Passive income (Rental, Dividends, Interest)
+                      </option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="purposeOfInvestment">
+                      Purpose of Investment:
+                    </label>
+                    <select
+                      name="purposeOfInvestment"
+                      value={formData.purposeOfInvestment || ""}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                    >
+                      <option value="" disabled>
+                        Select Purpose of Investment
+                      </option>
+                      <option value="startBusiness">
+                        Start and expand a business
+                      </option>
+                      <option value="educationSavings">
+                        Education savings
+                      </option>
+                      <option value="foreignExchangeHedging">
+                        Foreign exchange hedging
+                      </option>
+                      <option value="saveForRetirement">
+                        Save for retirement / financial goals
+                      </option>
+                      <option value="windingUpEstate">Winding up estate</option>
+                    </select>
+                  </div>
                   <div>
                     <label htmlFor="investmentAmount">Investment Amount:</label>
                     <input
@@ -334,7 +457,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
                   </div>
-                </>
+                </div>
               )}
             </>
           ) : (
@@ -356,53 +479,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
         </div>
       </div>
 
-      <div className="flex justify-between items-center">
-        <div>
-          <label htmlFor="sourceOfFunds">Source of Funds:</label>
-          <select
-            name="sourceOfFunds"
-            value={formData.sourceOfFunds || ""}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-          >
-            <option value="" disabled>
-              Select Source of Funds
-            </option>
-            <option value="gifts">Gifts / inheritance / winnings</option>
-            <option value="trade">Trade / business</option>
-            <option value="credit">Credit</option>
-            <option value="child">Child / spousal support payments</option>
-            <option value="tax">Tax refund</option>
-            <option value="savings"> Savings</option>
-            <option value="salary">Salary / bonus</option>
-            <option value="retirement">Retirement / insurance pay out</option>
-            <option value="passiveIncome">Passive income (Rental, Dividends, Interest)</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="purposeOfInvestment">Purpose of Investment:</label>
-          <select name="purposeOfInvestment" value={formData.purposeOfInvestment || ""} onChange={handleChange} className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white">
-            <option value="" disabled>
-              Select Purpose of Investment
-            </option>
-            <option value="startBusiness">Start and expand a business</option>
-            <option value="educationSavings">Education savings</option>
-            <option value="foreignExchangeHedging">Foreign exchange hedging</option>
-            <option value="saveForRetirement">Save for retirement / financial goals</option>
-            <option value="windingUpEstate">Winding up estate</option>
-          </select>
-        </div>
-      </div>
-
-      
-
-
-
-
 
       <label htmlFor="docs" className="block">
-        <span className="text-gray-700">Certificate of Incorporation or Registration:</span>
+        <span className="text-gray-700">
+          Certificate of Incorporation or Registration:
+        </span>
         <input
           type="file"
           name="docs"
@@ -413,7 +494,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
         />
       </label>
       <label htmlFor="docs" className="block">
-        <span className="text-gray-700">Memorandum of Incorporation (MOI):</span>
+        <span className="text-gray-700">
+          Memorandum of Incorporation (MOI):
+        </span>
         <input
           type="file"
           name="docs"
@@ -424,7 +507,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
         />
       </label>
       <label htmlFor="docs" className="block">
-        <span className="text-gray-700">Registration documents as a Non-Profit Company (if applicable):</span>
+        <span className="text-gray-700">
+          Registration documents as a Non-Profit Company (if applicable):
+        </span>
         <input
           type="file"
           name="docs"
@@ -435,7 +520,10 @@ export default function FormUse({ selectedOption }: TitleProp) {
         />
       </label>
       <label htmlFor="docs" className="block">
-        <span className="text-gray-700">Accreditation documents as a Social Housing Institution (SHI) or Other Developmental Agency (ODA):</span>
+        <span className="text-gray-700">
+          Accreditation documents as a Social Housing Institution (SHI) or Other
+          Developmental Agency (ODA):
+        </span>
         <input
           type="file"
           name="docs"
@@ -446,7 +534,10 @@ export default function FormUse({ selectedOption }: TitleProp) {
         />
       </label>
       <label htmlFor="docs" className="block">
-        <span className="text-gray-700">Certificate or official documentation confirming the allocation of a Community Credit Guarantee (CCG):</span>
+        <span className="text-gray-700">
+          Certificate or official documentation confirming the allocation of a
+          Community Credit Guarantee (CCG):
+        </span>
         <input
           type="file"
           name="docs"
