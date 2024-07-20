@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormSections from "./FormSections";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,76 @@ export default function FormUse({ selectedOption }: TitleProp) {
   const [formData, setFormData] = useState<FormData>({});
   const router = useRouter();
 
+  const [rate, setRate] = useState<number | null>(null);
+
+  useEffect(() => {
+    const { loanAmount, loanRepaymentPeriod } = formData;
+    if (loanAmount && loanRepaymentPeriod) {
+      const amount = parseFloat(loanAmount);
+      if (!isNaN(amount)) {
+        const calculatedRate = getLoanPaymentRate(amount, loanRepaymentPeriod);
+        setRate(calculatedRate);
+      } else {
+        setRate(null);
+      }
+    } else {
+      setRate(null);
+    }
+  }, [formData.loanAmount, formData.loanRepaymentPeriod]);
+
   const excludeFields = ["phone", "idNumber", "address", "postalCode"];
+
+  const [totalAmount, setTotalAmount] = useState("");
+  const [milestones, setMilestones] = useState([
+    { name: "Milestone 1", amount: "" },
+    { name: "Milestone 2", amount: "" },
+  ]);
+
+  const handleTotalAmountChange = (e: any) => {
+    setTotalAmount(e.target.value);
+  };
+
+  const getLoanPaymentRate = (amount: number, repaymentPeriod: string): number => {
+    let baseRate: number;
+  
+    if (amount <= 5000) {
+      baseRate = 5; // Base rate for small loans
+    } else if (amount <= 20000) {
+      baseRate = 7; // Base rate for medium loans
+    } else if (amount <= 100000) {
+      baseRate = 10; // Base rate for large loans
+    } else {
+      baseRate = 12; // Base rate for very large loans
+    }
+  
+    // Adjust base rate based on repayment period
+    switch (repaymentPeriod) {
+      case 'monthly':
+        baseRate += 0.5;
+        break;
+      case 'quarterly':
+        baseRate += 0.25;
+        break;
+      case 'semi-annually':
+        baseRate += 0.1;
+        break;
+      case 'annually':
+        baseRate -= 0.1;
+        break;
+    }
+  
+    // Add a random factor to the base rate to simulate bank variability
+    const variability = Math.random() * 2 - 1; // Random number between -1 and 1
+    const rate = baseRate + variability;
+  
+    return parseFloat(rate.toFixed(2)); // Return the rate rounded to two decimal places
+  };
+
+  const handleMilestoneChange = (index: any, e: any) => {
+    const newMilestones = [...milestones];
+    newMilestones[index].amount = e.target.value;
+    setMilestones(newMilestones);
+  };
 
   const handleChange = (e: any) => {
     const { name, value, type, files } = e.target;
@@ -325,128 +394,10 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
                   </div>
-                  <div>
-                    <label htmlFor="sourceOfFunds">Source of Funds:</label>
-                    <select
-                      name="sourceOfFunds"
-                      value={formData.sourceOfFunds || ""}
-                      onChange={handleChange}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                    >
-                      <option value="" disabled>
-                        Select Source of Funds
-                      </option>
-                      <option value="gifts">
-                        Gifts / inheritance / winnings
-                      </option>
-                      <option value="trade">Trade / business</option>
-                      <option value="credit">Credit</option>
-                      <option value="child">
-                        Child / spousal support payments
-                      </option>
-                      <option value="tax">Tax refund</option>
-                      <option value="savings"> Savings</option>
-                      <option value="salary">Salary / bonus</option>
-                      <option value="retirement">
-                        Retirement / insurance pay out
-                      </option>
-                      <option value="passiveIncome">
-                        Passive income (Rental, Dividends, Interest)
-                      </option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="purposeOfInvestment">
-                      Purpose of Investment:
-                    </label>
-                    <select
-                      name="purposeOfInvestment"
-                      value={formData.purposeOfInvestment || ""}
-                      onChange={handleChange}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                    >
-                      <option value="" disabled>
-                        Select Purpose of Investment
-                      </option>
-                      <option value="startBusiness">
-                        Start and expand a business
-                      </option>
-                      <option value="educationSavings">
-                        Education savings
-                      </option>
-                      <option value="foreignExchangeHedging">
-                        Foreign exchange hedging
-                      </option>
-                      <option value="saveForRetirement">
-                        Save for retirement / financial goals
-                      </option>
-                      <option value="windingUpEstate">Winding up estate</option>
-                    </select>
-                  </div>
                 </div>
               ) : (
-                <div className="flex justify-between items-center">
-                  <div>
-                    <label htmlFor="sourceOfFunds">Source of Funds:</label>
-                    <select
-                      name="sourceOfFunds"
-                      value={formData.sourceOfFunds || ""}
-                      onChange={handleChange}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                    >
-                      <option value="" disabled>
-                        Select Source of Funds
-                      </option>
-                      <option value="gifts">
-                        Gifts / inheritance / winnings
-                      </option>
-                      <option value="trade">Trade / business</option>
-                      <option value="credit">Credit</option>
-                      <option value="child">
-                        Child / spousal support payments
-                      </option>
-                      <option value="tax">Tax refund</option>
-                      <option value="savings"> Savings</option>
-                      <option value="salary">Salary / bonus</option>
-                      <option value="retirement">
-                        Retirement / insurance pay out
-                      </option>
-                      <option value="passiveIncome">
-                        Passive income (Rental, Dividends, Interest)
-                      </option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="purposeOfInvestment">
-                      Purpose of Investment:
-                    </label>
-                    <select
-                      name="purposeOfInvestment"
-                      value={formData.purposeOfInvestment || ""}
-                      onChange={handleChange}
-                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                    >
-                      <option value="" disabled>
-                        Select Purpose of Investment
-                      </option>
-                      <option value="startBusiness">
-                        Start and expand a business
-                      </option>
-                      <option value="educationSavings">
-                        Education savings
-                      </option>
-                      <option value="foreignExchangeHedging">
-                        Foreign exchange hedging
-                      </option>
-                      <option value="saveForRetirement">
-                        Save for retirement / financial goals
-                      </option>
-                      <option value="windingUpEstate">Winding up estate</option>
-                    </select>
-                  </div>
-                  <div>
+                <div>
+                  {/* <div>
                     <label htmlFor="investmentAmount">Investment Amount:</label>
                     <input
                       type="text"
@@ -456,29 +407,133 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       placeholder="Enter Investment Amount"
                       className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                     />
+                  </div> */}
+                  <div>
+                    <label htmlFor="totalAmount">
+                      Total Investment Amount:
+                    </label>
+                    <input
+                      type="text"
+                      id="totalAmount"
+                      name="totalAmount"
+                      value={totalAmount}
+                      onChange={handleTotalAmountChange}
+                      placeholder="Enter Total Investment Amount"
+                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                    />
                   </div>
+
+                  {milestones.map((milestone, index) => (
+                    <div key={index} className="mt-4">
+                      <label htmlFor={`milestone-${index}`}>
+                        {milestone.name}:
+                      </label>
+                      <input
+                        type="text"
+                        id={`milestone-${index}`}
+                        name={`milestone-${index}`}
+                        value={milestone.amount}
+                        onChange={(e) => handleMilestoneChange(index, e)}
+                        placeholder={`Enter amount for ${milestone.name}`}
+                        className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                      />
+                    </div>
+                  ))}
                 </div>
               )}
             </>
           ) : (
-            <div>
-              <label htmlFor="loanAmount">
-                {formData.applicationType === "Loan" ? "Application" : null}{" "}
-                Amount:
-              </label>
-              <input
-                type="text"
-                name="loanAmount"
-                value={formData.loanAmount || ""}
-                onChange={handleChange}
-                placeholder="Enter Amount"
-                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-              />
+            <div className="flex justify-between items-end gap-4">
+              <div>
+                <label htmlFor="loanRepaymentPeriod">
+                  {formData.applicationType === "Loan" ? "Application" : null}{" "}
+                  Repayment Period:
+                </label>
+                <select
+                  name="loanRepaymentPeriod"
+                  value={formData.loanRepaymentPeriod || ""}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                >
+                  <option value="" disabled>
+                    Select Repayment Period
+                  </option>
+                  <option value="monthly">Monthly</option>
+                  <option value="quarterly">Quarterly</option>
+                  <option value="semi-annually">Semi-annually</option>
+                  <option value="annually">Annually</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="loanAmount">
+                  {formData.applicationType === "Loan" ? "Application" : null}{" "}
+                  Amount:
+                </label>
+                <input
+                  type="text"
+                  name="loanAmount"
+                  value={formData.loanAmount || ""}
+                  onChange={handleChange}
+                  placeholder="Enter Amount"
+                  className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                />
+              </div>
+
+              {rate !== null && <p className="font-bold text-2xl text-blue-600">Rate: {rate}%</p>}
             </div>
           )}
         </div>
       </div>
 
+      <div className="flex justify-between items-center">
+        <div>
+          <label htmlFor="sourceOfFunds">Source of Funds:</label>
+          <select
+            name="sourceOfFunds"
+            value={formData.sourceOfFunds || ""}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
+            <option value="" disabled>
+              Select Source of Funds
+            </option>
+            <option value="gifts">Gifts / inheritance / winnings</option>
+            <option value="trade">Trade / business</option>
+            <option value="credit">Credit</option>
+            <option value="child">Child / spousal support payments</option>
+            <option value="tax">Tax refund</option>
+            <option value="savings"> Savings</option>
+            <option value="salary">Salary / bonus</option>
+            <option value="retirement">Retirement / insurance pay out</option>
+            <option value="passiveIncome">
+              Passive income (Rental, Dividends, Interest)
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="purposeOfInvestment">Purpose of Investment:</label>
+          <select
+            name="purposeOfInvestment"
+            value={formData.purposeOfInvestment || ""}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
+            <option value="" disabled>
+              Select Purpose of Investment
+            </option>
+            <option value="startBusiness">Start and expand a business</option>
+            <option value="educationSavings">Education savings</option>
+            <option value="foreignExchangeHedging">
+              Foreign exchange hedging
+            </option>
+            <option value="saveForRetirement">
+              Save for retirement / financial goals
+            </option>
+            <option value="windingUpEstate">Winding up estate</option>
+          </select>
+        </div>
+      </div>
 
       <label htmlFor="docs" className="block">
         <span className="text-gray-700">
