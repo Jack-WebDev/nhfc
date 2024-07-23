@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,11 +25,9 @@ import {
   History,
   Info,
   ListChecks,
-  Lock,
   Mail,
   Play,
   ThumbsUp,
-  TriangleAlert,
   User,
 } from "lucide-react";
 import EligibilityCheck from "./EligibilityCheck";
@@ -139,7 +138,7 @@ export default function ViewApplication() {
 
   return (
     <>
-      <ArrowLeft onClick={() => router.back()} className=" cursor-pointer" />
+      <ArrowLeft onClick={() => router.back()} className="cursor-pointer" />
       {loanData?.map((loan) => {
         const fomattedDate = loan.createdAt.split("T")[0];
         const buttonContent =
@@ -156,6 +155,7 @@ export default function ViewApplication() {
               <Play /> Initiate
             </button>
           );
+
         return (
           <div
             key={loan.id}
@@ -206,20 +206,20 @@ export default function ViewApplication() {
                   Application Type: <span>{loan.ApplicationType}</span>
                 </p>
                 <hr />
-
                 {loan.ApplicationType === "Loan" ? (
                   <>
-                  <p className="flex justify-between items-center">Loan Amount: <span>{formatAmount(loan.LoanAmount)}</span></p>
-                  <hr />
-
+                    <p className="flex justify-between items-center">
+                      Loan Amount: <span>{formatAmount(loan.LoanAmount)}</span>
+                    </p>
+                    <hr />
                   </>
                 ) : null}
                 {loan.ApplicationType === "Investment" ? (
                   <>
-                                  <p className="flex justify-between items-center">
-                  Investment Type: <span>{loan.InvestmentType}</span>
-                </p>
-                <hr />
+                    <p className="flex justify-between items-center">
+                      Investment Type: <span>{loan.InvestmentType}</span>
+                    </p>
+                    <hr />
                     {loan.InvestmentAmount !== "null" ? (
                       <>
                         <p className="flex justify-between items-center">
@@ -231,22 +231,30 @@ export default function ViewApplication() {
                     ) : null}
                     {loan.EquityAmount !== "null" ? (
                       <>
-                        <p className="flex justify-between items-center">Equity Amount: <span>{formatAmount(loan.EquityAmount)}</span></p>
+                        <p className="flex justify-between items-center">
+                          Equity Amount:{" "}
+                          <span>{formatAmount(loan.EquityAmount)}</span>
+                        </p>
                         <hr />
                       </>
                     ) : null}
                     {loan.sourceOfFunds !== "null" ? (
                       <>
-                        <p className="flex justify-between items-center">Source of Funds: <span>{loan.sourceOfFunds}</span></p>
+                        <p className="flex justify-between items-center">
+                          Source of Funds: <span>{loan.sourceOfFunds}</span>
+                        </p>
                         <hr />
                       </>
                     ) : null}
                     {loan.purposeOfInvestment !== "null" ? (
                       <>
-                        <p className="flex justify-between items-center">Purpose of Investment: <span>{loan.purposeOfInvestment}</span></p>
+                        <p className="flex justify-between items-center">
+                          Purpose of Investment:{" "}
+                          <span>{loan.purposeOfInvestment}</span>
+                        </p>
                       </>
                     ) : null}
-                <hr />
+                    <hr />
                   </>
                 ) : null}{" "}
                 <p className="flex justify-between items-center">
@@ -316,13 +324,13 @@ export default function ViewApplication() {
               </h2>
 
               <div className="grid gap-y-4 my-8 font-medium">
-                <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
+                <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Initial Review</h3>
                   <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg">
                     <Check /> Completed
                   </button>{" "}
                 </div>
-                <div className=" bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
+                <div className="bg-gray-100 p-4 rounded-lg flex items-center justify-between hover:bg-blue-100">
                   <h3>Detailed Assessment</h3>
                   <button className="flex items-center gap-x-2 bg-green-500 text-white py-2 px-4 rounded-lg">
                     <Check /> Completed

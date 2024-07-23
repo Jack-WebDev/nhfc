@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
-import axios from "axios";
+import axios from "axios"; // Ensure axios is imported
 
 const ViewProject = () => {
   const params = useParams();
@@ -27,7 +27,10 @@ const ViewProject = () => {
 
   return (
     <>
-      <ArrowLeft onClick={() => router.back()} className="cursor-pointer" />
+      <ArrowLeft
+        onClick={() => router.back()}
+        className="cursor-pointer mb-4"
+      />
       {projectData.map((project) => (
         <div
           key={project.id}
@@ -59,62 +62,70 @@ const ViewProject = () => {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  Project Code:{" "}
+                  <strong>Project Code:</strong>{" "}
                   <span className="text-black">{project.projectCode}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  Municipality:{" "}
+                  <strong>Municipality:</strong>{" "}
                   <span className="text-black">{project.municipality}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  Ward: <span className="text-black">{project.ward}</span>
+                  <strong>Ward:</strong>{" "}
+                  <span className="text-black">{project.ward}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  ERF Number:{" "}
+                  <strong>ERF Number:</strong>{" "}
                   <span className="text-black">{project.address}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  Start Date:{" "}
+                  <strong>Start Date:</strong>{" "}
                   <span className="text-black">{project.communityHalls}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  End Date:{" "}
+                  <strong>End Date:</strong>{" "}
                   <span className="text-black">
                     {project.deliverablesSummary}
                   </span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  Project Owner:{" "}
+                  <strong>Project Owner:</strong>{" "}
                   <span className="text-black">{project.projectOwner}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  Developer:{" "}
+                  <strong>Developer:</strong>{" "}
                   <span className="text-black">{project.developer}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  Project Liason:{" "}
+                  <strong>Project Liason:</strong>{" "}
                   <span className="text-black">{project.projectLiason}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  Jobs Created:{" "}
+                  <strong>Jobs Created:</strong>{" "}
                   <span className="text-black">{project.developer}</span>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-xl">
-                  People Trained:{" "}
+                  <strong>People Trained:</strong>{" "}
                   <span className="text-black">{project.materialSupplier}</span>
                 </div>
               </div>
               <ProgressBar progress={75} />
               <div className="flex gap-4 mt-4">
-                <a href="#" className="btn btn-primary">
+                <a
+                  href="#"
+                  className="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded"
+                >
                   Download Project Brief
                 </a>
-                <a href="#" className="btn btn-secondary">
+                <a
+                  href="#"
+                  className="btn btn-secondary bg-gray-500 text-white px-4 py-2 rounded"
+                >
                   Apply
                 </a>
               </div>
             </div>
           </div>
+
           <div className="my-8">
             <h2 className="text-2xl font-semibold mb-4">Project Location</h2>
             <p>Address: {project.address}</p>
@@ -132,6 +143,7 @@ const ViewProject = () => {
               ></iframe>
             </div>
           </div>
+
           <div>
             <h2 className="text-2xl font-semibold mb-4">Impact</h2>
             <p>
@@ -159,46 +171,23 @@ const ViewProject = () => {
               dolor voluptatem voluptas? Eos, iure?
             </p>
           </div>
+
           <TabsComponent />
+
           <div>
             <h2 className="text-2xl font-semibold mb-4">Project Gallery</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="relative w-full h-[200px]">
-                <Image
-                  src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
-                  alt="Gallery Image 1"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
-              </div>
-              <div className="relative w-full h-[200px]">
-                <Image
-                  src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
-                  alt="Gallery Image 2"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
-              </div>
-              <div className="relative w-full h-[200px]">
-                <Image
-                  src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
-                  alt="Gallery Image 3"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
-              </div>
-              <div className="relative w-full h-[200px]">
-                <Image
-                  src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
-                  alt="Gallery Image 4"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
-                />
-              </div>
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="relative w-full h-[200px]">
+                  <Image
+                    src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
+                    alt={`Gallery Image ${index + 1}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -215,7 +204,7 @@ const TabsComponent = () => {
   };
 
   return (
-    <div>
+    <div className="my-8">
       <div className="tabs flex border-b-2 mb-4">
         <div
           className={`tab p-2 cursor-pointer ${
@@ -261,8 +250,10 @@ const TabsComponent = () => {
       <div className="tab-content">
         {activeTab === "deliverables" && (
           <div>
-            <h4>Deliverables / Outputs / Outcomes</h4>
-            <ul>
+            <h4 className="text-xl font-semibold mb-4">
+              Deliverables / Outputs / Outcomes
+            </h4>
+            <ul className="list-disc pl-5 space-y-2">
               <li>
                 10,000+ housing units (mix of social housing, RDP houses, and
                 bonded units)
@@ -280,8 +271,10 @@ const TabsComponent = () => {
         )}
         {activeTab === "partners" && (
           <div>
-            <h4>Implementation Partners</h4>
-            <ul>
+            <h4 className="text-xl font-semibold mb-4">
+              Implementation Partners
+            </h4>
+            <ul className="list-disc pl-5 space-y-2">
               <li>
                 National Housing Finance Corporation (NHFC) - Project Owner
               </li>
@@ -302,17 +295,19 @@ const TabsComponent = () => {
         )}
         {activeTab === "risks" && (
           <div>
-            <h4>Risks and Assumptions</h4>
-            <h5>Risks:</h5>
-            <ul>
+            <h4 className="text-xl font-semibold mb-4">
+              Risks and Assumptions
+            </h4>
+            <h5 className="font-semibold">Risks:</h5>
+            <ul className="list-disc pl-5 space-y-2">
               <li>Delays in construction due to unforeseen circumstances</li>
               <li>Budget overruns</li>
               <li>Community resistance or conflicts</li>
               <li>Changes in government policies or regulations</li>
               <li>Environmental challenges</li>
             </ul>
-            <h5>Assumptions:</h5>
-            <ul>
+            <h5 className="font-semibold mt-4">Assumptions:</h5>
+            <ul className="list-disc pl-5 space-y-2">
               <li>Continued government support and funding</li>
               <li>Stable economic conditions</li>
               <li>Availability of skilled labor</li>
@@ -323,16 +318,16 @@ const TabsComponent = () => {
         )}
         {activeTab === "financing" && (
           <div>
-            <h4>Financing</h4>
-            <p>Total Project Value: R3.5 Billion</p>
-            <h5>Funding Sources:</h5>
-            <ul>
+            <h4 className="text-xl font-semibold mb-4">Financing</h4>
+            <p className="mb-2">Total Project Value: R3.5 Billion</p>
+            <h5 className="font-semibold">Funding Sources:</h5>
+            <ul className="list-disc pl-5 space-y-2">
               <li>NHFC Loan: R1.5 Billion</li>
               <li>Government Subsidy: R1 Billion</li>
               <li>Private Sector Investment: R800 Million</li>
               <li>Municipal Contribution: R200 Million</li>
             </ul>
-            <p>
+            <p className="mt-4">
               The project utilizes a mixed-funding model to ensure
               sustainability and affordability for various income groups. This
               includes subsidized units, rental stock, and bonded houses.
