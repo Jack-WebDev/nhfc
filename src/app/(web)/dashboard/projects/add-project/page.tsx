@@ -240,6 +240,7 @@ export default function AddProject() {
                 <option value="Umgungundlovu">Umgungundlovu</option>
               </select>
             </div>
+
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-2">
@@ -556,6 +557,7 @@ export default function AddProject() {
           </button>
         </form>
       </div>
+
     </div>
   );
 }
