@@ -14,7 +14,6 @@ import {
 } from "@tanstack/react-table";
 
 import { Input } from "@/components/ui/input";
-
 import {
   Table,
   TableBody,
@@ -23,11 +22,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import { Button } from "@/components/ui/button";
-
 import { useEffect, useState } from "react";
-
 import {
   ChevronLeft,
   ChevronRight,
@@ -37,12 +33,17 @@ import {
   FileText,
   MoreHorizontal,
   Trash,
-  Trash2,
 } from "lucide-react";
-import ViewProject from "./_components/ViewProject";
 import { useRouter } from "next/navigation";
 import axios, { AxiosError } from "axios";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, PageHeader } from "@/components";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  PageHeader,
+} from "@/components";
 import { toast } from "react-toastify";
 
 type ProjectProps = {
@@ -71,7 +72,7 @@ type ProjectProps = {
   implementationPartners: string;
 };
 
-export default function Timesheet() {
+export default function Projects() {
   const [data, setData] = useState<ProjectProps[]>([]);
   const router = useRouter();
 
@@ -89,17 +90,15 @@ export default function Timesheet() {
     fetchProjects();
   }, []);
 
-
-  const handleDelete = async (id:string) => {
+  const handleDelete = async (id: string) => {
     try {
       await axios.delete(`/api/projects/${id}`);
       toast.success("Project deleted successfully");
-      router.refresh()
-      
+      router.refresh();
     } catch (error) {
-      console.log(error as AxiosError)
+      console.log(error as AxiosError);
     }
-  }
+  };
 
   const columns: ColumnDef<ProjectProps>[] = [
     {
@@ -137,23 +136,28 @@ export default function Timesheet() {
         const project = row.original;
         return (
           <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              onClick={() => router.push(`/dashboard/projects/${project.id}`)}
-              className="flex gap-x-2"
-            >
-              <Eye /> View Project
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleDelete(project.id)} className="flex gap-x-2"><Trash/> Delete Project</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={() => router.push(`/dashboard/projects/${project.id}`)}
+                className="flex gap-x-2"
+              >
+                <Eye /> View Project
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => handleDelete(project.id)}
+                className="flex gap-x-2"
+              >
+                <Trash /> Delete Project
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         );
       },
     },
@@ -187,9 +191,9 @@ export default function Timesheet() {
 
   return (
     <>
-    <PageHeader Icon={FileText} title="Projects"/>
+      <PageHeader Icon={FileText} title="Projects" />
       <div className="timesheets-container w-[80%] mx-auto mt-12">
-        <div className="w-full p-4 rounded-xl border-2 border-primary">
+        <div className="w-full p-4 rounded-xl border shadow-lg bg-white">
           <div className="flex items-center justify-between py-4">
             <Input
               placeholder="Filter by project name...."
@@ -218,7 +222,7 @@ export default function Timesheet() {
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
                       return (
-                        <TableHead key={header.id}>
+                        <TableHead key={header.id} className="bg-gray-100">
                           {header.isPlaceholder
                             ? null
                             : flexRender(
@@ -237,6 +241,7 @@ export default function Timesheet() {
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
+                      className="hover:bg-gray-50"
                     >
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
@@ -265,7 +270,7 @@ export default function Timesheet() {
         <div className="flex justify-center flex-col items-center gap-2 mt-12">
           <div className="flex items-center gap-4">
             <Button
-              variant={"default"}
+              variant="default"
               className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
               onClick={() => table.firstPage()}
               disabled={!table.getCanPreviousPage()}
@@ -273,7 +278,7 @@ export default function Timesheet() {
               <ChevronsLeft />
             </Button>
             <Button
-              variant={"default"}
+              variant="default"
               className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
@@ -281,7 +286,7 @@ export default function Timesheet() {
               <ChevronLeft />
             </Button>
             <Button
-              variant={"default"}
+              variant="default"
               className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
@@ -289,7 +294,7 @@ export default function Timesheet() {
               <ChevronRight />
             </Button>
             <Button
-              variant={"default"}
+              variant="default"
               className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
               onClick={() => table.lastPage()}
               disabled={!table.getCanNextPage()}

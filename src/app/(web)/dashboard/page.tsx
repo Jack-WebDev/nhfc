@@ -29,8 +29,7 @@ const Page = async () => {
   return (
     <div>
       <>
-      <PageHeader Icon={LayoutTemplateIcon} title="Dashboard Overview"/>
-        {/* <h2 className="text-3xl font-semibold my-12">Dashboard Overview</h2> */}
+        <PageHeader Icon={LayoutTemplateIcon} title="Dashboard Overview" />
         <div className="grid grid-cols-4 grid-rows-2 gap-8 mt-12">
           <DashboardCard
             total={totalApplications}
@@ -79,7 +78,9 @@ const Page = async () => {
         </div>
       </>
       <>
-        <h2 className="text-3xl font-semibold my-12">Messaging Center Metrics</h2>
+        <h2 className="text-3xl font-semibold my-12">
+          Messaging Center Metrics
+        </h2>
         <div className="grid grid-cols-4 gap-x-8">
           <DashboardCard total={2134} title="Total Messages" />
           <DashboardCard total={1261} title="Open Messages" />
@@ -88,8 +89,8 @@ const Page = async () => {
         </div>
         <div className="grid grid-cols-2 gap-8 my-12">
           <BarChartComponent />
+          <FinanceSolutionsChartComponent />
           <LineChartComponent />
-          <FinanceSolutionsChartComponent/>
           {/* <PieChartComponent/> */}
         </div>
       </>
