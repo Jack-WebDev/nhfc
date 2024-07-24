@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Card,
@@ -26,6 +26,7 @@ export default function ApplicationProcess() {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [error, setError] = useState<string>(""); // State to manage error message
   const [employmentStatus, setEmploymentStatus] = useState("");
+  const [projects, setProjects] = useState<any>([]);
 
   const router = useRouter();
 
@@ -108,6 +109,15 @@ export default function ApplicationProcess() {
     },
   });
 
+  useEffect(() => {
+    const fetchProjectData = async () => {
+      const res = await axios.get(`/api/projects`);
+      setProjects(res.data);
+    };
+
+    fetchProjectData();
+  },[])
+
   const projectDetails: any = {
     fleurhofIntegratedHousingDevelopment: {
       name: "Fleurhof Integrated Housing Development",
@@ -151,6 +161,7 @@ export default function ApplicationProcess() {
 
     const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData;
     const updatedQualificationData = {
+      ...formData,
       ...formData.qualificationData,
       [name]: newValue,
     };
@@ -192,7 +203,17 @@ export default function ApplicationProcess() {
 
     setSelectedProject(value ? projectDetails[value] : null);
   };
-
+  // const handleChange = (e: any) => {
+  //   const { name, value } = e.target;
+  //   const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData; // Assuming formData is your form data state
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     [stepDataKey]: {
+  //       ...prevFormData[stepDataKey],
+  //       [name as keyof (typeof prevFormData)[typeof stepDataKey]]: value, // Type assertion here
+  //     },
+  //   }));
+  // };
   const getStepDataKey = (step: any) => {
     switch (step) {
       case 1:

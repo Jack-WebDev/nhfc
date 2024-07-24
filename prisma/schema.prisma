@@ -144,12 +144,12 @@ model Projects {
   contractor             String
   deliverablesSummary    String
   implementationPartners String
-  skilledWorkers         Int
-  unskilledWorkers       Int
-  schools                Int
-  clinics                Int
-  communityHalls         Int
-  sportsField            Int
+  skilledWorkers         String?
+  unskilledWorkers       String?
+  schools                String?
+  clinics                String?
+  communityHalls         String?
+  sportsField            String?
 }
 
 model AdminQueries {

@@ -258,17 +258,19 @@ export default function ViewApplication() {
             <div className="grid grid-cols-3 gap-4 my-8">
               <p>Application Type: {loan.LoanType}</p>
               <p>Submitted Date: {fomattedDate}</p>
-              <p>Investment Type: {loan.InvestmentType}</p>
               {loan.LoanAmount !== "null" ? (
                 <p>Loan Amount: {formatAmount(loan.LoanAmount)}</p>
               ) : null}
               {loan.ApplicationType === "Investment" ? (
                 <>
+                  <p>Investment Type: {loan.InvestmentType}</p>
+
                   {loan.InvestmentAmount !== "null" ? (
                     <p>
                       Investment Amount: {formatAmount(loan.InvestmentAmount)}
                     </p>
                   ) : null}
+
                   {loan.EquityAmount !== "null" ? (
                     <p>Equity Amount: {formatAmount(loan.EquityAmount)}</p>
                   ) : null}

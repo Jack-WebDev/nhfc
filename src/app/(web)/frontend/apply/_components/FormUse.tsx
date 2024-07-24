@@ -17,6 +17,11 @@ type FormData = {
   [key: string]: any;
 };
 
+type ProjectData = {
+  id: string;
+  projectName: string;
+};
+
 type TitleProp = {
   selectedOption: string;
 };
@@ -95,6 +100,23 @@ export default function FormUse({ selectedOption }: TitleProp) {
     newMilestones[index].amount = e.target.value;
     setMilestones(newMilestones);
   };
+
+  const [projects, setProjects] = useState<ProjectData[]>([]);
+  console.log(projects)
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
+
+  useEffect(() => {
+    const fetchProjectData = async () => {
+      const res = await axios.get('/api/projects');
+      setProjects(res.data);
+    };
+
+    fetchProjectData();
+  }, []);
 
   const handleChange = (e: any) => {
     const { name, value, type, files } = e.target;
@@ -266,31 +288,24 @@ export default function FormUse({ selectedOption }: TitleProp) {
         </div>
       </div>
       <div className="flex justify-between items-center">
-        <div className="grid gap-y-4">
-          <label htmlFor="projectName">Project Name:</label>
-          <select
-            name="projectName"
-            value={formData.projectName || ""}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-          >
-            <option value="" disabled>
-              Select Project
+      <div className="grid gap-y-4">
+        <label htmlFor="projectName">Project Name:</label>
+        <select
+          name="projectName"
+          value={formData.projectName || ""}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+        >
+          <option value="" disabled>
+            Select Project
+          </option>
+          {projects.map((project) => (
+            <option key={project.id} value={project.projectName}>
+              {project.projectName}
             </option>
-            <option value="Fleurhof Integrated Housing Development">
-              Fleurhof Integrated Housing Development
-            </option>
-            <option value="Belhar Social Housing Project">
-              Belhar Social Housing Project
-            </option>
-            <option value="Westgate Social Housing Project">
-              Westgate Social Housing Project
-            </option>
-            <option value="Devland Gardens">Devland Gardens</option>
-            <option value="Southernwood Square">Southernwood Square</option>
-            <option value="Thembelihle Village">Thembelihle Village</option>
-          </select>
-        </div>
+          ))}
+        </select>
+      </div>
         <div className="grid gap-y-4">
           <label htmlFor="applicantType">Applicant Type:</label>
           <select

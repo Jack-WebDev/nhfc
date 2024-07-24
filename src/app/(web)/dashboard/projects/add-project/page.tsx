@@ -129,6 +129,7 @@ export default function AddProject() {
             />
           </div>
         </div>
+        
         <div className="flex items-center justify-between w-full gap-x-12">
           <div className="grid gap-y-2 w-full">
             <label>Project Program</label>
@@ -486,7 +487,8 @@ export default function AddProject() {
             <option value="Or Tambo">Or Tambo</option>
             <option value="Chris Hani">Chris Hani</option>
           </select>
-        </div>
+        </div> 
+
 
         <button
           onClick={handleSubmit}

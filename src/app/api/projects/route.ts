@@ -87,6 +87,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         communityHalls: communityHalls,
         sportsField: sportsField,
         implementationPartners: implementationPartners,
+
       },
     });
 
