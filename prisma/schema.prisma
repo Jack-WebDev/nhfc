@@ -4,8 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url      = env("POSTGRES_PRISMA_URL")
 }
 
 model Session {
@@ -43,31 +42,31 @@ model User {
 }
 
 model Applications {
-  id             String   @id
-  NameOfCompany  String
-  ContactPerson  String
-  ApplicantType  String?
-  ApplicationType String?
-  Email          String   @unique
-  PhoneNumber    String   @unique
-  Address        String
-  IdNumber       String?
-  InvestmentType String?
-  ProjectName    String?
-  City           String
-  Province       String
-  PostalCode     String
-  sourceOfFunds  String?
+  id                  String   @id
+  NameOfCompany       String
+  ContactPerson       String
+  ApplicantType       String?
+  Email               String   @unique
+  PhoneNumber         String   @unique
+  Address             String
+  IdNumber            String?
+  InvestmentType      String?
+  ProjectName         String?
+  City                String
+  Province            String
+  PostalCode          String
+  LoanType            String
+  Rate                String?
+  Docs                String?
+  Country             String?
+  LoanAmount          String
+  LoanStatus          String   @default("Pending")
+  createdAt           DateTime @default(now())
+  ApplicationType     String?
+  EquityAmount        String?
+  InvestmentAmount    String?
   purposeOfInvestment String?
-  LoanType       String
-  Rate           String?
-  Docs           String?
-  Country        String?
-  LoanAmount     String
-  EquityAmount   String?
-  InvestmentAmount String?
-  LoanStatus     String   @default("Pending")
-  createdAt      DateTime @default(now())
+  sourceOfFunds       String?
 }
 
 model FirstHomeLoan {
@@ -128,7 +127,7 @@ model FirstHomeLoan {
 }
 
 model Projects {
-  id                     String @id @default(cuid())
+  id                     String  @id @default(cuid())
   projectName            String
   projectCode            String
   programme              String
@@ -144,13 +143,13 @@ model Projects {
   materialSupplier       String
   contractor             String
   deliverablesSummary    String
-  skilledWorkers         Int
-  unskilledWorkers       Int
-  schools                Int
-  clinics                Int
-  communityHalls         Int
-  sportsField            Int
   implementationPartners String
+  skilledWorkers         String?
+  unskilledWorkers       String?
+  schools                String?
+  clinics                String?
+  communityHalls         String?
+  sportsField            String?
 }
 
 model AdminQueries {
