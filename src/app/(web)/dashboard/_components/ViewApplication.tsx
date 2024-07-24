@@ -10,6 +10,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useParams, useRouter } from "next/navigation";
@@ -21,6 +30,7 @@ import {
   Ban,
   Check,
   Clock,
+  Download,
   FileText,
   History,
   Info,
@@ -77,7 +87,7 @@ export default function ViewApplication() {
   }, [applicationID]);
 
   const handleApprove = async (loan: string) => {
-    const res = await axios.put(`/api/applications/${loan}`, {
+    await axios.put(`/api/applications/${loan}`, {
       LoanStatus: "Approved",
     });
     toast.success("Application Approved Successfully");
@@ -88,30 +98,108 @@ export default function ViewApplication() {
       return (
         <div className="my-8 grid gap-y-2">
           <h3 className="font-semibold text-xl">Eligibility Results</h3>
-          <p className="pl-2">Checking credit score... Passed</p>
-          <p className="pl-2">Verifying income... Passed</p>
-          <p className="pl-2">Checking employment status... Passed</p>
-          <p className="pl-2">Validating identity... Passed</p>
-          <p className="pl-2">Reviewing application history... Passed</p>
+
+          <p className="pl-2">
+            Checking credit score... <span className="font-bold">Passed</span>{" "}
+            (750/850)
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: TransUnion
+            </span>
+          </p>
+          <p className="pl-2">
+            Verifying income... <span className="font-bold">Passed</span>{" "}
+            (R550,000/year)
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: Employer Records (New Dawn I.T and SARS)
+            </span>
+          </p>
+          <p className="pl-2">
+            Checking employment status...{" "}
+            <span className="font-bold">Passed</span> (Full-time)
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: Employer Verification (New Dawn I.T)
+            </span>
+          </p>
+          <p className="pl-2">
+            Validating identity... <span className="font-bold">Passed</span>
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: Home Affairs Department Database
+            </span>
+          </p>
+          <p className="pl-2">
+            Reviewing application history...{" "}
+            <span className="font-bold">Passed</span>
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: Loan Application Records
+            </span>
+          </p>
           <p className="pl-2">
             Overall Result:{" "}
             <span className="text-green-500 font-bold text-xl">Eligible</span>
           </p>
+          <button className="bg-blue-500 text-white rounded-xl py-2 px-4 mt-4 grid justify-self-end">
+            Download detailed report
+          </button>
         </div>
       );
     } else if (loan.LoanStatus === "Rejected") {
       return (
         <div className="my-8 grid gap-y-2">
           <h3 className="font-semibold text-xl">Eligibility Results</h3>
-          <p className="pl-2">Checking credit score... Passed</p>
-          <p className="pl-2">Verifying income... Passed</p>
-          <p className="pl-2">Checking employment status... Failed</p>
-          <p className="pl-2">Validating identity... Passed</p>
-          <p className="pl-2">Reviewing application history... Passed</p>
+          <div className="progress-bar">
+            <div className="progress-bar-fill" style={{ width: "60%" }}></div>
+          </div>
+          <p className="pl-2">
+            Checking credit score... <span className="font-bold">Passed</span>{" "}
+            (650/850)
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: TransUnion
+            </span>
+          </p>
+          <p className="pl-2">
+            Verifying income... <span className="font-bold">Passed</span>{" "}
+            (R280,000/year)
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: Employer Records (StructureIT and SARS)
+            </span>
+          </p>
+          <p className="pl-2">
+            Checking employment status...{" "}
+            <span className="font-bold text-red-500">Failed</span> (Part-time)
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: Employer Verification (StructureIT)
+            </span>
+          </p>
+          <p className="pl-2">
+            Validating identity... <span className="font-bold">Passed</span>
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: Home Affairs Department Database
+            </span>
+          </p>
+          <p className="pl-2">
+            Reviewing application history...{" "}
+            <span className="font-bold">Passed</span>
+            <br />
+            <span className="text-sm text-gray-500">
+              Data source: Loan Application Records
+            </span>
+          </p>
           <p className="pl-2">
             Overall Result:{" "}
             <span className="text-red-500 font-bold text-xl">Not Eligible</span>
           </p>
+          <button className="bg-blue-500 text-white rounded-xl py-2 px-4 mt-4 grid justify-self-end">
+            Download detailed report
+          </button>
         </div>
       );
     }
@@ -135,6 +223,10 @@ export default function ViewApplication() {
     // Combine the integer part and decimal part
     return "R" + integerPart + "." + decimalPart;
   };
+
+  const formatDate = (date: string) => {
+    return date.split("T")[0];
+  }
 
   return (
     <>
@@ -309,14 +401,317 @@ export default function ViewApplication() {
                 <hr />
               </div>
             </div>
-            <div>
-              <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl">
-                <Clock /> Eligibility Check
-              </h2>
-              <hr />
-              {loan.LoanStatus === "Pending" && <EligibilityCheck />}
-              {loan.LoanStatus !== "Pending" && renderEligibilityResults(loan)}
-            </div>
+
+            {loan.ApplicationType === "Loan" ? (
+              <div>
+                <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl">
+                  <Clock /> Eligibility Check
+                </h2>
+                <hr />
+                {loan.LoanStatus === "Pending" && <EligibilityCheck />}
+                {loan.LoanStatus !== "Pending" &&
+                  renderEligibilityResults(loan)}
+              </div>
+            ) : (
+              <div className="my-12">
+                <div className="flex justify-evenly items-center">
+
+                <h2 className="text-3xl text-blue-500 font-medium my-8 text-center">Due Diligence Report</h2>
+                <button className="bg-blue-500 text-white rounded-xl py-2 px-4 mt-4 flex gap-x-2"><Download/>
+            Download report
+          </button>
+                </div>
+                <Tabs defaultValue="overview">
+                  <TabsList className="flex items-center justify-between ">
+                    <TabsTrigger className="text-lg font-medium" value="overview">Overview</TabsTrigger>
+                    <TabsTrigger className="text-xl font-medium" value="risk">Risk Assessment</TabsTrigger>
+                    {loan.NameOfCompany !== "N/A" ? <TabsTrigger className="text-lg font-medium" value="financial">
+                      Financial Performance
+                    </TabsTrigger>: null}
+                    
+                    <TabsTrigger className="text-lg font-medium" value="market">Market Analysis</TabsTrigger>
+                    <TabsTrigger className="text-lg font-medium" value="legal">Legal & Compliance</TabsTrigger>
+                    <TabsTrigger className="text-lg font-medium" value="conclusion">Conclusion</TabsTrigger>
+                  </TabsList>
+
+                  {/* Overview Tab */}
+                  <TabsContent value="overview">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Due Diligence Report Overview</CardTitle>
+                        <CardDescription>
+                          Review the general information about the investment
+                          opportunity.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4 grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Investment Amount:
+                          </Label>
+                          <p className="text-gray-800">{formatAmount(loan.InvestmentAmount)}</p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Investment Type:
+                          </Label>
+                          <p className="text-gray-800">Equity</p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Investment Date:
+                          </Label>
+                          <p className="text-gray-800">{formatDate(loan.createdAt)}</p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Expected Return:
+                          </Label>
+                          <p className="text-gray-800">20% Annual Return</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  {/* Risk Assessment Tab */}
+                  <TabsContent value="risk">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Risk Assessment</CardTitle>
+                        <CardDescription>
+                          Detailed assessment of potential risks associated with
+                          the investment.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4 grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="font-semibold">Market Risks:</Label>
+                          <p className="text-gray-800">
+                            - High competition in the tech industry.
+                            <br />
+                            - Potential market fluctuations.
+                            <br />- Regulatory changes impacting market
+                            conditions.
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Operational Risks:
+                          </Label>
+                          <p className="text-gray-800">
+                            - Dependency on key personnel.
+                            <br />
+                            - Potential supply chain disruptions.
+                            <br />- Technological obsolescence.
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Financial Risks:
+                          </Label>
+                          <p className="text-gray-800">
+                            - Cash flow variability.
+                            <br />
+                            - Profit margin fluctuations.
+                            <br />- Capital requirement uncertainties.
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">Legal Risks:</Label>
+                          <p className="text-gray-800">
+                            - Compliance with industry regulations.
+                            <br />
+                            - Intellectual property disputes.
+                            <br />- Contractual obligations and liabilities.
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  {/* Financial Performance Tab */}
+                  {loan.NameOfCompany !== "N/A" ? (
+                    <>
+                                      <TabsContent value="financial">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Financial Performance</CardTitle>
+                        <CardDescription>
+                          Overview of the company&apos;s financial performance
+                          including historical data and projections.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4 grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Historical Revenue:
+                          </Label>
+                          <p className="text-gray-800">
+                            R2M (2023), R1.5M (2022), R1.2M (2021)
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Projected Revenue:
+                          </Label>
+                          <p className="text-gray-800">
+                            R5M (2024), R8M (2025), R10M (2026)
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Net Profit Margin:
+                          </Label>
+                          <p className="text-gray-800">
+                            15% (2023), Projected 18% (2024)
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">EBITDA:</Label>
+                          <p className="text-gray-800">
+                            R300,000 (2023), Projected R800,000 (2024)
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                    </>
+                  ):null}
+
+
+                  {/* Market Analysis Tab */}
+                  <TabsContent value="market">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Market and Competitive Analysis</CardTitle>
+                        <CardDescription>
+                          Analysis of the market landscape and competitive
+                          environment.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                          <Label className="font-semibold">Market Size:</Label>
+                          <p className="text-gray-800">
+                            R10B with a CAGR of 20%
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Competitive Landscape:
+                          </Label>
+                          <p className="text-gray-800">
+                            - Major competitors: ABC Corp, DEF Ltd.
+                            <br />
+                            - Market share distribution and competitor
+                            strengths.
+                            <br />- Competitive advantages of the company.
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            SWOT Analysis:
+                          </Label>
+                          <p className="text-gray-800">
+                            - Strengths: Innovative technology, strong team.
+                            <br />
+                            - Weaknesses: High R&D costs.
+                            <br />
+                            - Opportunities: Expanding market, strategic
+                            partnerships.
+                            <br />- Threats: Regulatory changes, market
+                            saturation.
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  {/* Legal & Compliance Tab */}
+                  <TabsContent value="legal">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Legal and Compliance</CardTitle>
+                        <CardDescription>
+                          Review of legal considerations and regulatory
+                          compliance.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Legal Structure:
+                          </Label>
+                          <p className="text-gray-800">
+                            LLC, registered in South Africa
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Regulatory Compliance:
+                          </Label>
+                          <p className="text-gray-800">
+                            - Adherence to FDA regulations.
+                            <br />
+                            - Compliance with data protection laws.
+                            <br />- Intellectual property rights and
+                            registrations.
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Pending Legal Issues:
+                          </Label>
+                          <p className="text-gray-800">
+                            - Ongoing patent dispute with a competitor.
+                            <br />- Review of recent contract negotiations.
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  {/* Conclusion Tab */}
+                  <TabsContent value="conclusion">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Conclusion and Recommendations</CardTitle>
+                        <CardDescription>
+                          Summary of the investment&apos;s strengths and
+                          recommendations based on the due diligence findings.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Overall Assessment:
+                          </Label>
+                          <p className="text-gray-800">
+                            The investment presents a strong opportunity with
+                            high growth potential and solid financial
+                            projections. However, it is important to monitor the
+                            competitive landscape and manage operational risks.
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="font-semibold">
+                            Recommendations:
+                          </Label>
+                          <p className="text-gray-800">
+                            - Proceed with the investment but ensure ongoing
+                            risk management.
+                            <br />
+                            - Conduct further review of pending legal issues.
+                            <br />- Consider strategic partnerships to mitigate
+                            competitive risks.
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            )}
 
             <div>
               <h2 className="flex items-center gap-x-2 text-blue-500 font-semibold text-2xl">

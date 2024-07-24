@@ -16,6 +16,11 @@ type FormData = {
   [key: string]: any;
 };
 
+type ProjectData = {
+  id: string;
+  projectName: string;
+};
+
 type TitleProp = {
   selectedOption: string;
 };
@@ -92,6 +97,23 @@ export default function FormUse({ selectedOption }: TitleProp) {
     newMilestones[index].amount = e.target.value;
     setMilestones(newMilestones);
   };
+
+  const [projects, setProjects] = useState<ProjectData[]>([]);
+  console.log(projects)
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
+
+  useEffect(() => {
+    const fetchProjectData = async () => {
+      const res = await axios.get('/api/projects');
+      setProjects(res.data);
+    };
+
+    fetchProjectData();
+  }, []);
 
   const handleChange = (e: any) => {
     const { name, value, type, files } = e.target;
@@ -338,6 +360,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               <label htmlFor="nameOfCompany" className="block">
                 Name of Company:
               </label>
+
               <input
                 type="text"
                 name="nameOfCompany"
