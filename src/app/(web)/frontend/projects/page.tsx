@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import axios from "axios";
 import { MapPin, DollarSign, Home } from "lucide-react";
-import { useRouter } from "next/navigation"; // Ensure correct import
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type ProjectProps = {
@@ -45,6 +45,7 @@ export default function Projects() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedProvince, setSelectedProvince] = useState<string>("");
+  const router = useRouter();
 
   const projectsPerPage = 4;
   const indexOfLastProject = currentPage * projectsPerPage;
@@ -75,7 +76,6 @@ export default function Projects() {
     return null; // Return null if the window object is not available (i.e., during SSR)
   }
 
-  const router = useRouter(); // Initialize the router
 
   return (
     <>
