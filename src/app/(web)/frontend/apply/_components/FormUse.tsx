@@ -16,6 +16,11 @@ type FormData = {
   [key: string]: any;
 };
 
+type ProjectData = {
+  id: string;
+  projectName: string;
+};
+
 type TitleProp = {
   selectedOption: string;
 };
@@ -92,6 +97,23 @@ export default function FormUse({ selectedOption }: TitleProp) {
     newMilestones[index].amount = e.target.value;
     setMilestones(newMilestones);
   };
+
+  const [projects, setProjects] = useState<ProjectData[]>([]);
+  console.log(projects)
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
+
+  useEffect(() => {
+    const fetchProjectData = async () => {
+      const res = await axios.get('/api/projects');
+      setProjects(res.data);
+    };
+
+    fetchProjectData();
+  }, []);
 
   const handleChange = (e: any) => {
     const { name, value, type, files } = e.target;
@@ -283,61 +305,57 @@ export default function FormUse({ selectedOption }: TitleProp) {
             />
           </div>
         </div>
-      </fieldset>
-      <fieldset className="border p-4 rounded-md mb-6">
-        <legend className="text-lg font-medium">Project Information</legend>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="projectName" className="block">
-              Project Name:
-            </label>
-            <select
-              name="projectName"
-              value={formData.projectName || ""}
-              onChange={handleChange}
-              className="block w-full rounded-lg border border-gray-300 p-2"
-            >
-              <option value="" disabled>
-                Select Project
-              </option>
-              <option value="Fleurhof Integrated Housing Development">
-                Fleurhof Integrated Housing Development
-              </option>
-              <option value="Belhar Social Housing Project">
-                Belhar Social Housing Project
-              </option>
-              <option value="Westgate Social Housing Project">
-                Westgate Social Housing Project
-              </option>
-              <option value="Devland Gardens">Devland Gardens</option>
-              <option value="Southernwood Square">Southernwood Square</option>
-              <option value="Thembelihle Village">Thembelihle Village</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="applicantType" className="block">
-              Applicant Type:
-            </label>
-            <select
-              name="applicantType"
-              value={formData.applicantType || ""}
-              onChange={handleChange}
-              className="block w-full rounded-lg border border-gray-300 p-2"
-            >
-              <option value="" disabled>
-                Select Applicant Type
-              </option>
-              <option value="Individual">Individual</option>
-              <option value="Organization/Business">
-                Organization/Business
-              </option>
-            </select>
-          </div>
-          {formData.applicantType === "Organization/Business" && (
-            <div>
-              <label htmlFor="nameOfCompany" className="block">
-                Name of Company:
-              </label>
+
+        <div className="grid gap-y-4">
+          <label htmlFor="postalCode">Postal Code:</label>
+          <input
+            type="text"
+            name="postalCode"
+            value={formData.postalCode || ""}
+            onChange={handleChange}
+            placeholder="Enter Postal Code"
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          />
+        </div>
+      </div>
+      <div className="flex justify-between items-center">
+      <div className="grid gap-y-4">
+        <label htmlFor="projectName">Project Name:</label>
+        <select
+          name="projectName"
+          value={formData.projectName || ""}
+          onChange={handleChange}
+          className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+        >
+          <option value="" disabled>
+            Select Project
+          </option>
+          {projects.map((project) => (
+            <option key={project.id} value={project.projectName}>
+              {project.projectName}
+            </option>
+          ))}
+        </select>
+      </div>
+        <div className="grid gap-y-4">
+          <label htmlFor="applicantType">Applicant Type:</label>
+          <select
+            name="applicantType"
+            value={formData.applicantType || ""}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+          >
+            <option value="" disabled>
+              Select Applicant Type
+            </option>
+            <option value="Individual">Individual</option>
+            <option value="Organization/Business">Organization/Business</option>
+          </select>
+        </div>
+        {formData.applicantType === "Organization/Business" ? (
+          <>
+            <div className="grid gap-y-4">
+              <label htmlFor="nameOfCompany">Name of Company:</label>
               <input
                 type="text"
                 name="nameOfCompany"
