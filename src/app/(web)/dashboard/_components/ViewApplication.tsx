@@ -98,9 +98,9 @@ export default function ViewApplication() {
       return (
         <div className="my-8 grid gap-y-2">
           <h3 className="font-semibold text-xl">Eligibility Results</h3>
-
+    
           <p className="pl-2">
-            Checking credit score... <span className="font-bold">Passed</span>{" "}
+            Checking credit score... <span className="font-bold text-green-500">Passed</span>{" "}
             (750/850)
             <br />
             <span className="text-sm text-gray-500">
@@ -108,7 +108,7 @@ export default function ViewApplication() {
             </span>
           </p>
           <p className="pl-2">
-            Verifying income... <span className="font-bold">Passed</span>{" "}
+            Verifying income... <span className="font-bold text-green-500">Passed</span>{" "}
             (R550,000/year)
             <br />
             <span className="text-sm text-gray-500">
@@ -117,14 +117,14 @@ export default function ViewApplication() {
           </p>
           <p className="pl-2">
             Checking employment status...{" "}
-            <span className="font-bold">Passed</span> (Full-time)
+            <span className="font-bold text-green-500">Passed</span> (Full-time)
             <br />
             <span className="text-sm text-gray-500">
               Data source: Employer Verification (New Dawn I.T)
             </span>
           </p>
           <p className="pl-2">
-            Validating identity... <span className="font-bold">Passed</span>
+            Validating identity... <span className="font-bold text-green-500">Passed</span>
             <br />
             <span className="text-sm text-gray-500">
               Data source: Home Affairs Department Database
@@ -132,7 +132,7 @@ export default function ViewApplication() {
           </p>
           <p className="pl-2">
             Reviewing application history...{" "}
-            <span className="font-bold">Passed</span>
+            <span className="font-bold text-green-500">Passed</span>
             <br />
             <span className="text-sm text-gray-500">
               Data source: Loan Application Records
@@ -155,7 +155,7 @@ export default function ViewApplication() {
             <div className="progress-bar-fill" style={{ width: "60%" }}></div>
           </div>
           <p className="pl-2">
-            Checking credit score... <span className="font-bold">Passed</span>{" "}
+            Checking credit score... <span className="font-bold text-green-500">Passed</span>{" "}
             (650/850)
             <br />
             <span className="text-sm text-gray-500">
@@ -163,7 +163,7 @@ export default function ViewApplication() {
             </span>
           </p>
           <p className="pl-2">
-            Verifying income... <span className="font-bold">Passed</span>{" "}
+            Verifying income... <span className="font-bold text-green-500">Passed</span>{" "}
             (R280,000/year)
             <br />
             <span className="text-sm text-gray-500">
@@ -179,7 +179,7 @@ export default function ViewApplication() {
             </span>
           </p>
           <p className="pl-2">
-            Validating identity... <span className="font-bold">Passed</span>
+            Validating identity... <span className="font-bold text-green-500">Passed</span>
             <br />
             <span className="text-sm text-gray-500">
               Data source: Home Affairs Department Database
@@ -187,7 +187,7 @@ export default function ViewApplication() {
           </p>
           <p className="pl-2">
             Reviewing application history...{" "}
-            <span className="font-bold">Passed</span>
+            <span className="font-bold text-green-500">Passed</span>
             <br />
             <span className="text-sm text-gray-500">
               Data source: Loan Application Records
@@ -203,6 +203,7 @@ export default function ViewApplication() {
         </div>
       );
     }
+    
     return null;
   };
 
