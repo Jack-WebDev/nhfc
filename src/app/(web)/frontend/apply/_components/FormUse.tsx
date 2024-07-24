@@ -99,16 +99,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
   };
 
   const [projects, setProjects] = useState<ProjectData[]>([]);
-  console.log(projects)
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({ ...prev, [name]: value }));
-  // };
+  console.log(projects);
 
   useEffect(() => {
     const fetchProjectData = async () => {
-      const res = await axios.get('/api/projects');
+      const res = await axios.get("/api/projects");
       setProjects(res.data);
     };
 
@@ -360,7 +355,6 @@ export default function FormUse({ selectedOption }: TitleProp) {
               <label htmlFor="nameOfCompany" className="block">
                 Name of Company:
               </label>
-
               <input
                 type="text"
                 name="nameOfCompany"
@@ -393,8 +387,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
               <option value="Investment">Investment</option>
             </select>
           </div>
-          {formData.applicationType === "Investment" ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {formData.applicationType === "Investment" && (
+            <div className="col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label htmlFor="investmentType" className="block">
                   Investment Type:
@@ -413,8 +407,8 @@ export default function FormUse({ selectedOption }: TitleProp) {
                   <option value="Loan">Loan</option>
                 </select>
               </div>
-              {formData.investmentType === "Quasi Equity" ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {formData.investmentType === "Quasi Equity" && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 col-span-3">
                   <div>
                     <label htmlFor="investmentAmount" className="block">
                       Investment Amount:
@@ -455,8 +449,10 @@ export default function FormUse({ selectedOption }: TitleProp) {
                     />
                   </div>
                 </div>
-              ) : (
-                <div>
+              )}
+              {(formData.investmentType === "Equity" ||
+                formData.investmentType === "Loan") && (
+                <div className="col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <label htmlFor="totalAmount" className="block">
                       Total Investment Amount:
@@ -471,26 +467,39 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       className="block w-full rounded-lg border border-gray-300 p-2"
                     />
                   </div>
-                  {milestones.map((milestone, index) => (
-                    <div key={index} className="mt-4">
-                      <label htmlFor={`milestone-${index}`} className="block">
-                        {milestone.name}:
-                      </label>
-                      <input
-                        type="text"
-                        id={`milestone-${index}`}
-                        name={`milestone-${index}`}
-                        value={milestone.amount}
-                        onChange={(e) => handleMilestoneChange(index, e)}
-                        placeholder={`Enter amount for ${milestone.name}`}
-                        className="block w-full rounded-lg border border-gray-300 p-2"
-                      />
-                    </div>
-                  ))}
+                  <div>
+                    <label htmlFor="milestone-0" className="block">
+                      Milestone 1:
+                    </label>
+                    <input
+                      type="text"
+                      id="milestone-0"
+                      name="milestone-0"
+                      value={milestones[0].amount}
+                      onChange={(e) => handleMilestoneChange(0, e)}
+                      placeholder="Enter amount for Milestone 1"
+                      className="block w-full rounded-lg border border-gray-300 p-2"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="milestone-1" className="block">
+                      Milestone 2:
+                    </label>
+                    <input
+                      type="text"
+                      id="milestone-1"
+                      name="milestone-1"
+                      value={milestones[1].amount}
+                      onChange={(e) => handleMilestoneChange(1, e)}
+                      placeholder="Enter amount for Milestone 2"
+                      className="block w-full rounded-lg border border-gray-300 p-2"
+                    />
+                  </div>
                 </div>
               )}
             </div>
-          ) : (
+          )}
+          {formData.applicationType === "Loan" && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="loanRepaymentPeriod" className="block">

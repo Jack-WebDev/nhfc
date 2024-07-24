@@ -1,4 +1,4 @@
-// src/app/(web)/frontend/_components/NotificationContext.tsx
+
 'use client'
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Notification } from './types';
