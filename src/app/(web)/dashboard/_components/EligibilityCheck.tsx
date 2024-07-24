@@ -129,6 +129,29 @@ export default function EligibilityCheck() {
           </div>
         </div>
       )}
+
+      {!isModalOpen && steps.length > 0 && (
+        <div className="result mt-8">
+          <h3 className="underline text-center text-lg font-semibold my-4">Eligibility Results</h3>
+          <ul className="space-y-4">
+            {steps.map((step, index) => (
+              <li key={index} className={`text-black ${step.result === 'Passed' ? 'passed text-green-700' : 'failed text-red-700'} relative`}>
+                <div className="flex items-center">
+                  <span className="font-bold">{step.message} </span>
+                  <span className={`ml-2 ${step.result === 'Passed' ? 'text-green-500' : 'text-red-500'}`}>{step.result}</span>
+                </div>
+                <p className="text-sm text-gray-600">{step.details}</p>
+                <p className="text-xs text-gray-400">Source: {step.source}</p>
+              </li>
+            ))}
+          </ul>
+          <div className="summary mt-4 text-center">
+            <p><strong>Overall Result: {result}</strong></p>
+            {outcomeMetric && <p className="mt-2 text-gray-700">{outcomeMetric}</p>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
