@@ -27,6 +27,7 @@ type TitleProp = {
 
 export default function FormUse({ selectedOption }: TitleProp) {
   const [formData, setFormData] = useState<FormData>({});
+  const [errors, setErrors] = useState<FormData>({});
   const router = useRouter();
   const [rate, setRate] = useState<number | null>(null);
   const excludeFields = ["phone", "idNumber", "address", "postalCode"];
@@ -135,10 +136,118 @@ export default function FormUse({ selectedOption }: TitleProp) {
 
       return updatedData;
     });
+
+    // Reset error for the changed field
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors: FormData = {};
+
+    // Validate contact information
+    if (!formData.fullName) {
+      newErrors.fullName = "Contact Person is required";
+      valid = false;
+    }
+    if (!formData.idNumber) {
+      newErrors.idNumber = "ID Number is required";
+      valid = false;
+    }
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+      valid = false;
+    }
+    if (!formData.phone) {
+      newErrors.phone = "Phone Number is required";
+      valid = false;
+    }
+
+    // Validate address information
+    if (!formData.address) {
+      newErrors.address = "Address is required";
+      valid = false;
+    }
+    if (!formData.city) {
+      newErrors.city = "City is required";
+      valid = false;
+    }
+    if (!formData.country) {
+      newErrors.country = "Country is required";
+      valid = false;
+    }
+    if (!formData.province) {
+      newErrors.province = "Province is required";
+      valid = false;
+    }
+    if (!formData.postalCode) {
+      newErrors.postalCode = "Postal Code is required";
+      valid = false;
+    }
+
+    // Validate project information
+    if (!formData.projectName) {
+      newErrors.projectName = "Project Name is required";
+      valid = false;
+    }
+    if (!formData.applicantType) {
+      newErrors.applicantType = "Applicant Type is required";
+      valid = false;
+    }
+    if (
+      formData.applicantType === "Organization/Business" &&
+      !formData.nameOfCompany
+    ) {
+      newErrors.nameOfCompany = "Name of Company is required";
+      valid = false;
+    }
+
+    // Validate financial information
+    if (!formData.applicationType) {
+      newErrors.applicationType = "Application Type is required";
+      valid = false;
+    }
+    if (formData.applicationType === "Investment" && !formData.investmentType) {
+      newErrors.investmentType = "Investment Type is required";
+      valid = false;
+    }
+    if (
+      formData.applicationType === "Investment" &&
+      formData.investmentType === "Quasi Equity"
+    ) {
+      if (!formData.investmentAmount) {
+        newErrors.investmentAmount = "Investment Amount is required";
+        valid = false;
+      }
+      if (!formData.loanAmount) {
+        newErrors.loanAmount = "Loan Amount is required";
+        valid = false;
+      }
+      if (!formData.equityAmount) {
+        newErrors.equityAmount = "Equity Amount is required";
+        valid = false;
+      }
+    }
+    if (
+      formData.applicationType === "Investment" &&
+      (formData.investmentType === "Equity" ||
+        formData.investmentType === "Loan")
+    ) {
+      if (!totalAmount) {
+        newErrors.totalAmount = "Total Investment Amount is required";
+        valid = false;
+      }
+    }
+
+    setErrors(newErrors);
+    return valid;
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     console.log("Form Data:", { ...formData, loanType: selectedOption });
     try {
       const res = await axios.post("/api/applications", {
@@ -172,7 +281,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
               onChange={handleChange}
               placeholder="Enter Contact Person"
               className="border border-gray-200 rounded-lg p-2 w-full"
+              required
             />
+            {errors.fullName && (
+              <p className="text-red-600">{errors.fullName}</p>
+            )}
           </div>
           <div>
             <label htmlFor="idNumber" className="block">
@@ -185,7 +298,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
               onChange={handleChange}
               placeholder="Enter Id Number"
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             />
+            {errors.idNumber && (
+              <p className="text-red-600">{errors.idNumber}</p>
+            )}
           </div>
           <div>
             <label htmlFor="email" className="block">
@@ -198,7 +315,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               onChange={handleChange}
               placeholder="Enter Email"
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             />
+            {errors.email && <p className="text-red-600">{errors.email}</p>}
           </div>
           <div>
             <label htmlFor="phone" className="block">
@@ -211,7 +330,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               onChange={handleChange}
               placeholder="Enter Phone Number"
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             />
+            {errors.phone && <p className="text-red-600">{errors.phone}</p>}
           </div>
         </div>
       </fieldset>
@@ -228,7 +349,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               onChange={handleChange}
               placeholder="Enter Address"
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             />
+            {errors.address && <p className="text-red-600">{errors.address}</p>}
           </div>
           <div>
             <label htmlFor="city" className="block">
@@ -241,7 +364,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               onChange={handleChange}
               placeholder="Enter City"
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             />
+            {errors.city && <p className="text-red-600">{errors.city}</p>}
           </div>
           <div>
             <label htmlFor="country" className="block">
@@ -252,6 +377,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               value={formData.country || ""}
               onChange={handleChange}
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             >
               <option value="" disabled>
                 Select Country
@@ -261,6 +387,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               <option value="Ghana">Ghana</option>
               <option value="Botswana">Botswana</option>
             </select>
+            {errors.country && <p className="text-red-600">{errors.country}</p>}
           </div>
           <div>
             <label htmlFor="province" className="block">
@@ -271,6 +398,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               value={formData.province || ""}
               onChange={handleChange}
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             >
               <option value="" disabled>
                 Select Province
@@ -285,6 +413,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               <option value="North West">North West</option>
               <option value="Northern Cape">Northern Cape</option>
             </select>
+            {errors.province && (
+              <p className="text-red-600">{errors.province}</p>
+            )}
           </div>
           <div>
             <label htmlFor="postalCode" className="block">
@@ -297,7 +428,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
               onChange={handleChange}
               placeholder="Enter Postal Code"
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             />
+            {errors.postalCode && (
+              <p className="text-red-600">{errors.postalCode}</p>
+            )}
           </div>
         </div>
       </fieldset>
@@ -313,6 +448,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               value={formData.projectName || ""}
               onChange={handleChange}
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             >
               <option value="" disabled>
                 Select Project
@@ -330,6 +466,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               <option value="Southernwood Square">Southernwood Square</option>
               <option value="Thembelihle Village">Thembelihle Village</option>
             </select>
+            {errors.projectName && (
+              <p className="text-red-600">{errors.projectName}</p>
+            )}
           </div>
           <div>
             <label htmlFor="applicantType" className="block">
@@ -340,6 +479,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               value={formData.applicantType || ""}
               onChange={handleChange}
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             >
               <option value="" disabled>
                 Select Applicant Type
@@ -349,6 +489,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
                 Organization/Business
               </option>
             </select>
+            {errors.applicantType && (
+              <p className="text-red-600">{errors.applicantType}</p>
+            )}
           </div>
           {formData.applicantType === "Organization/Business" && (
             <div>
@@ -362,7 +505,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
                 onChange={handleChange}
                 placeholder="Enter Name of Company"
                 className="block w-full rounded-lg border border-gray-300 p-2"
+                required
               />
+              {errors.nameOfCompany && (
+                <p className="text-red-600">{errors.nameOfCompany}</p>
+              )}
             </div>
           )}
         </div>
@@ -379,6 +526,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               value={formData.applicationType || ""}
               onChange={handleChange}
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             >
               <option value="" disabled>
                 Select Application Type
@@ -386,6 +534,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               <option value="Loan">Loan</option>
               <option value="Investment">Investment</option>
             </select>
+            {errors.applicationType && (
+              <p className="text-red-600">{errors.applicationType}</p>
+            )}
           </div>
           {formData.applicationType === "Investment" && (
             <div className="col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -398,6 +549,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                   value={formData.investmentType || ""}
                   onChange={handleChange}
                   className="block w-full rounded-lg border border-gray-300 p-2"
+                  required
                 >
                   <option value="" disabled>
                     Select Investment Type
@@ -406,6 +558,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
                   <option value="Equity">Equity</option>
                   <option value="Loan">Loan</option>
                 </select>
+                {errors.investmentType && (
+                  <p className="text-red-600">{errors.investmentType}</p>
+                )}
               </div>
               {formData.investmentType === "Quasi Equity" && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 col-span-3">
@@ -420,7 +575,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       onChange={handleChange}
                       placeholder="Enter Investment Amount"
                       className="block w-full rounded-lg border border-gray-300 p-2"
+                      required
                     />
+                    {errors.investmentAmount && (
+                      <p className="text-red-600">{errors.investmentAmount}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="loanAmount" className="block">
@@ -433,7 +592,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       onChange={handleChange}
                       readOnly
                       className="block w-full rounded-lg border border-gray-300 p-2"
+                      required
                     />
+                    {errors.loanAmount && (
+                      <p className="text-red-600">{errors.loanAmount}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="equityAmount" className="block">
@@ -446,7 +609,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       onChange={handleChange}
                       placeholder="Enter Equity Amount"
                       className="block w-full rounded-lg border border-gray-300 p-2"
+                      required
                     />
+                    {errors.equityAmount && (
+                      <p className="text-red-600">{errors.equityAmount}</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -465,7 +632,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       onChange={handleTotalAmountChange}
                       placeholder="Enter Total Investment Amount"
                       className="block w-full rounded-lg border border-gray-300 p-2"
+                      required
                     />
+                    {errors.totalAmount && (
+                      <p className="text-red-600">{errors.totalAmount}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="milestone-0" className="block">
@@ -479,7 +650,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       onChange={(e) => handleMilestoneChange(0, e)}
                       placeholder="Enter amount for Milestone 1"
                       className="block w-full rounded-lg border border-gray-300 p-2"
+                      required
                     />
+                    {errors[`milestone-0`] && (
+                      <p className="text-red-600">{errors[`milestone-0`]}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="milestone-1" className="block">
@@ -493,7 +668,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
                       onChange={(e) => handleMilestoneChange(1, e)}
                       placeholder="Enter amount for Milestone 2"
                       className="block w-full rounded-lg border border-gray-300 p-2"
+                      required
                     />
+                    {errors[`milestone-1`] && (
+                      <p className="text-red-600">{errors[`milestone-1`]}</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -510,6 +689,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
                   value={formData.loanRepaymentPeriod || ""}
                   onChange={handleChange}
                   className="block w-full rounded-lg border border-gray-300 p-2"
+                  required
                 >
                   <option value="" disabled>
                     Select Repayment Period
@@ -519,6 +699,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
                   <option value="semi-annually">Semi-annually</option>
                   <option value="annually">Annually</option>
                 </select>
+                {errors.loanRepaymentPeriod && (
+                  <p className="text-red-600">{errors.loanRepaymentPeriod}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="loanAmount" className="block">
@@ -531,7 +714,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
                   onChange={handleChange}
                   placeholder="Enter Amount"
                   className="block w-full rounded-lg border border-gray-300 p-2"
+                  required
                 />
+                {errors.loanAmount && (
+                  <p className="text-red-600">{errors.loanAmount}</p>
+                )}
               </div>
               {rate !== null && (
                 <p className="font-bold text-2xl text-blue-600">
@@ -554,6 +741,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               value={formData.sourceOfFunds || ""}
               onChange={handleChange}
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             >
               <option value="" disabled>
                 Select Source of Funds
@@ -570,6 +758,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
                 Passive income (Rental, Dividends, Interest)
               </option>
             </select>
+            {errors.sourceOfFunds && (
+              <p className="text-red-600">{errors.sourceOfFunds}</p>
+            )}
           </div>
           <div>
             <label htmlFor="purposeOfInvestment" className="block">
@@ -580,6 +771,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
               value={formData.purposeOfInvestment || ""}
               onChange={handleChange}
               className="block w-full rounded-lg border border-gray-300 p-2"
+              required
             >
               <option value="" disabled>
                 Select Purpose of Investment
@@ -594,6 +786,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               </option>
               <option value="windingUpEstate">Winding up estate</option>
             </select>
+            {errors.purposeOfInvestment && (
+              <p className="text-red-600">{errors.purposeOfInvestment}</p>
+            )}
           </div>
         </div>
       </fieldset>
@@ -609,7 +804,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               name="docs"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               onChange={handleChange}
+              required
             />
+            {errors.docs && <p className="text-red-600">{errors.docs}</p>}
           </label>
           <label htmlFor="docs" className="block">
             <span className="text-gray-700">
@@ -620,7 +817,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               name="docs"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               onChange={handleChange}
+              required
             />
+            {errors.docs && <p className="text-red-600">{errors.docs}</p>}
           </label>
           <label htmlFor="docs" className="block">
             <span className="text-gray-700">
@@ -631,7 +830,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               name="docs"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               onChange={handleChange}
+              required
             />
+            {errors.docs && <p className="text-red-600">{errors.docs}</p>}
           </label>
           <label htmlFor="docs" className="block">
             <span className="text-gray-700">
@@ -643,7 +844,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               name="docs"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               onChange={handleChange}
+              required
             />
+            {errors.docs && <p className="text-red-600">{errors.docs}</p>}
           </label>
           <label htmlFor="docs" className="block">
             <span className="text-gray-700">
@@ -655,7 +858,9 @@ export default function FormUse({ selectedOption }: TitleProp) {
               name="docs"
               className="mt-1 block w-full rounded-lg border border-gray-300 p-2"
               onChange={handleChange}
+              required
             />
+            {errors.docs && <p className="text-red-600">{errors.docs}</p>}
           </label>
         </div>
       </fieldset>
