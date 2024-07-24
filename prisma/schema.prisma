@@ -127,7 +127,7 @@ model FirstHomeLoan {
 }
 
 model Projects {
-  id                     String @id @default(cuid())
+  id                     String  @id @default(cuid())
   projectName            String
   projectCode            String
   programme              String
