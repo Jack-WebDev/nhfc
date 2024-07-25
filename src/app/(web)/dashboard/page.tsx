@@ -88,11 +88,17 @@ const Page = async () => {
           <DashboardCard total={"40%"} title="Turn Around Time" />
         </div>
         <div className="grid grid-cols-2 gap-8 my-12">
-          <BarChartComponent />
-          <FinanceSolutionsChartComponent />
-          <LineChartComponent />
-          {/* <PieChartComponent/> */}
-        </div>
+  <div className="col-span-1">
+    <BarChartComponent />
+  </div>
+  <div className="col-span-1">
+    <FinanceSolutionsChartComponent />
+  </div>
+  <div className="col-span-2">
+    <LineChartComponent />
+  </div>
+</div>
+
       </>
     </div>
   );

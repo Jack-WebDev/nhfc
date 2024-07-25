@@ -35,7 +35,7 @@ const chartConfig = {
 
 export function LineChartComponent() {
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
       <CardTitle>Loan Disbursement</CardTitle>
       <CardDescription>A graph showing the disbursement of loans over the past 6 months</CardDescription>

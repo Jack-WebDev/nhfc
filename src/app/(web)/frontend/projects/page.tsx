@@ -42,14 +42,29 @@ type ProjectProps = {
   projectType: string;
 };
 
+
+const provinces: Record<string, string[]> = {
+  "Eastern Cape": ["Buffalo City", "Nelson Mandela Bay", "Alfred Nzo", "Amathole", "Chris Hani"],
+  "Free State": ["Mangaung", "Fezile Dabi", "Lejweleputswa", "Thabo Mofutsanyane", "Xhariep"],
+  "Gauteng": ["City of Johannesburg", "City of Tshwane", "Ekurhuleni", "Sedibeng", "West Rand"],
+  "KwaZulu-Natal": ["eThekwini", "uMgungundlovu", "uThukela", "Zululand", "King Cetshwayo"],
+  "Limpopo": ["Polokwane", "Capricorn", "Mopani", "Sekhukhune", "Vhembe"],
+  "Mpumalanga": ["Ehlanzeni", "Gert Sibande", "Nkangala", "Steve Tshwete", "Mbombela"],
+  "North West": ["Bojanala Platinum", "Ngaka Modiri Molema", "Dr Kenneth Kaunda", "Dr Ruth Segomotsi Mompati", "Madibeng"],
+  "Northern Cape": ["Frances Baard", "John Taolo Gaetsewe", "Namakwa", "Pixley ka Seme", "ZF Mgcawu"],
+  "Western Cape": ["City of Cape Town", "Cape Winelands", "Garden Route", "Overberg", "West Coast"],
+};
+
 export default function Projects() {
   const [projects, setProjects] = useState<ProjectProps[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedProvince, setSelectedProvince] = useState<string>("");
-  const [selectedMunicipality, setSelectedMunicipality] = useState<string>("");
-  const [selectedWard, setSelectedWard] = useState<string>("");
-  const [selectedProjectType, setSelectedProjectType] = useState<string>("");
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedMunicipality, setSelectedMunicipality] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
+  const [selectedProjectType, setSelectedProjectType] = useState("");
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [municipalities, setMunicipalities] = useState<string[]>([]);
   const router = useRouter();
 
   const projectsPerPage = 4;
@@ -65,16 +80,28 @@ export default function Projects() {
     fetchProjects();
   }, []);
 
-  const filteredProjects = projects.filter(
-    (project) =>
-      project.projectName.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (selectedProvince === "" || project.province === selectedProvince) &&
-      (selectedMunicipality === "" ||
-        project.municipality === selectedMunicipality) &&
-      (selectedWard === "" || project.ward === selectedWard) &&
-      (selectedProjectType === "" ||
-        project.projectType === selectedProjectType)
-  );
+  useEffect(() => {
+    if (selectedProvince) {
+      setMunicipalities(provinces[selectedProvince]);
+      setSelectedMunicipality("");
+    } else {
+      setMunicipalities([]);
+      setSelectedMunicipality("");
+    }
+  }, [selectedProvince]);
+
+  useEffect(() => {
+    const filtered = projects.filter(
+      (project) =>
+        project.projectName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (selectedProvince === "" || project.province === selectedProvince) &&
+        (selectedMunicipality === "" || project.municipality === selectedMunicipality) &&
+        (selectedWard === "" || project.ward === selectedWard) &&
+        (selectedProjectType === "" || project.projectType === selectedProjectType)
+    );
+    setFilteredProjects(filtered);
+  }, [projects, searchQuery, selectedProvince, selectedMunicipality, selectedWard, selectedProjectType]);
+
 
   const currentProjects = filteredProjects.slice(
     indexOfFirstProject,
@@ -117,22 +144,18 @@ export default function Projects() {
             </label>
             <select
               name="province"
-              value={selectedProvince}
-              onChange={(e) => setSelectedProvince(e.target.value)}
+              value={selectedProvince} onChange={(e) => setSelectedProvince(e.target.value)}
               className="border p-2 rounded-md w-full md:w-64"
             >
               <option value="">Select Province</option>
-              <option value="Gauteng">Gauteng</option>
-              <option value="Western Cape">Western Cape</option>
-              <option value="KwaZulu-Natal">KwaZulu-Natal</option>
-              <option value="Eastern Cape">Eastern Cape</option>
-              <option value="Free State">Free State</option>
-              <option value="Limpopo">Limpopo</option>
-              <option value="Mpumalanga">Mpumalanga</option>
-              <option value="North West">North West</option>
-              <option value="Northern Cape">Northern Cape</option>
+        {Object.keys(provinces).map((province) => (
+          <option key={province} value={province}>
+            {province}
+          </option>
+        ))}
             </select>
           </div>
+
 
           <div className="mb-4 md:mb-0">
             <label
@@ -143,16 +166,15 @@ export default function Projects() {
             </label>
             <select
               name="municipality"
-              value={selectedMunicipality}
-              onChange={(e) => setSelectedMunicipality(e.target.value)}
+              value={selectedMunicipality} onChange={(e) => setSelectedMunicipality(e.target.value)} disabled={!selectedProvince}
               className="border p-2 rounded-md w-full md:w-64"
             >
-              <option value="">All Municipalities</option>
-              <option value="City of Johannesburg">City of Johannesburg</option>
-              <option value="City of Cape Town">City of Cape Town</option>
-              <option value="eThekwini">eThekwini</option>
-              <option value="City of Tshwane">City of Tshwane</option>
-              <option value="Nelson Mandela Bay">Nelson Mandela Bay</option>
+        <option value="">Select Municipality</option>
+        {municipalities.map((municipality) => (
+          <option key={municipality} value={municipality}>
+            {municipality}
+          </option>
+        ))}
             </select>
           </div>
 
