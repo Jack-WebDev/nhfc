@@ -264,7 +264,6 @@ export default function FormUse({ selectedOption }: TitleProp) {
 
   return (
     <form
-      onSubmit={handleSubmit}
       className="max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md space-y-6"
     >
       <fieldset className="border p-4 rounded-md mb-6">
@@ -717,6 +716,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
           )}
         </div>
       </fieldset>
+      {formData.applicationType === "Investment" ? (
       <fieldset className="border p-4 rounded-md mb-6">
         <legend className="text-lg font-medium">Funding Information</legend>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -780,9 +780,11 @@ export default function FormUse({ selectedOption }: TitleProp) {
           </div>
         </div>
       </fieldset>
+
+      ): null}
       <fieldset className="border p-4 rounded-md mb-6">
         <legend className="text-lg font-medium">Document Uploads</legend>
-        <div className="space-y-4">
+        <div className="space-y-4 grid grid-cols-2 gap-4 self-end">
           <label htmlFor="docs" className="block">
             <span className="text-gray-700">
               Certificate of Incorporation or Registration:
@@ -856,6 +858,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
         <button
           type="submit"
           className="bg-blue-500 text-white py-2 px-8 rounded-lg hover:bg-blue-600"
+          onClick={handleSubmit}
         >
           Submit
         </button>
