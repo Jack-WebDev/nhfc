@@ -116,7 +116,7 @@ export default function ApplicationProcess() {
     };
 
     fetchProjectData();
-  },[])
+  }, []);
 
   const projectDetails: any = {
     fleurhofIntegratedHousingDevelopment: {
@@ -632,77 +632,115 @@ export default function ApplicationProcess() {
                         </h2>
                       </div>
                       {currentStep === 1 && (
-                        <div className="p-6 bg-white rounded-lg shadow-md">
-                          <h2 className="text-2xl font-semibold mb-4">
+                        <div className="p-8 bg-gray-100 rounded-lg shadow-lg">
+                          <h2 className="text-2xl font-semibold mb-6">
                             Applicant Identification
                           </h2>
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 RSA ID Number:
                               </span>
                               <input
                                 type="text"
                                 name="idNumber"
                                 placeholder="Enter your RSA ID Number"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.personalData.idNumber
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 hover:border-blue-500`}
                                 value={formData.personalData.idNumber}
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">First Name:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                First Name:
+                              </span>
                               <input
                                 type="text"
                                 name="firstName"
                                 placeholder="Enter your First Name"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.personalData.firstName
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 hover:border-blue-500`}
                                 value={formData.personalData.firstName}
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">Last Name:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                Last Name:
+                              </span>
                               <input
                                 type="text"
                                 name="lastName"
                                 placeholder="Enter your Last Name"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.personalData.lastName
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 hover:border-blue-500`}
                                 value={formData.personalData.lastName}
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">Email:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                Email:
+                              </span>
                               <input
                                 type="email"
                                 name="email"
                                 placeholder="Enter your Email"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.personalData.email
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 hover:border-blue-500`}
                                 value={formData.personalData.email}
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 Phone Number:
                               </span>
                               <input
                                 type="text"
                                 name="phoneNumber"
                                 placeholder="Enter your Phone Number"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.personalData.phoneNumber
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 hover:border-blue-500`}
                                 value={formData.personalData.phoneNumber}
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">Gender:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                Gender:
+                              </span>
                               <select
                                 name="gender"
                                 value={formData.personalData.gender}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.personalData.gender
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
+                                required
                               >
                                 <option value="" disabled>
                                   Select Gender
@@ -713,12 +751,19 @@ export default function ApplicationProcess() {
                               </select>
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">Race:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                Race:
+                              </span>
                               <select
                                 name="race"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.personalData.race
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.personalData.race}
                                 onChange={handleChange}
+                                required
                               >
                                 <option value="" disabled>
                                   Select your Race
@@ -735,51 +780,78 @@ export default function ApplicationProcess() {
                       )}
 
                       {currentStep === 2 && (
-                        <div className="p-6 bg-white rounded-lg shadow-md">
+                        <div className="p-8 bg-gray-100 rounded-lg shadow-lg">
                           <h2 className="text-2xl font-semibold mb-6">
                             Current Physical Address
                           </h2>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             <label className="block col-span-2">
-                              <span className="text-gray-700">Address:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                Address:
+                              </span>
                               <textarea
                                 name="address"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.addressData.address
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.addressData.address}
                                 onChange={handleChange}
                                 placeholder="Enter your Address"
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">Suburb:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                Suburb:
+                              </span>
                               <input
                                 type="text"
                                 name="suburb"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.addressData.suburb
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.addressData.suburb}
                                 placeholder="Enter your Suburb"
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">City:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                City:
+                              </span>
                               <input
                                 type="text"
                                 name="city"
                                 placeholder="Enter your City"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.addressData.city
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.addressData.city}
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">Province:</span>
-
+                              <span className="text-gray-800 font-medium text-lg">
+                                Province:
+                              </span>
                               <select
                                 name="province"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.addressData.province
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.addressData.province}
                                 onChange={handleChange}
+                                required
                               >
                                 <option value="" disabled>
                                   Select your Province
@@ -804,16 +876,21 @@ export default function ApplicationProcess() {
                               </select>
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 Postal Code:
                               </span>
                               <input
                                 type="text"
                                 name="postalCode"
                                 placeholder="Enter your Postal Code"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.addressData.postalCode
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.addressData.postalCode}
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                           </div>
@@ -821,20 +898,27 @@ export default function ApplicationProcess() {
                       )}
 
                       {currentStep === 3 && (
-                        <div className="p-6 bg-white rounded-lg shadow-md">
+                        <div className="p-8 bg-gray-100 rounded-lg shadow-lg">
                           <h2 className="text-2xl font-semibold mb-6">
                             First Home Finance, Project and Typology
                           </h2>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <label>
-                              First Home Finance
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <label className="block">
+                              <span className="text-gray-800 font-medium text-lg">
+                                First Home Finance:
+                              </span>
                               <select
                                 name="supportType"
                                 value={formData.supportData.supportType}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.supportData.supportType
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
+                                required
                               >
-                                <option value="">
+                                <option value="" disabled>
                                   Select First Home Finance Type
                                 </option>
                                 <option value="socialHousing">
@@ -850,15 +934,24 @@ export default function ApplicationProcess() {
                               </select>
                             </label>
 
-                            <label>
-                              Province:
+                            <label className="block">
+                              <span className="text-gray-800 font-medium text-lg">
+                                Province:
+                              </span>
                               <select
                                 name="province"
                                 value={formData.supportData.province}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.supportData.province
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
+                                required
                               >
-                                <option value="">Select Province</option>
+                                <option value="" disabled>
+                                  Select Province
+                                </option>
                                 <option value="easternCape">
                                   Eastern Cape
                                 </option>
@@ -878,15 +971,23 @@ export default function ApplicationProcess() {
                                 </option>
                               </select>
                             </label>
-                            <label>
-                              Municipality/ Metro:
+
+                            <label className="block">
+                              <span className="text-gray-800 font-medium text-lg">
+                                Municipality/ Metro:
+                              </span>
                               <select
                                 name="municipalityMetro"
                                 value={formData.supportData.municipalityMetro}
                                 onChange={handleChange}
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.supportData.municipalityMetro
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
+                                required
                               >
-                                <option value="">
+                                <option value="" disabled>
                                   Select Municipality/ Metro
                                 </option>
                                 <option value="buffaloCity">
@@ -927,64 +1028,79 @@ export default function ApplicationProcess() {
                                 </option>
                               </select>
                             </label>
-                            <div className="grid">
-                              <label>
-                                Project Name:
-                                <select
-                                  name="projectName"
-                                  value={formData.supportData.projectName}
-                                  onChange={handleChange}
-                                  className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                                >
-                                  <option value="">Select Project</option>
-                                  <option value="fleurhofIntegratedHousingDevelopment">
-                                    Fleurhof Integrated Housing Development
-                                  </option>
-                                  <option value="belharSocialHousingProject">
-                                    Belhar Social Housing Project
-                                  </option>
-                                  <option value="westgateSocialHousingProject">
-                                    Westgate Social Housing Project
-                                  </option>
-                                  <option value="devlandGardens">
-                                    Devland Gardens
-                                  </option>
-                                  <option value="southernwoodSquare">
-                                    Southernwood Square
-                                  </option>
-                                  <option value="thembelihleVillage">
-                                    Thembelihle Village
-                                  </option>
-                                </select>
-                              </label>
-                              {selectedProject && (
-                                <div className="mt-4 p-4 border rounded-lg bg-gray-100">
-                                  <Image
-                                    src={"/toek_1.jpeg"}
-                                    alt="project"
-                                    width={200}
-                                    height={200}
-                                    style={{ width: "100%", height: "auto" }}
-                                  />
-                                  <h2 className="text-xl font-semibold mt-4">
-                                    {selectedProject.name}
-                                  </h2>
-                                  <p>{selectedProject.summary}</p>
-                                  <button className="bg-blue-500 text-white py-2 px-8 rounded-lg mt-4">
-                                    View Project Details
-                                  </button>
-                                </div>
-                              )}
-                            </div>
 
                             <label className="block">
-                              <span>Typology:</span>
+                              <span className="text-gray-800 font-medium text-lg">
+                                Project Name:
+                              </span>
+                              <select
+                                name="projectName"
+                                value={formData.supportData.projectName}
+                                onChange={handleChange}
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.supportData.projectName
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
+                                required
+                              >
+                                <option value="" disabled>
+                                  Select Project
+                                </option>
+                                <option value="fleurhofIntegratedHousingDevelopment">
+                                  Fleurhof Integrated Housing Development
+                                </option>
+                                <option value="belharSocialHousingProject">
+                                  Belhar Social Housing Project
+                                </option>
+                                <option value="westgateSocialHousingProject">
+                                  Westgate Social Housing Project
+                                </option>
+                                <option value="devlandGardens">
+                                  Devland Gardens
+                                </option>
+                                <option value="southernwoodSquare">
+                                  Southernwood Square
+                                </option>
+                                <option value="thembelihleVillage">
+                                  Thembelihle Village
+                                </option>
+                              </select>
+                            </label>
 
+                            {selectedProject && (
+                              <div className="mt-4 p-4 border rounded-lg bg-gray-100 col-span-3">
+                                <Image
+                                  src={"/toek_1.jpeg"}
+                                  alt="project"
+                                  width={200}
+                                  height={200}
+                                  style={{ width: "100%", height: "auto" }}
+                                />
+                                <h2 className="text-xl font-semibold mt-4">
+                                  {selectedProject.name}
+                                </h2>
+                                <p>{selectedProject.summary}</p>
+                                <button className="bg-blue-500 text-white py-2 px-8 rounded-lg mt-4">
+                                  View Project Details
+                                </button>
+                              </div>
+                            )}
+
+                            <label className="block">
+                              <span className="text-gray-800 font-medium text-lg">
+                                Typology:
+                              </span>
                               <select
                                 name="product"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.supportData.product
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.supportData.product}
                                 onChange={handleChange}
+                                required
                               >
                                 <option value="" disabled>
                                   Select Typology
@@ -1003,115 +1119,171 @@ export default function ApplicationProcess() {
                           </div>
                         </div>
                       )}
-
                       {currentStep === 4 && (
-                        <div className="p-6 bg-white rounded-lg shadow-md">
-                          <h2 className="text-2xl font-semibold mb-4">
+                        <div className="p-8 bg-gray-100 rounded-lg shadow-lg">
+                          <h2 className="text-2xl font-semibold mb-6">
                             Qualification
                           </h2>
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <label className="block col-span-2">
-                              <span className="text-gray-700">
+                            <label className="block">
+                              <span className="text-gray-800 font-medium text-lg">
                                 I am a South African citizen or Resident:
                               </span>
                               <select
                                 name="isCitizenOrResident"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.qualificationData
+                                    .isCitizenOrResident
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.qualificationData.isCitizenOrResident
                                 }
                                 onChange={handleChange}
+                                required
                               >
+                                <option value="" disabled>
+                                  Select an option
+                                </option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                               </select>
                             </label>
+
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 I am over 18 years old:
                               </span>
                               <select
                                 name="isOver18"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.qualificationData.isOver18
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.qualificationData.isOver18}
                                 onChange={handleChange}
+                                required
                               >
+                                <option value="" disabled>
+                                  Select an option
+                                </option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                               </select>
                             </label>
+
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 I am a first-time buyer:
                               </span>
                               <select
                                 name="isFirstTimeBuyer"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.qualificationData.isFirstTimeBuyer
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.qualificationData.isFirstTimeBuyer
                                 }
                                 onChange={handleChange}
+                                required
                               >
+                                <option value="" disabled>
+                                  Select an option
+                                </option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                               </select>
                             </label>
+
                             <label className="block col-span-2">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 I have dependants that live with me:
                               </span>
                               <select
                                 name="hasDependents"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.qualificationData.hasDependents
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.qualificationData.hasDependents}
                                 onChange={handleChange}
+                                required
                               >
+                                <option value="" disabled>
+                                  Select an option
+                                </option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                               </select>
                             </label>
+
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 Monthly Income Applicant:
                               </span>
                               <input
                                 type="text"
                                 name="monthlyIncomeApplicant"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.qualificationData
+                                    .monthlyIncomeApplicant
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.qualificationData
                                     .monthlyIncomeApplicant
                                 }
                                 onChange={handleChange}
+                                required
                               />
                             </label>
+
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 Monthly Income Spouse:
                               </span>
                               <input
                                 type="text"
                                 name="monthlyIncomeSpouse"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.qualificationData
+                                    .monthlyIncomeSpouse
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.qualificationData.monthlyIncomeSpouse
                                 }
                                 onChange={handleChange}
+                                required
                               />
                             </label>
+
                             <label className="block col-span-2">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 Combined Monthly Household Income (between R3500
                                 - R22000):
                               </span>
                               <input
                                 type="text"
                                 name="combinedMonthlyIncome"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.qualificationData
+                                    .combinedMonthlyIncome
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.qualificationData
                                     .combinedMonthlyIncome
                                 }
+                                onChange={handleChange}
                                 readOnly
                               />
                               {!isIncomeInRange && (
@@ -1125,94 +1297,124 @@ export default function ApplicationProcess() {
                       )}
 
                       {currentStep === 5 && (
-                        <div className="p-6 bg-white rounded-lg shadow-md">
-                          <h2 className="text-2xl font-semibold mb-4">
+                        <div className="p-8 bg-gray-100 rounded-lg shadow-lg">
+                          <h2 className="text-2xl font-semibold mb-6">
                             Dependants Living With Applicant
                           </h2>
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 No. of Female Children Under 18:
                               </span>
                               <input
                                 type="text"
                                 name="femaleChildrenUnder18"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.dependentsData.femaleChildrenUnder18
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.dependentsData.femaleChildrenUnder18
                                 }
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 No. of Male Children Under 18:
                               </span>
                               <input
                                 type="text"
                                 name="maleChildrenUnder18"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.dependentsData.maleChildrenUnder18
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.dependentsData.maleChildrenUnder18
                                 }
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 No. of Female Children Between 18 and 24:
                               </span>
                               <input
                                 type="text"
                                 name="femaleChildren18To24"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.dependentsData.femaleChildren18To24
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.dependentsData.femaleChildren18To24
                                 }
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 No. of Male Children Between 18 and 24:
                               </span>
                               <input
                                 type="text"
                                 name="maleChildren18To24"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.dependentsData.maleChildren18To24
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={
                                   formData.dependentsData.maleChildren18To24
                                 }
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                             <label className="block col-span-2">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 Other (Including Spouse):
                               </span>
                               <input
                                 type="text"
                                 name="otherDependents"
-                                className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-full rounded-lg border ${
+                                  !formData.dependentsData.otherDependents
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={formData.dependentsData.otherDependents}
                                 onChange={handleChange}
+                                required
                               />
                             </label>
                           </div>
                         </div>
                       )}
+
                       {currentStep === 6 && (
-                        <div className="p-6 bg-white rounded-lg shadow-md">
-                          <h2 className="text-2xl font-semibold mb-4">
+                        <div className="p-8 bg-gray-100 rounded-lg shadow-lg">
+                          <h2 className="text-2xl font-semibold mb-6">
                             Employment Status
                           </h2>
                           <div className="grid">
                             <label className="block">
-                              <span className="text-gray-700">
+                              <span className="text-gray-800 font-medium text-lg">
                                 Employment Status:
                               </span>
                               <select
-                                className="mt-1 block w-1/2 rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                className={`mt-1 block w-1/2 rounded-lg border ${
+                                  !employmentStatus
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                 value={employmentStatus}
                                 onChange={handleStatusChange}
                               >
@@ -1224,64 +1426,92 @@ export default function ApplicationProcess() {
                               </select>
                             </label>
                             {employmentStatus === "employed" && (
-                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
                                 <label className="block">
-                                  <span className="text-gray-700">
+                                  <span className="text-gray-800 font-medium text-lg">
                                     Company Name:
                                   </span>
                                   <input
                                     type="text"
                                     name="companyName"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData.companyName
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={
                                       formData.currentEmployerData.companyName
                                     }
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                                 <label className="block col-span-2">
-                                  <span className="text-gray-700">
+                                  <span className="text-gray-800 font-medium text-lg">
                                     Address:
                                   </span>
                                   <textarea
                                     name="address"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData.address
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={formData.currentEmployerData.address}
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                                 <label className="block">
-                                  <span className="text-gray-700">Suburb:</span>
+                                  <span className="text-gray-800 font-medium text-lg">
+                                    Suburb:
+                                  </span>
                                   <input
                                     type="text"
                                     name="suburb"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData.suburb
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={formData.currentEmployerData.suburb}
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                                 <label className="block">
-                                  <span className="text-gray-700">City:</span>
+                                  <span className="text-gray-800 font-medium text-lg">
+                                    City:
+                                  </span>
                                   <input
                                     type="text"
                                     name="city"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData.city
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={formData.currentEmployerData.city}
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                                 <label className="block">
-                                  <span className="text-gray-700">
+                                  <span className="text-gray-800 font-medium text-lg">
                                     Province:
                                   </span>
-
                                   <select
                                     name="province"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData.province
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={
                                       formData.currentEmployerData.province
                                     }
                                     onChange={handleChange}
+                                    required
                                   >
                                     <option value="" disabled>
                                       Select your Province
@@ -1312,77 +1542,106 @@ export default function ApplicationProcess() {
                                   </select>
                                 </label>
                                 <label className="block">
-                                  <span className="text-gray-700">
+                                  <span className="text-gray-800 font-medium text-lg">
                                     Postal Code:
                                   </span>
                                   <input
                                     type="text"
                                     name="postalCode"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData.postalCode
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={
                                       formData.currentEmployerData.postalCode
                                     }
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                                 <label className="block">
-                                  <span className="text-gray-700">
+                                  <span className="text-gray-800 font-medium text-lg">
                                     Employment Date:
                                   </span>
                                   <input
                                     type="text"
                                     name="employmentDate"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData
+                                        .employmentDate
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={
                                       formData.currentEmployerData
                                         .employmentDate
                                     }
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                                 <label className="block">
-                                  <span className="text-gray-700">
+                                  <span className="text-gray-800 font-medium text-lg">
                                     Contact Person Name:
                                   </span>
                                   <input
                                     type="text"
                                     name="contactPersonName"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData
+                                        .contactPersonName
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={
                                       formData.currentEmployerData
                                         .contactPersonName
                                     }
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                                 <label className="block col-span-2">
-                                  <span className="text-gray-700">
+                                  <span className="text-gray-800 font-medium text-lg">
                                     Contact Person Phone:
                                   </span>
                                   <input
                                     type="text"
                                     name="contactPersonPhone"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData
+                                        .contactPersonPhone
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={
                                       formData.currentEmployerData
                                         .contactPersonPhone
                                     }
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                                 <label className="block col-span-2">
-                                  <span className="text-gray-700">
+                                  <span className="text-gray-800 font-medium text-lg">
                                     Contact Person Email:
                                   </span>
                                   <input
                                     type="text"
                                     name="contactPersonEmail"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                    className={`mt-1 block w-full rounded-lg border ${
+                                      !formData.currentEmployerData
+                                        .contactPersonEmail
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                    } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-3 bg-white hover:border-blue-500`}
                                     value={
                                       formData.currentEmployerData
                                         .contactPersonEmail
                                     }
                                     onChange={handleChange}
+                                    required
                                   />
                                 </label>
                               </div>
@@ -1398,7 +1657,7 @@ export default function ApplicationProcess() {
                       {currentStep === 7 && (
                         <>
                           {employmentStatus === "self-employed" ? (
-                            <div className="flex justify-between items-end mb-8 p-6 bg-white rounded-lg shadow-md">
+                            <div className="flex justify-between items-end mb-8 p-6 bg-gray-100 rounded-lg shadow-md">
                               <div className="grid gap-y-8">
                                 <label htmlFor="docs" className="grid mt-8">
                                   <span className="text-red-600 text-lg font-semibold">
@@ -1500,7 +1759,7 @@ export default function ApplicationProcess() {
                                 <label htmlFor="docs" className="grid mt-8">
                                   <span className="text-red-600 text-lg font-semibold">
                                     Divorce settlement agreement, to prove
-                                    .custodianship.
+                                    custodianship.
                                   </span>
                                   <input
                                     type="file"
@@ -1531,7 +1790,7 @@ export default function ApplicationProcess() {
                             </div>
                           ) : (
                             <>
-                              <div className="grid p-6 bg-white rounded-lg shadow-md">
+                              <div className="grid p-6 bg-gray-100 rounded-lg shadow-md">
                                 <h2 className="text-2xl font-semibold mb-4">
                                   Previous Employment
                                 </h2>
@@ -1543,7 +1802,12 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="companyName"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData
+                                          .companyName
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData
                                           .companyName
@@ -1557,7 +1821,11 @@ export default function ApplicationProcess() {
                                     </span>
                                     <textarea
                                       name="address"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData.address
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData.address
                                       }
@@ -1571,7 +1839,11 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="suburb"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData.suburb
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData.suburb
                                       }
@@ -1583,7 +1855,11 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="city"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData.city
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData.city
                                       }
@@ -1597,7 +1873,12 @@ export default function ApplicationProcess() {
 
                                     <select
                                       name="province"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData
+                                          .province
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData.province
                                       }
@@ -1639,7 +1920,12 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="contactPersonName"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData
+                                          .contactPersonName
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData
                                           .contactPersonName
@@ -1654,7 +1940,12 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="contactPersonPhone"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData
+                                          .contactPersonPhone
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData
                                           .contactPersonPhone
@@ -1669,7 +1960,12 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="contactPersonEmail"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData
+                                          .contactPersonEmail
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData
                                           .contactPersonEmail
@@ -1685,7 +1981,12 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="postalCode"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData
+                                          .postalCode
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData
                                           .postalCode
@@ -1700,7 +2001,12 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="employmentStartDate"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData
+                                          .employmentStartDate
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData
                                           .employmentStartDate
@@ -1715,7 +2021,12 @@ export default function ApplicationProcess() {
                                     <input
                                       type="text"
                                       name="employmentEndDate"
-                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
+                                      className={`mt-1 block w-full rounded-lg border ${
+                                        !formData.previousEmploymentData
+                                          .employmentEndDate
+                                          ? "border-red-500"
+                                          : "border-gray-300"
+                                      } shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white`}
                                       value={
                                         formData.previousEmploymentData
                                           .employmentEndDate
@@ -1724,7 +2035,7 @@ export default function ApplicationProcess() {
                                     />
                                   </label>
 
-                                  <label className="flex gap-x-4">
+                                  <label className="flex gap-x-4 items-center">
                                     <span className="text-gray-700">
                                       Do you agree to the Terms and Conditions?
                                     </span>
@@ -1760,15 +2071,19 @@ export default function ApplicationProcess() {
                         </>
                       )}
                       {currentStep === 8 && (
-                        <div>
+                        <div className="p-6 bg-gray-100 rounded-lg shadow-md">
+                          <h2 className="text-2xl font-semibold mb-4">
+                            Apply Here
+                          </h2>
                           <div>
                             <textarea
                               name=""
                               id=""
                               placeholder="Describe and or give reasons for why you seek this financial solution from NHFC....."
+                              className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
                             ></textarea>
                           </div>
-                          <label className="flex gap-x-4">
+                          <label className="flex gap-x-4 items-center mt-4">
                             <span className="text-gray-700">
                               Do you agree to the Terms and Conditions?
                             </span>
@@ -1791,7 +2106,7 @@ export default function ApplicationProcess() {
                           </label>
                           <button
                             type="submit"
-                            className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
+                            className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200 mt-4"
                           >
                             Submit
                           </button>

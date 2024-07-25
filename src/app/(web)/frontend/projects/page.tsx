@@ -38,6 +38,8 @@ type ProjectProps = {
   communityHalls: string;
   sportsField: string;
   implementationPartners: string;
+  projectValue: number;
+  projectType: string;
 };
 
 export default function Projects() {
@@ -45,21 +47,14 @@ export default function Projects() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedProvince, setSelectedProvince] = useState<string>("");
+  const [selectedMunicipality, setSelectedMunicipality] = useState<string>("");
+  const [selectedWard, setSelectedWard] = useState<string>("");
+  const [selectedProjectType, setSelectedProjectType] = useState<string>("");
   const router = useRouter();
 
   const projectsPerPage = 4;
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = projects.slice(
-    indexOfFirstProject,
-    indexOfLastProject
-  );
-
-  const filteredProjects = projects.filter(
-    (project) =>
-      project.projectName.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (selectedProvince === "" || project.province === selectedProvince)
-  );
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -70,12 +65,27 @@ export default function Projects() {
     fetchProjects();
   }, []);
 
+  const filteredProjects = projects.filter(
+    (project) =>
+      project.projectName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (selectedProvince === "" || project.province === selectedProvince) &&
+      (selectedMunicipality === "" ||
+        project.municipality === selectedMunicipality) &&
+      (selectedWard === "" || project.ward === selectedWard) &&
+      (selectedProjectType === "" ||
+        project.projectType === selectedProjectType)
+  );
+
+  const currentProjects = filteredProjects.slice(
+    indexOfFirstProject,
+    indexOfLastProject
+  );
+
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   if (typeof window === "undefined") {
     return null; // Return null if the window object is not available (i.e., during SSR)
   }
-
 
   return (
     <>
@@ -123,61 +133,125 @@ export default function Projects() {
               <option value="Northern Cape">Northern Cape</option>
             </select>
           </div>
+
+          <div className="mb-4 md:mb-0">
+            <label
+              htmlFor="municipality"
+              className="block mb-2 text-sm font-medium text-gray-700"
+            >
+              Municipality:
+            </label>
+            <select
+              name="municipality"
+              value={selectedMunicipality}
+              onChange={(e) => setSelectedMunicipality(e.target.value)}
+              className="border p-2 rounded-md w-full md:w-64"
+            >
+              <option value="">All Municipalities</option>
+              <option value="City of Johannesburg">City of Johannesburg</option>
+              <option value="City of Cape Town">City of Cape Town</option>
+              <option value="eThekwini">eThekwini</option>
+              <option value="City of Tshwane">City of Tshwane</option>
+              <option value="Nelson Mandela Bay">Nelson Mandela Bay</option>
+            </select>
+          </div>
+
+          <div className="mb-4 md:mb-0">
+            <label
+              htmlFor="ward"
+              className="block mb-2 text-sm font-medium text-gray-700"
+            >
+              Ward:
+            </label>
+            <select
+              name="ward"
+              value={selectedWard}
+              onChange={(e) => setSelectedWard(e.target.value)}
+              className="border p-2 rounded-md w-full md:w-64"
+            >
+              <option value="">All Wards</option>
+              <option value="Ward 1">Ward 1</option>
+              <option value="Ward 2">Ward 2</option>
+              <option value="Ward 3">Ward 3</option>
+              <option value="Ward 4">Ward 4</option>
+              <option value="Ward 5">Ward 5</option>
+            </select>
+          </div>
+
+          <div className="mb-4 md:mb-0">
+            <label
+              htmlFor="projectType"
+              className="block mb-2 text-sm font-medium text-gray-700"
+            >
+              Project Type:
+            </label>
+            <select
+              name="projectType"
+              value={selectedProjectType}
+              onChange={(e) => setSelectedProjectType(e.target.value)}
+              className="border p-2 rounded-md w-full md:w-64"
+            >
+              <option value="">All Project Types</option>
+              <option value="Social Housing">Social Housing</option>
+              <option value="Affordable Housing">Affordable Housing</option>
+              <option value="Rental Housing">Rental Housing</option>
+              <option value="Gap Housing">Gap Housing</option>
+            </select>
+          </div>
         </div>
 
         <div className="flex flex-wrap justify-center gap-8">
-          {filteredProjects
-            .slice(indexOfFirstProject, indexOfLastProject)
-            .map((project) => (
-              <Card
-                className="w-[350px] p-6 bg-white shadow-lg rounded-lg flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 hover:transform hover:scale-105 border border-gray-200"
-                key={project.id}
-              >
-                <div>
-                  <CardHeader>
-                    <CardTitle className="text-lg font-semibold">
-                      {project.projectName}
-                    </CardTitle>
-                    <CardDescription className="text-gray-500">
-                      {project.deliverablesSummary}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="mt-4">
-                    <ul className="space-y-2">
-                      <li className="flex items-center">
-                        <MapPin className="w-5 h-5 mr-2 text-blue-500" />
-                        <span className="text-sm text-gray-600">
-                          Location: {project.address}, {project.province}
-                        </span>
-                      </li>
-                      <li className="flex items-center">
-                        <Home className="w-5 h-5 mr-2 text-green-500" />
-                        <span className="text-sm text-gray-600">
-                          Units: 10,000+
-                        </span>
-                      </li>
-                      <li className="flex items-center">
-                        <DollarSign className="w-5 h-5 mr-2 text-yellow-500" />
-                        <span className="text-sm text-gray-600">
-                          Project Value: R3.5 Billion
-                        </span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </div>
-                <CardFooter className="mt-4">
-                  <Button
-                    variant="default"
-                    className="w-full bg-blue-500 text-white hover:bg-blue-700"
-                    onClick={() =>
-                      router.push(`/frontend/projects/${project.id}`)
-                    } // Use router.push for navigation
-                  >
-                    View Details
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
+          {currentProjects.map((project) => (
+            <Card
+              className="w-[350px] p-6 bg-white shadow-lg rounded-lg flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 hover:transform hover:scale-105 border border-gray-200"
+              key={project.id}
+            >
+              <div>
+                <CardHeader>
+                  <CardTitle className="text-lg font-semibold">
+                    {project.projectName}
+                  </CardTitle>
+                  <CardDescription className="text-gray-500">
+                    {project.deliverablesSummary}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="mt-4">
+                  <ul className="space-y-2">
+                    <li className="flex items-center">
+                      <MapPin className="w-5 h-5 mr-2 text-blue-500" />
+                      <span className="text-sm text-gray-600">
+                        Location: {project.address}, {project.province}
+                      </span>
+                    </li>
+                    <li className="flex items-center">
+                      <Home className="w-5 h-5 mr-2 text-green-500" />
+                      <span className="text-sm text-gray-600">
+                        Units: 10,000+
+                      </span>
+                    </li>
+                    <li className="flex items-center">
+                      <DollarSign className="w-5 h-5 mr-2 text-yellow-500" />
+                      <span className="text-sm text-gray-600">
+                        Project Value: R
+                        {project.projectValue?.toLocaleString() ?? "N/A"}
+                      </span>
+                    </li>
+                  </ul>
+                </CardContent>
+              </div>
+              <CardFooter className="mt-4">
+                <Button
+                  variant="default"
+                  className="w-full bg-blue-500 text-white hover:bg-blue-700"
+                  onClick={() =>
+                    router.push(`/frontend/projects/${project.id}`)
+                  } // Use router.push for navigation
+                >
+                  View Details
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
 
         <Pagination
