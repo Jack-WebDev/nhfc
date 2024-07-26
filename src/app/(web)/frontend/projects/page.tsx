@@ -59,6 +59,7 @@ export default function Projects() {
   const [projects, setProjects] = useState<ProjectProps[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchWard, setSearchWard] = useState<string>("");
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedMunicipality, setSelectedMunicipality] = useState("");
   const [selectedWard, setSelectedWard] = useState("");
@@ -94,13 +95,13 @@ export default function Projects() {
     const filtered = projects.filter(
       (project) =>
         project.projectName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (searchWard === "" || project.ward === searchWard) &&
         (selectedProvince === "" || project.province === selectedProvince) &&
         (selectedMunicipality === "" || project.municipality === selectedMunicipality) &&
-        (selectedWard === "" || project.ward === selectedWard) &&
         (selectedProjectType === "" || project.projectType === selectedProjectType)
     );
     setFilteredProjects(filtered);
-  }, [projects, searchQuery, selectedProvince, selectedMunicipality, selectedWard, selectedProjectType]);
+  }, [projects, searchQuery, selectedProvince, selectedMunicipality, searchWard, selectedProjectType]);
 
 
   const currentProjects = filteredProjects.slice(
@@ -179,25 +180,19 @@ export default function Projects() {
           </div>
 
           <div className="mb-4 md:mb-0">
-            <label
-              htmlFor="ward"
+          <label
+              htmlFor="search"
               className="block mb-2 text-sm font-medium text-gray-700"
             >
-              Ward:
+              Search Ward:
             </label>
-            <select
-              name="ward"
-              value={selectedWard}
-              onChange={(e) => setSelectedWard(e.target.value)}
+            <input
+              type="text"
+              placeholder="Enter Ward Number"
+              value={searchWard}
+              onChange={(e) => setSearchWard(e.target.value)}
               className="border p-2 rounded-md w-full md:w-64"
-            >
-              <option value="">All Wards</option>
-              <option value="Ward 1">Ward 1</option>
-              <option value="Ward 2">Ward 2</option>
-              <option value="Ward 3">Ward 3</option>
-              <option value="Ward 4">Ward 4</option>
-              <option value="Ward 5">Ward 5</option>
-            </select>
+            />
           </div>
 
           <div className="mb-4 md:mb-0">
