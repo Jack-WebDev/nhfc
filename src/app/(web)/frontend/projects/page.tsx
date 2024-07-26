@@ -300,7 +300,7 @@ const Pagination = ({
   }
 
   return (
-    <nav className="mt-4">
+    <nav className="mt-12">
       <ul className="flex justify-center space-x-2">
         {currentPage > 1 && (
           <li>
