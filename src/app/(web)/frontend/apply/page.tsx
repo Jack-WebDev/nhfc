@@ -19,14 +19,20 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { formatAmount, isNumeric } from "@/utils/amountFormat";
 
+type ProjectData = {
+  id: string;
+  deliverablesSummary: string;
+  projectName: string;
+};
+
 export default function ApplicationProcess() {
   const [selectedOption, setSelectedOption] = useState<string>("");
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  // const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isIncomeInRange, setIsIncomeInRange] = useState(true); // State to track if income is in range
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [error, setError] = useState<string>(""); // State to manage error message
   const [employmentStatus, setEmploymentStatus] = useState("");
-  const [projects, setProjects] = useState<any>([]);
+  const [projects, setProjects] = useState<ProjectData[]>([]);
 
   const router = useRouter();
 
@@ -113,6 +119,7 @@ export default function ApplicationProcess() {
     const fetchProjectData = async () => {
       const res = await axios.get(`/api/projects`);
       setProjects(res.data);
+      console.log(res.data);
     };
 
     fetchProjectData();
@@ -200,12 +207,14 @@ export default function ApplicationProcess() {
         setError("");
       }
     }
-
-    setSelectedProject(value ? projectDetails[value] : null);
   };
-  // const handleChange = (e: any) => {
-  //   const { name, value } = e.target;
-  //   const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData; // Assuming formData is your form data state
+  const selectedProject = projects.find(
+    (project) => project.projectName === formData.supportData.projectName
+  );  
+
+    // const handleChange = (e: any) => {
+      //   const { name, value } = e.target;
+      //   const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData; // Assuming formData is your form data state
   //   setFormData((prevFormData) => ({
   //     ...prevFormData,
   //     [stepDataKey]: {
@@ -1047,24 +1056,14 @@ export default function ApplicationProcess() {
                                 <option value="" disabled>
                                   Select Project
                                 </option>
-                                <option value="fleurhofIntegratedHousingDevelopment">
-                                  Fleurhof Integrated Housing Development
-                                </option>
-                                <option value="belharSocialHousingProject">
-                                  Belhar Social Housing Project
-                                </option>
-                                <option value="westgateSocialHousingProject">
-                                  Westgate Social Housing Project
-                                </option>
-                                <option value="devlandGardens">
-                                  Devland Gardens
-                                </option>
-                                <option value="southernwoodSquare">
-                                  Southernwood Square
-                                </option>
-                                <option value="thembelihleVillage">
-                                  Thembelihle Village
-                                </option>
+                                {projects.map((project) => (
+                                  <option
+                                    key={project.id}
+                                    value={project.projectName}
+                                  >
+                                    {project.projectName}
+                                  </option>
+                                ))}
                               </select>
                             </label>
 
@@ -1078,9 +1077,9 @@ export default function ApplicationProcess() {
                                   style={{ width: "100%", height: "auto" }}
                                 />
                                 <h2 className="text-xl font-semibold mt-4">
-                                  {selectedProject.name}
+                                  {selectedProject.projectName}
                                 </h2>
-                                <p>{selectedProject.summary}</p>
+                                <p>{selectedProject.deliverablesSummary}</p>
                                 <button className="bg-blue-500 text-white py-2 px-8 rounded-lg mt-4">
                                   View Project Details
                                 </button>
@@ -1657,7 +1656,7 @@ export default function ApplicationProcess() {
                       {currentStep === 7 && (
                         <>
                           {employmentStatus === "self-employed" ? (
-                            <div className="flex justify-between items-end mb-8 p-6 bg-gray-100 rounded-lg shadow-md">
+                            <div className="grid grid-cols-2 gap-4 justify-between items-end mb-8 p-6 bg-gray-100 rounded-lg shadow-md ">
                               <div className="grid gap-y-8">
                                 <label htmlFor="docs" className="grid mt-8">
                                   <span className="text-red-600 text-lg font-semibold">
@@ -2035,37 +2034,144 @@ export default function ApplicationProcess() {
                                     />
                                   </label>
 
-                                  <label className="flex gap-x-4 items-center">
-                                    <span className="text-gray-700">
-                                      Do you agree to the Terms and Conditions?
-                                    </span>
-                                    <input
-                                      type="checkbox"
-                                      name="termsAgreement"
-                                      checked={
-                                        formData.previousEmploymentData
-                                          .termsAgreement === "yes"
-                                      }
-                                      onChange={(e) =>
-                                        handleChange({
-                                          target: {
-                                            name: "termsAgreement",
-                                            value: e.target.checked
-                                              ? "yes"
-                                              : "no",
-                                          },
-                                        })
-                                      }
-                                    />
-                                  </label>
+                          
                                 </div>
-                                <button
-                                  type="submit"
-                                  className="grid justify-self-end py-2 px-6 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-200"
-                                >
-                                  Submit
-                                </button>
+ 
                               </div>
+                                <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                                  Documents Required for Application
+                                </h2>
+                              <div className="grid grid-cols-2 gap-4 justify-between items-end mt-12 mb-8 p-6 bg-gray-100 rounded-lg shadow-md ">
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Smart Card or a bar-coded identity document
+                                    of every adult member of the household.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Birth certificates, bearing the
+                                    thirteen-digit identity number, for every
+                                    child member of the household that does not
+                                    have a bar-coded identity document.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Proof of Sources of Income
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Affidavit for any union solemnised in terms
+                                    of customary law.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Permission-To-Occupy in the case of
+                                    applicants in rural areas.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Marriage certificate for any union
+                                    solemnised in terms of civil law.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Divorce settlement agreement, to prove
+                                    custodianship.
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+
+                              <div className="grid gap-y-8">
+                                <label htmlFor="docs" className="grid mt-8">
+                                  <span className="text-red-600 text-lg font-semibold">
+                                    Court order or order issued by the
+                                    Commissioner of Child Welfare, to prove
+                                    guardianship;
+                                  </span>
+                                  <input
+                                    type="file"
+                                    name="docs"
+                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                    onChange={handleChange}
+                                    multiple
+                                  />
+                                </label>
+                              </div>
+                            </div>
                             </>
                           )}
                         </>
