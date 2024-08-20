@@ -66,11 +66,15 @@ type PreviousEmploymentData = {
   postalCode: string;
   employmentStartDate: string;
   employmentEndDate: string;
-  termsAgreement: string;
   contactPersonName: string;
   contactPersonPhone: string;
   contactPersonEmail: string;
 };
+
+type TermsOfAgreement = {
+  loanReason: string;
+  termsandconditions: boolean;
+}
 
 type FormData = {
   loanType: string;
@@ -81,11 +85,14 @@ type FormData = {
   dependentsData: DependentsData;
   currentEmployerData: CurrentEmployerData;
   previousEmploymentData: PreviousEmploymentData;
+  termsofagreement: TermsOfAgreement
 };
 
 export async function GET() {
   try {
     const res = await db.firstHomeLoan.findMany();
+
+    console.log(res)
 
     return NextResponse.json(res, { status: 200 });
   } catch (error) {
@@ -102,7 +109,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       const randomIndex = Math.floor(Math.random() * chars.length);
       result += chars[randomIndex];
     }
-    return result;
+    return `NHFC-${result}`;
   }
   try {
     const data: FormData = await req.json();
@@ -116,6 +123,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       dependentsData,
       currentEmployerData,
       previousEmploymentData,
+      termsofagreement
     } = data;
     console.log(
       personalData,
@@ -124,7 +132,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
       qualificationData,
       dependentsData,
       currentEmployerData,
-      previousEmploymentData
+      previousEmploymentData,
+      termsofagreement
     );
 
     const applicationData = await db.firstHomeLoan.create({
@@ -188,7 +197,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
           previousEmploymentData.contactPersonPhone,
         previousCompanyContactPersonEmail:
           previousEmploymentData.contactPersonEmail,
-        termsAgreement: previousEmploymentData.termsAgreement,
+          reasonForLoan: termsofagreement.loanReason,
+          termsandconditions: termsofagreement.termsandconditions,
       },
     });
 

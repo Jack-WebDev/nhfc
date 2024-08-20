@@ -70,27 +70,30 @@ model Applications {
 }
 
 model FirstHomeLoan {
-  id                                 String   @id
-  LoanType                           String
-  idNumber                           String   @unique
-  firstName                          String
-  lastName                           String
-  email                              String
-  phone                              String
-  gender                             String
-  race                               String
-  address                            String
-  suburb                             String
-  city                               String
-  province                           String
-  postalCode                         String
-  supportType                        String
-  projectProvince                    String
-  municipalityMetro                  String
-  projectName                        String
-  product                            String
-  isCitizenOrResident                String
-  isOver18                           String
+  id                  String @id
+  LoanType            String
+  ApplicationType     String @default("First Home Loan")
+  idNumber            String @unique
+  firstName           String
+  lastName            String
+  email               String
+  phone               String
+  gender              String
+  race                String
+  address             String
+  suburb              String
+  city                String
+  province            String
+  postalCode          String
+  supportType         String
+  projectProvince     String
+  municipalityMetro   String
+  projectName         String
+  product             String
+  isCitizenOrResident String
+  isOver18            String
+  LoanStatus          String @default("Pending")
+
   isFirstTimeBuyer                   String
   hasDependents                      String
   monthlyIncomeApplicant             String
@@ -122,7 +125,8 @@ model FirstHomeLoan {
   previousCompanyContactPersonName   String
   previousCompanyContactPersonPhone  String
   previousCompanyContactPersonEmail  String
-  termsAgreement                     String
+  reasonForLoan                    String
+  termsandconditions                Boolean
   createdAt                          DateTime @default(now())
 }
 
