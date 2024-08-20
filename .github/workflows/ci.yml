@@ -49,12 +49,12 @@ jobs:
 
       - name: Apply Prisma Migrations
         env:
-          DATABASE_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
+          POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
         run: yarn prisma migrate deploy
 
       - name: Lint code
         env:
-          DATABASE_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
+          POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
         run: yarn lint
 
       - name: Check TypeScript types
@@ -62,5 +62,5 @@ jobs:
 
       - name: Build project
         env:
-          DATABASE_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
+          POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
         run: yarn build
