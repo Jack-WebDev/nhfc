@@ -111,9 +111,14 @@ export default function ApplicationProcess() {
       contactPersonName: "",
       contactPersonPhone: "",
       contactPersonEmail: "",
-      termsAgreement: "",
+    },
+    termsofagreement: {
+      loanReason: "",
+      termsandconditions: false,
     },
   });
+
+  console.log(formData);
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -158,71 +163,94 @@ export default function ApplicationProcess() {
     },
   };
 
+  // Type guard to check if an object has the 'monthlyIncomeApplicant' property
+  function hasIncomeProperties(
+    obj: any
+  ): obj is { monthlyIncomeApplicant: string; monthlyIncomeSpouse: string } {
+    return "monthlyIncomeApplicant" in obj && "monthlyIncomeSpouse" in obj;
+  }
+
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    let newValue = value;
+    const { name, value, type, checked } = e.target;
+    let newValue = type === "checkbox" ? checked : value;
 
     if (currentStep === 4 && isNumeric(value.replace(/,/g, ""))) {
       newValue = formatAmount(value.replace(/,/g, ""));
     }
 
     const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData;
-    const updatedQualificationData = {
-      ...formData,
-      ...formData.qualificationData,
-      [name]: newValue,
-    };
-    const applicantIncome =
-      parseFloat(
-        updatedQualificationData.monthlyIncomeApplicant.replace(/,/g, "")
-      ) || 0;
-    const spouseIncome =
-      parseFloat(
-        updatedQualificationData.monthlyIncomeSpouse.replace(/,/g, "")
-      ) || 0;
-    const combinedIncome = applicantIncome + spouseIncome;
 
-    // Update combinedMonthlyIncome with formatted result
-    updatedQualificationData.combinedMonthlyIncome = formatAmount(
-      combinedIncome.toString()
-    );
+    setFormData((prevFormData) => {
+      const stepData = prevFormData[stepDataKey];
 
-    let qualificationData = updatedQualificationData;
-
-    // Update formData state
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [stepDataKey]: qualificationData,
-    }));
-    if (currentStep === 4) {
-      const isCombinedIncomeInRange =
-        combinedIncome >= 3500 && combinedIncome <= 22000;
-      setIsIncomeInRange(isCombinedIncomeInRange);
-      setIsSubmitDisabled(!isCombinedIncomeInRange);
-      if (!isCombinedIncomeInRange) {
-        setError(
-          "Combined monthly income must be between R10,000 and R20,000."
+      // Ensure stepData is an object before spreading
+      if (typeof stepData !== "object" || stepData === null) {
+        console.error(
+          `Expected stepData to be an object, but got: ${stepData}`
         );
-      } else {
-        setError("");
+        return prevFormData; // If stepData is not an object, don't update formData
       }
-    }
+
+      const updatedQualificationData = {
+        ...stepData,
+        [name]: newValue,
+      };
+
+      // Only perform income-related calculations if the object has the income properties
+      if (currentStep === 4 && hasIncomeProperties(updatedQualificationData)) {
+        const applicantIncome =
+          parseFloat(
+            updatedQualificationData.monthlyIncomeApplicant.replace(/,/g, "") ||
+              "0"
+          ) || 0;
+        const spouseIncome =
+          parseFloat(
+            updatedQualificationData.monthlyIncomeSpouse.replace(/,/g, "") ||
+              "0"
+          ) || 0;
+        const combinedIncome = applicantIncome + spouseIncome;
+
+        // Update combinedMonthlyIncome with formatted result
+        updatedQualificationData.combinedMonthlyIncome = formatAmount(
+          combinedIncome.toString()
+        );
+
+        const isCombinedIncomeInRange =
+          combinedIncome >= 3500 && combinedIncome <= 22000;
+        setIsIncomeInRange(isCombinedIncomeInRange);
+        setIsSubmitDisabled(!isCombinedIncomeInRange);
+        setError(
+          isCombinedIncomeInRange
+            ? ""
+            : "Combined monthly income must be between R10,000 and R20,000."
+        );
+      }
+
+      return {
+        ...prevFormData,
+        [stepDataKey]: updatedQualificationData,
+      };
+    });
   };
+
   const selectedProject = projects.find(
     (project) => project.projectName === formData.supportData.projectName
-  );  
+  );
 
-    // const handleChange = (e: any) => {
-      //   const { name, value } = e.target;
-      //   const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData; // Assuming formData is your form data state
+  // const handleChange = (e: any) => {
+  //   const { name, value, type, checked } = e.target;
+  //   const stepDataKey = getStepDataKey(currentStep) as keyof typeof formData;
+
   //   setFormData((prevFormData) => ({
   //     ...prevFormData,
   //     [stepDataKey]: {
-  //       ...prevFormData[stepDataKey],
-  //       [name as keyof (typeof prevFormData)[typeof stepDataKey]]: value, // Type assertion here
+  //       ...((prevFormData[stepDataKey] as object) || {}),
+  //       [name as keyof (typeof prevFormData)[typeof stepDataKey]]:
+  //         type === "checkbox" ? checked : value,
   //     },
   //   }));
   // };
+
   const getStepDataKey = (step: any) => {
     switch (step) {
       case 1:
@@ -240,7 +268,7 @@ export default function ApplicationProcess() {
       case 7:
         return "previousEmploymentData";
       case 8:
-        return "termsAgreement";
+        return "termsofagreement";
 
       default:
         return "personalData";
@@ -2033,161 +2061,159 @@ export default function ApplicationProcess() {
                                       onChange={handleChange}
                                     />
                                   </label>
-
-                          
                                 </div>
- 
                               </div>
-                                <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
-                                  Documents Required for Application
-                                </h2>
+                              <h2 className="text-2xl font-semibold my-4 text-center text-blue-500">
+                                Documents Required for Application
+                              </h2>
                               <div className="grid grid-cols-2 gap-4 justify-between items-end mt-12 mb-8 p-6 bg-gray-100 rounded-lg shadow-md ">
-                              <div className="grid gap-y-8">
-                                <label htmlFor="docs" className="grid mt-8">
-                                  <span className="text-red-600 text-lg font-semibold">
-                                    Smart Card or a bar-coded identity document
-                                    of every adult member of the household.
-                                  </span>
-                                  <input
-                                    type="file"
-                                    name="docs"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-                                    onChange={handleChange}
-                                    multiple
-                                  />
-                                </label>
-                              </div>
+                                <div className="grid gap-y-8">
+                                  <label htmlFor="docs" className="grid mt-8">
+                                    <span className="text-red-600 text-lg font-semibold">
+                                      Smart Card or a bar-coded identity
+                                      document of every adult member of the
+                                      household.
+                                    </span>
+                                    <input
+                                      type="file"
+                                      name="docs"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                      onChange={handleChange}
+                                      multiple
+                                    />
+                                  </label>
+                                </div>
 
-                              <div className="grid gap-y-8">
-                                <label htmlFor="docs" className="grid mt-8">
-                                  <span className="text-red-600 text-lg font-semibold">
-                                    Birth certificates, bearing the
-                                    thirteen-digit identity number, for every
-                                    child member of the household that does not
-                                    have a bar-coded identity document.
-                                  </span>
-                                  <input
-                                    type="file"
-                                    name="docs"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-                                    onChange={handleChange}
-                                    multiple
-                                  />
-                                </label>
-                              </div>
+                                <div className="grid gap-y-8">
+                                  <label htmlFor="docs" className="grid mt-8">
+                                    <span className="text-red-600 text-lg font-semibold">
+                                      Birth certificates, bearing the
+                                      thirteen-digit identity number, for every
+                                      child member of the household that does
+                                      not have a bar-coded identity document.
+                                    </span>
+                                    <input
+                                      type="file"
+                                      name="docs"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                      onChange={handleChange}
+                                      multiple
+                                    />
+                                  </label>
+                                </div>
 
-                              <div className="grid gap-y-8">
-                                <label htmlFor="docs" className="grid mt-8">
-                                  <span className="text-red-600 text-lg font-semibold">
-                                    Proof of Sources of Income
-                                  </span>
-                                  <input
-                                    type="file"
-                                    name="docs"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-                                    onChange={handleChange}
-                                    multiple
-                                  />
-                                </label>
-                              </div>
+                                <div className="grid gap-y-8">
+                                  <label htmlFor="docs" className="grid mt-8">
+                                    <span className="text-red-600 text-lg font-semibold">
+                                      Proof of Sources of Income
+                                    </span>
+                                    <input
+                                      type="file"
+                                      name="docs"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                      onChange={handleChange}
+                                      multiple
+                                    />
+                                  </label>
+                                </div>
 
-                              <div className="grid gap-y-8">
-                                <label htmlFor="docs" className="grid mt-8">
-                                  <span className="text-red-600 text-lg font-semibold">
-                                    Affidavit for any union solemnised in terms
-                                    of customary law.
-                                  </span>
-                                  <input
-                                    type="file"
-                                    name="docs"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-                                    onChange={handleChange}
-                                    multiple
-                                  />
-                                </label>
-                              </div>
+                                <div className="grid gap-y-8">
+                                  <label htmlFor="docs" className="grid mt-8">
+                                    <span className="text-red-600 text-lg font-semibold">
+                                      Affidavit for any union solemnised in
+                                      terms of customary law.
+                                    </span>
+                                    <input
+                                      type="file"
+                                      name="docs"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                      onChange={handleChange}
+                                      multiple
+                                    />
+                                  </label>
+                                </div>
 
-                              <div className="grid gap-y-8">
-                                <label htmlFor="docs" className="grid mt-8">
-                                  <span className="text-red-600 text-lg font-semibold">
-                                    Permission-To-Occupy in the case of
-                                    applicants in rural areas.
-                                  </span>
-                                  <input
-                                    type="file"
-                                    name="docs"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-                                    onChange={handleChange}
-                                    multiple
-                                  />
-                                </label>
-                              </div>
+                                <div className="grid gap-y-8">
+                                  <label htmlFor="docs" className="grid mt-8">
+                                    <span className="text-red-600 text-lg font-semibold">
+                                      Permission-To-Occupy in the case of
+                                      applicants in rural areas.
+                                    </span>
+                                    <input
+                                      type="file"
+                                      name="docs"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                      onChange={handleChange}
+                                      multiple
+                                    />
+                                  </label>
+                                </div>
 
-                              <div className="grid gap-y-8">
-                                <label htmlFor="docs" className="grid mt-8">
-                                  <span className="text-red-600 text-lg font-semibold">
-                                    Marriage certificate for any union
-                                    solemnised in terms of civil law.
-                                  </span>
-                                  <input
-                                    type="file"
-                                    name="docs"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-                                    onChange={handleChange}
-                                    multiple
-                                  />
-                                </label>
-                              </div>
+                                <div className="grid gap-y-8">
+                                  <label htmlFor="docs" className="grid mt-8">
+                                    <span className="text-red-600 text-lg font-semibold">
+                                      Marriage certificate for any union
+                                      solemnised in terms of civil law.
+                                    </span>
+                                    <input
+                                      type="file"
+                                      name="docs"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                      onChange={handleChange}
+                                      multiple
+                                    />
+                                  </label>
+                                </div>
 
-                              <div className="grid gap-y-8">
-                                <label htmlFor="docs" className="grid mt-8">
-                                  <span className="text-red-600 text-lg font-semibold">
-                                    Divorce settlement agreement, to prove
-                                    custodianship.
-                                  </span>
-                                  <input
-                                    type="file"
-                                    name="docs"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-                                    onChange={handleChange}
-                                    multiple
-                                  />
-                                </label>
-                              </div>
+                                <div className="grid gap-y-8">
+                                  <label htmlFor="docs" className="grid mt-8">
+                                    <span className="text-red-600 text-lg font-semibold">
+                                      Divorce settlement agreement, to prove
+                                      custodianship.
+                                    </span>
+                                    <input
+                                      type="file"
+                                      name="docs"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                      onChange={handleChange}
+                                      multiple
+                                    />
+                                  </label>
+                                </div>
 
-                              <div className="grid gap-y-8">
-                                <label htmlFor="docs" className="grid mt-8">
-                                  <span className="text-red-600 text-lg font-semibold">
-                                    Court order or order issued by the
-                                    Commissioner of Child Welfare, to prove
-                                    guardianship;
-                                  </span>
-                                  <input
-                                    type="file"
-                                    name="docs"
-                                    className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
-                                    onChange={handleChange}
-                                    multiple
-                                  />
-                                </label>
+                                <div className="grid gap-y-8">
+                                  <label htmlFor="docs" className="grid mt-8">
+                                    <span className="text-red-600 text-lg font-semibold">
+                                      Court order or order issued by the
+                                      Commissioner of Child Welfare, to prove
+                                      guardianship;
+                                    </span>
+                                    <input
+                                      type="file"
+                                      name="docs"
+                                      className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out"
+                                      onChange={handleChange}
+                                      multiple
+                                    />
+                                  </label>
+                                </div>
                               </div>
-                            </div>
                             </>
                           )}
                         </>
                       )}
                       {currentStep === 8 && (
                         <div className="p-6 bg-gray-100 rounded-lg shadow-md">
-                          <h2 className="text-2xl font-semibold mb-4">
-                            Apply Here
-                          </h2>
                           <div>
+                            <label className="block">
+                              Reason for home loan application:
+                            </label>
                             <textarea
-                              name=""
-                              id=""
-                              placeholder="Describe and or give reasons for why you seek this financial solution from NHFC....."
+                              name="loanReason" // Ensure this matches your state key
                               className="mt-1 block w-full rounded-lg border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200 ease-in-out p-2 bg-white"
-                            ></textarea>
+                              value={formData.termsofagreement.loanReason}
+                              onChange={handleChange}
+                            />
                           </div>
                           <label className="flex gap-x-4 items-center mt-4">
                             <span className="text-gray-700">
@@ -2195,19 +2221,11 @@ export default function ApplicationProcess() {
                             </span>
                             <input
                               type="checkbox"
-                              name="termsAgreement"
+                              name="termsandconditions" // Ensure this matches your state key
                               checked={
-                                formData.previousEmploymentData
-                                  .termsAgreement === "yes"
+                                formData.termsofagreement.termsandconditions
                               }
-                              onChange={(e) =>
-                                handleChange({
-                                  target: {
-                                    name: "termsAgreement",
-                                    value: e.target.checked ? "yes" : "no",
-                                  },
-                                })
-                              }
+                              onChange={handleChange}
                             />
                           </label>
                           <button

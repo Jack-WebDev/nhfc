@@ -73,6 +73,7 @@ type LoanApplication = {
   Country: string;
   LoanType: string;
   LoanAmount: string;
+  ApplicationType: string;
   LoanStatus: string;
   createdAt: any;
 };
@@ -225,7 +226,7 @@ export default function Applications() {
       header: () => <div>Application Amount</div>,
       cell: ({ row }) => {
         const loanAmount:string = row.getValue("LoanAmount");
-        return <div className="font-medium">{`${formatAmount(loanAmount)}`}</div>;
+        return <div className="font-medium">{loanAmount}</div>;
 
       },
     },
@@ -264,6 +265,7 @@ export default function Applications() {
       enableHiding: false,
       cell: ({ row }) => {
         const loan = row.original;
+        console.log(loan)
 
         return (
           <DropdownMenu>

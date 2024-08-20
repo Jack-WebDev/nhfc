@@ -20,7 +20,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       const randomIndex = Math.floor(Math.random() * chars.length);
       result += chars[randomIndex];
     }
-    return result;
+    return `NHFC-${result}`;
   }
   try {
     const data = await req.json();
