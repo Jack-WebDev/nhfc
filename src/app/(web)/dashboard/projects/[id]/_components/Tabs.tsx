@@ -23,53 +23,52 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export function TabsComponent() {
   const typologys = [
     {
-      typology: "INV001",
-      description: "Paid",
-      qty: "R250.00",
-      sellingPrice: "3765",
-      income: "R1400533"
+      typology: "RDP Houses",
+      description: "	Basic housing units",
+      qty: "5000",
+      sellingPrice: "R150,000.00",
+      income: "R890,000.00",
     },
     {
-      typology: "INV002",
-      description: "Pending",
-      qty: "R150.00",
-      sellingPrice: "32986",
-      income: "R1400533"
+      typology: "Social Housing Units",
+      description: "Affordable rental apartments",
+      qty: "3000",
+      sellingPrice: "R325,000.00",
+      income: "R1200,000.00",
     },
     {
-      typology: "INV003",
-      description: "Unpaid",
-      qty: "R350.00",
-      sellingPrice: "2000",
-      income: "R1400533"
+      typology: "Bonded Houses",
+      description: "Market-rate housing",
+      qty: "2000",
+      sellingPrice: "R750,000.00",
+      income: "R2000,000.00",
+    },
+  ];
+
+  const risks = [
+    {
+      typology: "Delays in land acquisition",
+      description: "High",
+      qty: "Early engagement with land owners and municipality",
+
     },
     {
-      typology: "INV004",
-      description: "Paid",
-      qty: "R450.00",
-      sellingPrice: "3765",
-      income: "R1400533"
+      typology: "Cost overruns due to material price fluctuations",
+      description: "Medium",
+      qty: "Contingency budget and bulk purchasing agreements",
+
     },
     {
-      typology: "INV005",
-      description: "Paid",
-      qty: "R550.00",
-      sellingPrice: "32986",
-      income: "R1400533"
+      typology: "Community resistance to project",
+      description: "High",
+      qty: "Comprehensive stakeholder engagement and community liaison program",
+
     },
     {
-      typology: "INV006",
-      description: "Pending",
-      qty: "R200.00",
-      sellingPrice: "2000",
-      income: "R1400533"
-    },
-    {
-      typology: "INV007",
-      description: "Unpaid",
-      qty: "R300.00",
-      sellingPrice: "3765",
-      income: "R1400533"
+      typology: "Assumption: Stable political environment",
+      description: "Medium",
+      qty: "Regular monitoring of political landscape and contingency planning",
+
     },
   ];
   return (
@@ -155,27 +154,21 @@ export function TabsComponent() {
           <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Typology</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Qty</TableHead>
-                  <TableHead >Selling Price</TableHead>
-                  <TableHead >Income</TableHead>
+                  <TableHead>Risk / Assumption</TableHead>
+                  <TableHead>Impact</TableHead>
+                  <TableHead>	Mitigation / Validation</TableHead>
+
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {typologys.map((typology) => (
-                  <TableRow key={typology.typology}>
+                {risks.map((risk) => (
+                  <TableRow key={risk.typology}>
                     <TableCell className="font-medium">
-                      {typology.typology}
+                      {risk.typology}
                     </TableCell>
-                    <TableCell>{typology.description}</TableCell>
-                    <TableCell>{typology.sellingPrice}</TableCell>
-                    <TableCell>
-                      {typology.qty}
-                    </TableCell>
-                    <TableCell>
-                      {typology.income}
-                    </TableCell>
+                    <TableCell>{risk.description}</TableCell>
+                    <TableCell>{risk.qty}</TableCell>
+
                   </TableRow>
                 ))}
               </TableBody>

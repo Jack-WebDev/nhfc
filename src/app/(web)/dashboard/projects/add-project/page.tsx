@@ -111,11 +111,11 @@ export default function AddProject() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    // console.log("Form Data:", formData);
     try {
       const res = await axios.post("/api/projects", formData);
       router.push("/frontend/projects");
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error as AxiosError);
     }

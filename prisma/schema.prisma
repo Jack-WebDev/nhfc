@@ -131,7 +131,7 @@ model FirstHomeLoan {
 }
 
 model Projects {
-  id                     String  @id @default(cuid())
+  id                     String   @id @default(cuid())
   projectName            String
   projectCode            String
   programme              String
@@ -148,6 +148,7 @@ model Projects {
   contractor             String
   deliverablesSummary    String
   implementationPartners String
+  hasOwner               Boolean? @default(false)
   skilledWorkers         String?
   unskilledWorkers       String?
   schools                String?

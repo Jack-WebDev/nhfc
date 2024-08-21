@@ -20,13 +20,13 @@ export const POST = async (request: Request) => {
     role,
   } = data;
 
-  console.log(phone);
+  // console.log(phone);
 
   const emailExist = await db.user.findUnique({
     where: { email: email },
   });
 
-  console.log(emailExist);
+  // console.log(emailExist);
   if (emailExist) {
     return new NextResponse(
       JSON.stringify({ message: "Email already registered" }),
@@ -34,12 +34,10 @@ export const POST = async (request: Request) => {
     );
   }
 
-  console.log("here3");
   const phoneExist = await db.user.findUnique({
     where: { phone: phone },
   });
 
-  console.log("333");
 
   if (phoneExist) {
     return new NextResponse(
@@ -48,12 +46,10 @@ export const POST = async (request: Request) => {
     );
   }
 
-  console.log("44");
   const IdNumberExist = await db.user.findUnique({
     where: { IdNumber: idNumber },
   });
 
-  console.log("dsds");
   if (IdNumberExist) {
     return new NextResponse(
       JSON.stringify({ message: "ID Number already registered" }),
@@ -64,7 +60,6 @@ export const POST = async (request: Request) => {
   const saltRounds = 10;
   const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
-  console.log("2");
 
   try {
     let role = "Client";
@@ -96,7 +91,6 @@ export const POST = async (request: Request) => {
       },
     });
 
-    console.log(user);
 
     // const otp = Math.floor(100000 + Math.random() * 900000);
 

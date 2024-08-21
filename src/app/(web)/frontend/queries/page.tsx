@@ -76,7 +76,7 @@ export default function Queries() {
   const [appliedLoan, setAppliedLoan] = useState<string>("");
   const [describeQuery, setDescribeQuery] = useState<string>("");
   const  user  = useUserContext();
-  console.log(user)
+  // console.log(user)
 
   useEffect(() => {
     const fetchQueries = async () => {

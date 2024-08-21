@@ -47,7 +47,7 @@ export default function ViewApplication() {
   const [loanData, setLoanData] = useState<LoanApplication[]>([]);
   const [firstHomeData, setFirstHomeData] = useState<any[]>([]);
   const router = useRouter();
-  console.log(loanData);
+  // console.log(loanData);
 
   useEffect(() => {
     const fetchApplicationData = async () => {
