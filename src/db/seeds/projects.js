@@ -95,6 +95,11 @@ function getProvinceAndMunicipality() {
   return { province: randomProvince, municipality: randomMunicipality };
 }
 
+function getRandomOwnership() {
+  return Math.random() > 0.5;
+}
+
+
 async function insertData() {
   const projects = Array.from({ length: 20 }).map(() => {
     const { province, municipality } = getProvinceAndMunicipality();
@@ -114,6 +119,7 @@ async function insertData() {
       developer: faker.person.fullName(),
       projectLiason: faker.person.fullName(),
       materialSupplier: faker.person.fullName(),
+      hasOwner: getRandomOwnership(),
       contractor: faker.person.fullName(),
       deliverablesSummary: faker.lorem.sentences(5),
       skilledWorkers: faker.number.int({ min: 10, max: 100 }).toString(),
