@@ -52,9 +52,9 @@ export default function Register() {
       } else {
         setErrors(null);
       }
-      console.log(formData);
+      // console.log(formData);
       const res = await axios.post(`/api/auth/register`, formData);
-      console.log(res);
+      // console.log(res);
       if (res.status === 201) {
         router.push("/login");
       }

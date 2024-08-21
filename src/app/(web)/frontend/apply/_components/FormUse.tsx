@@ -100,7 +100,7 @@ export default function FormUse({ selectedOption }: TitleProp) {
   };
 
   const [projects, setProjects] = useState<ProjectData[]>([]);
-  console.log(projects);
+  // console.log(projects);
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -248,13 +248,13 @@ export default function FormUse({ selectedOption }: TitleProp) {
     if (!validateForm()) {
       return;
     }
-    console.log("Form Data:", { ...formData, loanType: selectedOption });
+    // console.log("Form Data:", { ...formData, loanType: selectedOption });
     try {
       const res = await axios.post("/api/applications", {
         ...formData,
         loanType: selectedOption,
       });
-      console.log(res);
+      // console.log(res);
       router.push("/frontend");
       toast.success("Application Submitted Successfully");
     } catch (error) {

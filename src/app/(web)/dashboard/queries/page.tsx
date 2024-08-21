@@ -97,7 +97,7 @@ export default function Queries() {
       replyTo: reply,
     };
     try {
-      console.log(formData);
+      // console.log(formData);
       // await createQuery(formData);
     } catch (error) {
       console.log(error);
@@ -105,7 +105,7 @@ export default function Queries() {
   };
 
   const QueryDialog = ({ query, closeDialog }: any) => {
-    console.log(query);
+    // console.log(query);
     const formattedDate = query?.createdAt;
     return (
       <Dialog open={true} onOpenChange={closeDialog}>
@@ -214,7 +214,7 @@ export default function Queries() {
       enableHiding: false,
       cell: ({ row }) => {
         const query = row.original;
-        console.log(query);
+        // console.log(query);
         return (
           <RespondToQuery query={query} />
           // <DropdownMenu>
