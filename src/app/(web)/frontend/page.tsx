@@ -59,6 +59,7 @@ import {
   PageHeader,
 } from "@/components";
 import axios from "axios";
+import Link from "next/link";
 
 type LoanApplication = {
   id: string;
@@ -176,17 +177,17 @@ export default function Applications() {
 
   const formatAmount = (amount: string) => {
     // Convert the amount to a number and ensure it has two decimal places
-    let number = parseFloat(amount.replace(/[R,]/g, '')).toFixed(2);
-  
+    let number = parseFloat(amount.replace(/[R,]/g, "")).toFixed(2);
+
     // Split the number into the integer part and the decimal part
-    let [integerPart, decimalPart] = number.split('.');
-  
+    let [integerPart, decimalPart] = number.split(".");
+
     // Add commas as thousand separators
-    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
     // Combine the integer part and decimal part
-    return 'R' + integerPart + '.' + decimalPart;
-  }
+    return "R" + integerPart + "." + decimalPart;
+  };
 
   const columns: ColumnDef<LoanApplication>[] = [
     {
@@ -225,9 +226,8 @@ export default function Applications() {
       accessorKey: "LoanAmount",
       header: () => <div>Application Amount</div>,
       cell: ({ row }) => {
-        const loanAmount:string = row.getValue("LoanAmount");
+        const loanAmount: string = row.getValue("LoanAmount");
         return <div className="font-medium">{loanAmount}</div>;
-
       },
     },
     {
@@ -235,7 +235,7 @@ export default function Applications() {
       header: "Status",
       cell: ({ row }) => {
         const loanStatus: string = row.getValue("LoanStatus");
-        let variant
+        let variant;
 
         switch (loanStatus) {
           case "Pending":
@@ -253,7 +253,9 @@ export default function Applications() {
 
         return (
           <div className="capitalize">
-            <Badge className={`bg-${variant}-500 text-white`}>{loanStatus}</Badge>
+            <Badge className={`bg-${variant}-500 text-white`}>
+              {loanStatus}
+            </Badge>
           </div>
         );
       },
@@ -320,20 +322,37 @@ export default function Applications() {
     },
   });
 
-
   return (
     <>
       <div className="w-full">
         {/* <h1 className="text-3xl font-semibold">My Applications</h1> */}
         <div className="flex justify-between items-baseline mb-8">
-    <PageHeader Icon={FileText} title="My Applications"/>
+          <PageHeader Icon={FileText} title="My Applications" />
           {/* <h2>Applications List</h2> */}
-          <button
-            className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg"
-            onClick={() => router.push("/frontend/apply")}
-          >
-            <Plus /> Start New Application
-          </button>
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg hover:bg-blue-700"
+                // onClick={() => router.push("/frontend/apply")}
+              >
+                <Plus /> Start New Application
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Application Type</DialogTitle>
+              </DialogHeader>
+              <div className="grid grid-cols-2 items-stretch gap-x-4">
+                <Link href={"#"} className="border border-black rounded-xl p-8">
+                  <h2>Apply for a project</h2>
+                </Link>
+                <Link href={"/frontend/apply"} className="border border-black rounded-xl p-8">
+                  <h2>Apply for a loan or to invest in projects</h2>
+                </Link>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
         <div className="rounded-xl border">
           <Table className="bg-white rounded-xl">
@@ -395,7 +414,6 @@ export default function Applications() {
       <div className="flex justify-center flex-col items-center gap-2 mt-12">
         <div className="flex items-center gap-4">
           <Button
-            
             className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
             onClick={() => table.firstPage()}
             disabled={!table.getCanPreviousPage()}
@@ -403,7 +421,6 @@ export default function Applications() {
             <ChevronsLeft />
           </Button>
           <Button
-            
             className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -411,7 +428,6 @@ export default function Applications() {
             <ChevronLeft />
           </Button>
           <Button
-            
             className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
@@ -419,7 +435,6 @@ export default function Applications() {
             <ChevronRight />
           </Button>
           <Button
-            
             className="border rounded p-1 bg-blue-600 text-white hover:bg-blue-400"
             onClick={() => table.lastPage()}
             disabled={!table.getCanNextPage()}
