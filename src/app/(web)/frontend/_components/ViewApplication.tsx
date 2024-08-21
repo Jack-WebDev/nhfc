@@ -45,6 +45,7 @@ export default function ViewApplication() {
   const params = useParams();
   const applicationID = params.id;
   const [loanData, setLoanData] = useState<LoanApplication[]>([]);
+  const [firstHomeData, setFirstHomeData] = useState<any[]>([]);
   const router = useRouter();
   console.log(loanData);
 
@@ -53,6 +54,15 @@ export default function ViewApplication() {
       const res = await axios.get(`/api/applications/${applicationID}`);
       const usersData = await res.data;
       setLoanData(usersData);
+    };
+
+    fetchApplicationData();
+  }, [applicationID]);
+  useEffect(() => {
+    const fetchApplicationData = async () => {
+      const res = await axios.get(`/api/first-home/${applicationID}`);
+      const usersData = await res.data;
+      setFirstHomeData(usersData);
     };
 
     fetchApplicationData();
@@ -228,7 +238,7 @@ export default function ViewApplication() {
 
   return (
     <>
-      <ArrowLeft onClick={() => router.back()} className="0 cursor-pointer" />
+      <ArrowLeft onClick={() => router.back()} className="cursor-pointer" />
       {loanData?.map((loan) => {
         const fomattedDate = loan.createdAt.split("T")[0];
         return (
