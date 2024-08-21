@@ -42,11 +42,14 @@ export const POST = async (request: Request) => {
     );
   }
 
+  const fullName = user.firstName + " " + user.lastName;
+
   // create session token
   const sessionToken = jwt.sign(
     {
       
       id: user.id,
+      fullName: fullName,
       role: user.role,
       status: user.status,
       
@@ -60,6 +63,7 @@ export const POST = async (request: Request) => {
   const authToken = jwt.sign(
     {
       userId: user.id,
+      fullName: fullName,
       role: user.role,
       token: sessionToken,
       status: user.status,

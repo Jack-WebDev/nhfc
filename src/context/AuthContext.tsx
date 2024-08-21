@@ -12,6 +12,7 @@ export type SessionPayLoad = {
   role: string;
   status: string;
   token: string;
+  fullName: string;
   iat: number;
   ext: number;
 };
