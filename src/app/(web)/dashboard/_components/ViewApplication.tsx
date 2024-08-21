@@ -74,7 +74,7 @@ export default function ViewApplication() {
   const applicationID = params.id;
   const [loanData, setLoanData] = useState<LoanApplication[]>([]);
   const router = useRouter();
-  console.log(loanData);
+  // console.log(loanData);
 
   useEffect(() => {
     const fetchApplicationData = async () => {

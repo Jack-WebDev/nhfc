@@ -27,7 +27,7 @@ export function RespondToQuery({ query }: any) {
       id: query.id,
     };
     try {
-      console.log(formData);
+      // console.log(formData);
       await adminResponseToQuery(formData);
     } catch (error) {
       console.log(error);
@@ -40,7 +40,7 @@ export function RespondToQuery({ query }: any) {
         queryStatus: "Closed",
       });
 
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error);
     }

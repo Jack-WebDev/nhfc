@@ -104,7 +104,7 @@ export default function Applications() {
         // Combine the results
         const combinedData = [...res1.data, ...res2.data];
         setData(combinedData);
-        console.log(combinedData);
+        // console.log(combinedData);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -265,7 +265,7 @@ export default function Applications() {
       enableHiding: false,
       cell: ({ row }) => {
         const loan = row.original;
-        console.log(loan)
+        // console.log(loan)
 
         return (
           <DropdownMenu>

@@ -40,7 +40,7 @@ export function ChangePasswordForm(props: ChangePasswordFormProps) {
     setSuccessMessage("");
     setErrorMessage("");
 
-    console.log(values);
+    // console.log(values);
 
     const updateInfo = {
       oldPassword: values.oldPassword,

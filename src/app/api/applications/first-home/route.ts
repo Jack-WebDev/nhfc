@@ -92,7 +92,7 @@ export async function GET() {
   try {
     const res = await db.firstHomeLoan.findMany();
 
-    console.log(res)
+    // console.log(res)
 
     return NextResponse.json(res, { status: 200 });
   } catch (error) {
@@ -125,16 +125,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
       previousEmploymentData,
       termsofagreement
     } = data;
-    console.log(
-      personalData,
-      addressData,
-      supportData,
-      qualificationData,
-      dependentsData,
-      currentEmployerData,
-      previousEmploymentData,
-      termsofagreement
-    );
+    // console.log(
+    //   personalData,
+    //   addressData,
+    //   supportData,
+    //   qualificationData,
+    //   dependentsData,
+    //   currentEmployerData,
+    //   previousEmploymentData,
+    //   termsofagreement
+    // );
 
     const applicationData = await db.firstHomeLoan.create({
       data: {

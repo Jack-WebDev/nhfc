@@ -27,7 +27,7 @@ export function ClientRespondToQuery({ query }: any) {
       id: query.id,
     };
     try {
-      console.log(formData);
+      // console.log(formData);
       await clientResponseToQuery(formData);
     } catch (error) {
       console.log(error);

@@ -118,13 +118,13 @@ export default function ApplicationProcess() {
     },
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   useEffect(() => {
     const fetchProjectData = async () => {
       const res = await axios.get(`/api/projects`);
       setProjects(res.data);
-      console.log(res.data);
+      // console.log(res.data);
     };
 
     fetchProjectData();
@@ -285,14 +285,14 @@ export default function ApplicationProcess() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", { formData });
+    // console.log("Form submitted:", { formData });
     try {
       const res = await axios.post("/api/applications/first-home", {
         ...formData,
       });
       toast.success("Application Submitted Successfully");
       router.push("/frontend/applications");
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error as AxiosError);
     }
