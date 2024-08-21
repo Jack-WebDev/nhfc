@@ -61,27 +61,56 @@ export default function ViewProject() {
     fetchProjectData();
   }, [projectID]);
 
-  const typologys = [
+
+  const milestones = [
     {
-      typology: "INV001",
-      description: "Paid",
-      qty: "R250.00",
-      sellingPrice: "3765",
-      income: "R1400533",
+      milestone: "Project Initiation",
+      plannedDate: "2020-03-15	",
+      actualDate: "2020-03-15	",
+      status: "Completed",
     },
     {
-      typology: "INV002",
-      description: "Pending",
-      qty: "R150.00",
-      sellingPrice: "32986",
-      income: "R1400533",
+      milestone: "Land Acquisition",
+      plannedDate: "	2020-06-30",
+      actualDate: "2020-07-15",
+      status: "Completed",
     },
     {
-      typology: "INV003",
-      description: "Unpaid",
-      qty: "R350.00",
-      sellingPrice: "2000",
-      income: "R1400533",
+      milestone: "Environmental Impact Assessment",
+      plannedDate: "	2020-09-30",
+      actualDate: "2020-10-20",
+      status: "Completed",
+    },
+    {
+      milestone: "Infrastructure Development",
+      plannedDate: "	2021-06-30",
+      actualDate: "2021-08-15",
+      status: "Completed",
+    },
+    {
+      milestone: "Phase 1 Housing Construction",
+      plannedDate: "2022-12-31",
+      actualDate: "	2023-02-28",
+      status: "Completed",
+    },
+    {
+      milestone: "Phase 2 Housing Construction",
+      plannedDate: "	2024-06-30",
+      actualDate: "-",
+      status: "In Progress",
+    },
+    {
+      milestone: "Community Facilities Construction",
+      plannedDate: "2025-06-30",
+      actualDate: "-	",
+      status: "Planned",
+    },
+
+    {
+      milestone: "Project Completion",
+      plannedDate: "2025-12-31",
+      actualDate: "-	",
+      status: "Planned",
     },
   ];
   return (
@@ -218,23 +247,21 @@ export default function ViewProject() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Typology</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Qty</TableHead>
-                  <TableHead>Selling Price</TableHead>
-                  <TableHead>Income</TableHead>
+                  <TableHead>Milestone</TableHead>
+                  <TableHead>Planned Date</TableHead>
+                  <TableHead>Actual Date</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {typologys.map((typology) => (
-                  <TableRow key={typology.typology}>
+                {milestones.map((milestone) => (
+                  <TableRow key={milestone.milestone}>
                     <TableCell className="font-medium">
-                      {typology.typology}
+                      {milestone.milestone}
                     </TableCell>
-                    <TableCell>{typology.description}</TableCell>
-                    <TableCell>{typology.sellingPrice}</TableCell>
-                    <TableCell>{typology.qty}</TableCell>
-                    <TableCell>{typology.income}</TableCell>
+                    <TableCell>{milestone.plannedDate}</TableCell>
+                    <TableCell>{milestone.actualDate}</TableCell>
+                    <TableCell>{milestone.status}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
