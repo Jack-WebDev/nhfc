@@ -125,8 +125,8 @@ model FirstHomeLoan {
   previousCompanyContactPersonName   String
   previousCompanyContactPersonPhone  String
   previousCompanyContactPersonEmail  String
-  reasonForLoan                    String
-  termsandconditions                Boolean
+  reasonForLoan                      String
+  termsandconditions                 Boolean
   createdAt                          DateTime @default(now())
 }
 
@@ -156,42 +156,19 @@ model Projects {
   sportsField            String?
 }
 
-model AdminQueries {
-  id          String  @id @default(cuid())
-  referenceNo String
-  fullName    String
-  queryType   String
-  queryDate   String
-  queryStatus String
-  description String
-  appliedLoan String
-  replyTo     String?
-  attachments String
-}
-
-model userReplies {
-  id          String @id @default(cuid())
-  replyTo     String
-  attachments String
-}
-
-model adminReplies {
-  id          String @id @default(cuid())
-  replyTo     String
-  attachments String
-}
-
-model UserQueries {
-  id          String  @id @default(cuid())
-  referenceNo String
-  fullName    String
-  queryType   String
-  queryDate   String
-  queryStatus String
-  description String
-  appliedLoan String
-  replyTo     String?
-  attachments String
+model Queries {
+  id               String   @id @default(cuid())
+  referenceNo      String?
+  fullName         String?
+  queryType        String?
+  loanAppliedFor   String?
+  describeQuery    String?
+  clientAttachment String?
+  queryStatus      String?  @default("Open")
+  clientReply      String?
+  adminReply       String?
+  adminAttachment  String?
+  createdAt        DateTime @default(now())
 }
 
 enum BookStatus {
