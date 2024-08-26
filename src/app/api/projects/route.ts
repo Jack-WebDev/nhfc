@@ -38,30 +38,30 @@ export async function POST(req: NextRequest, res: NextResponse) {
       sportsField,
       implementationPartners,
     } = data;
-    console.log(
-      projectName,
-      projectCode,
-      programme,
-      projectStatus,
-      province,
-      municipality,
-      ward,
-      address,
-      gpscoordinates,
-      projectOwner,
-      developer,
-      projectLiason,
-      materialSupplier,
-      contractor,
-      deliverablesSummary,
-      skilledWorkers,
-      unskilledWorkers,
-      schools,
-      clinics,
-      communityHalls,
-      sportsField,
-      implementationPartners
-    );
+    // console.log(
+    //   projectName,
+    //   projectCode,
+    //   programme,
+    //   projectStatus,
+    //   province,
+    //   municipality,
+    //   ward,
+    //   address,
+    //   gpscoordinates,
+    //   projectOwner,
+    //   developer,
+    //   projectLiason,
+    //   materialSupplier,
+    //   contractor,
+    //   deliverablesSummary,
+    //   skilledWorkers,
+    //   unskilledWorkers,
+    //   schools,
+    //   clinics,
+    //   communityHalls,
+    //   sportsField,
+    //   implementationPartners
+    // );
 
     const projectData = await db.projects.create({
       data: {

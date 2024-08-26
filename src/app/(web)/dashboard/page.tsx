@@ -25,6 +25,17 @@ const Page = async () => {
       LoanStatus: "Pending",
     },
   });
+  const totalQueries = await db.queries.count();
+  const totalOpenQueries = await db.queries.count({
+    where: {
+      queryStatus: "Open",
+    },
+  });
+  const totalClosedQueries = await db.queries.count({
+    where: {
+      queryStatus: "Closed",
+    },
+  });
 
   return (
     <div>
@@ -82,9 +93,9 @@ const Page = async () => {
           Messaging Center Metrics
         </h2>
         <div className="grid grid-cols-4 gap-x-8">
-          <DashboardCard total={2134} title="Total Messages" />
-          <DashboardCard total={1261} title="Open Messages" />
-          <DashboardCard total={874} title="Closed Messages" />
+          <DashboardCard total={totalQueries} title="Total Messages" />
+          <DashboardCard total={totalOpenQueries} title="Open Messages" />
+          <DashboardCard total={totalClosedQueries} title="Closed Messages" />
           <DashboardCard total={"40%"} title="Turn Around Time" />
         </div>
         <div className="grid grid-cols-2 gap-8 my-12">

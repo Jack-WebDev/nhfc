@@ -47,29 +47,29 @@ export async function POST(req: NextRequest, res: NextResponse) {
       projectName,
       idNumber,
     } = data;
-    console.log(
-      nameOfCompany,
-      fullName,
-      email,
-      phone,
-      address,
-      city,
-      province,
-      sourceOfFunds,
-      purposeOfInvestment,
-      applicationType,
-      postalCode,
-      loanAmount,
-      loanType,
-      equityAmount,
-      investmentAmount,
-      country,
-      docs,
-      applicantType,
-      investmentType,
-      projectName,
-      idNumber
-    );
+    // console.log(
+    //   nameOfCompany,
+    //   fullName,
+    //   email,
+    //   phone,
+    //   address,
+    //   city,
+    //   province,
+    //   sourceOfFunds,
+    //   purposeOfInvestment,
+    //   applicationType,
+    //   postalCode,
+    //   loanAmount,
+    //   loanType,
+    //   equityAmount,
+    //   investmentAmount,
+    //   country,
+    //   docs,
+    //   applicantType,
+    //   investmentType,
+    //   projectName,
+    //   idNumber
+    // );
     const id = generateUniqueId();
 
     const applicationData = await db.applications.create({

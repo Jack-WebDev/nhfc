@@ -24,7 +24,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   const {queryStatus} = await req.json();
-  console.log(queryStatus);
+  // console.log(queryStatus);
   try {
     const query = await db.queries.update({
       where: {

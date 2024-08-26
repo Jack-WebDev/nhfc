@@ -6,7 +6,6 @@ export const POST = async (request: Request) => {
   const data = await request.json();
   const { otp } = data;
 
-  console.log(otp);
   try {
     
       // find the otp
@@ -14,7 +13,6 @@ export const POST = async (request: Request) => {
         where: { otp: Number(otp) },
       });
 
-      console.log("here")
     
       if (!otpData) {
         return new NextResponse(JSON.stringify({ message: "Invalid Otp" }), {

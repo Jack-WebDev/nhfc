@@ -111,11 +111,11 @@ export default function AddProject() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    // console.log("Form Data:", formData);
     try {
       const res = await axios.post("/api/projects", formData);
       router.push("/frontend/projects");
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error as AxiosError);
     }
@@ -240,7 +240,6 @@ export default function AddProject() {
                 <option value="Umgungundlovu">Umgungundlovu</option>
               </select>
             </div>
-
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-2">
@@ -252,10 +251,16 @@ export default function AddProject() {
                 className="w-full p-3 border rounded-lg"
               >
                 <option value="">Select Ward</option>
-                <option value="Buffalo City">Buffalo City</option>
-                <option value="Nelson Mandela Bay">Nelson Mandela Bay</option>
-                <option value="Or Tambo">Or Tambo</option>
-                <option value="Chris Hani">Chris Hani</option>
+                <option value="Ward-1">Ward 1</option>
+                <option value="Ward-2">Ward 2</option>
+                <option value="Ward-3">Ward 3</option>
+                <option value="Ward-4">Ward 4</option>
+                <option value="Ward-5">Ward 5</option>
+                <option value="Ward-6">Ward 6</option>
+                <option value="Ward-7">Ward 7</option>
+                <option value="Ward-8">Ward 8</option>
+                <option value="Ward-9">Ward 9</option>
+                <option value="Ward-10">Ward 10</option>
               </select>
             </div>
             <div className="space-y-2">
@@ -305,10 +310,15 @@ export default function AddProject() {
                 className="w-full p-3 border rounded-lg"
               >
                 <option value="">Select Developer</option>
-                <option value="Buffalo City">Buffalo City</option>
-                <option value="Nelson Mandela Bay">Nelson Mandela Bay</option>
-                <option value="Or Tambo">Or Tambo</option>
-                <option value="Chris Hani">Chris Hani</option>
+                <option value="James">James Patterson</option>
+                <option value="John">John Doe</option>
+                <option value="Mary">Mary Smith</option>
+                <option value="Michael">Michael Johnson</option>
+                <option value="Robert">Robert Williams</option>
+                <option value="Sarah">Sarah Jones</option>
+                <option value="Tom">Tom Brown</option>
+                <option value="William">William Lee</option>
+                <option value="Zachary">Zachary Smith</option>
               </select>
             </div>
           </div>
@@ -355,10 +365,16 @@ export default function AddProject() {
                 className="w-full p-3 border rounded-lg"
               >
                 <option value="">Select Contractor</option>
-                <option value="Buffalo City">Buffalo City</option>
-                <option value="Nelson Mandela Bay">Nelson Mandela Bay</option>
-                <option value="Or Tambo">Or Tambo</option>
-                <option value="Chris Hani">Chris Hani</option>
+                <option value="Vertex-Global">Vertex Global</option>
+                <option value="Synergy-Pulse">Synergy Pulse</option>
+                <option value="Luminary-Systems">Luminary Systems</option>
+                <option value="ZenithCore-Enterprises">
+                  ZenithCore Enterprises
+                </option>
+                <option value="Arcadia-Dynamics">Arcadia Dynamics</option>
+                <option value="VectorRise-Technologies">
+                  VectorRise Technologies
+                </option>
               </select>
             </div>
           </div>
@@ -557,7 +573,6 @@ export default function AddProject() {
           </button>
         </form>
       </div>
-
     </div>
   );
 }
