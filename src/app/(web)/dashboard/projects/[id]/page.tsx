@@ -558,7 +558,7 @@ export default function ViewProject() {
         ) : (
           <div
             key={project.id}
-            className="bg-white rounded-xl p-4 border w-1/2 mx-auto"
+            className="bg-white rounded-xl p-4 border w-[80%] mx-auto"
           >
             <h1 className="text-3xl font-semibold text-blue-500 mb-8">
               {project.projectName}
