@@ -334,7 +334,7 @@ export default function Applications() {
             <DialogTrigger asChild>
               <Button
                 className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg hover:bg-blue-700"
-                // onClick={() => router.push("/frontend/apply")}
+                onClick={() => router.push("/frontend/apply")}
               >
                 <Plus /> Start New Application
               </Button>

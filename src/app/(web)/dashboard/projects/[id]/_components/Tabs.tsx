@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,6 +21,7 @@ import {
 } from "@/components/ui/table";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
 
 export function TabsComponent() {
   const typologys = [
@@ -71,6 +74,35 @@ export function TabsComponent() {
 
     },
   ];
+
+  const [isFormVisible, setFormVisible] = useState(false);
+
+  // State to store form data
+  const [formData, setFormData] = useState({
+    name: '',
+    address: '',
+    manager: '',
+    // Add other form fields here as needed
+  });
+
+  // State to store the submitted data as a template
+  const [submittedData, setSubmittedData] = useState<typeof formData | null>(null);
+
+  // Function to handle form input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Function to handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmittedData(formData); // Save the submitted data as a template
+    setFormVisible(true); // Keep the form visible with the submitted data
+  };
   return (
     <Tabs defaultValue="deliverables">
       <TabsList className="flex items-center justify-between py-4 bg-transparent">
@@ -81,6 +113,9 @@ export function TabsComponent() {
         <TabsTrigger value="risk">Risk and Assumption</TabsTrigger>
 
         <TabsTrigger value="finance">Financing</TabsTrigger>
+        <TabsTrigger value="legal">Legal</TabsTrigger>
+        <TabsTrigger value="docs">Documents</TabsTrigger>
+
       </TabsList>
       <TabsContent value="deliverables">
         <Card>
@@ -191,6 +226,111 @@ export function TabsComponent() {
               <li>Private Sector Investment: R800 Million</li>
               <li>Municipal Contribution: R200 Million</li>
             </ul>
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="legal">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex justify-between items-center">Legal       <Button className="bg-blue-500 text-white py-2 px-8 rounded-xl hover:bg-blue-600" onClick={() => setFormVisible(true)}>Create Template</Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+          <div>
+
+      {isFormVisible && (
+        <form onSubmit={handleSubmit}>
+          <h2 className="text-2xl font-semibold my-8">Project Details</h2>
+          <div className="grid ">
+            <label htmlFor="name">Project Name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="grid">
+            <label htmlFor="description">Site Address:</label>
+            <textarea
+              id="description"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="grid">
+            <label htmlFor="description">Project Manager:</label>
+            <textarea
+              id="description"
+              name="manager"
+              value={formData.manager}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          {/* Add more form fields as needed */}
+
+          <button type="submit">Apply</button>
+        </form>
+      )}
+
+      {submittedData && (
+        <div style={{ marginTop: '20px' }}>
+          <h3>Template Preview:</h3>
+          <p><strong>Name:</strong> {submittedData.name}</p>
+          <p><strong>Site Addess:</strong> {submittedData.address}</p>
+          <p><strong>Project Manager:</strong> {submittedData.manager}</p>
+          {/* Display other fields as needed */}
+        </div>
+      )}
+    </div>
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="docs">
+        <Card>
+          <CardHeader>
+            <CardTitle>Attach Payment Certificates and/or Other Documents</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="grid">
+              <label htmlFor="name">Attach Payment Certificate:</label>
+              <input
+                type="file"
+                id="name"
+                name="name"
+                // value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="grid">
+              <label htmlFor="name">Site images:</label>
+              <input
+                type="file"
+                id="name"
+                name="name"
+                // value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="grid">
+              <label htmlFor="name">Other Documents:</label>
+              <input
+                type="file"
+                id="name"
+                name="name"
+                // value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
           </CardContent>
         </Card>
       </TabsContent>
