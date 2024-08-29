@@ -22,6 +22,7 @@ import {
   ShoppingBag,
   User,
   Users,
+  SquareGanttChart
 } from "lucide-react";
 import { LinkType, NavLinkGroup } from "./navLinkGroup";
 
@@ -71,6 +72,8 @@ const Staff = () => {
             Icon={FolderKanban}
           />
           <NavLink url="/dashboard/queries" title="Messaging Center" Icon={HelpCircle} />
+          <NavLink url="/dashboard/erm" title="ERM" Icon={SquareGanttChart} />
+
           <NavLink
             url="/dashboard/queries"
             title="Reports"
