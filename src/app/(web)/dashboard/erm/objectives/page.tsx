@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function Objectives() {
+export default function page() {
   return (
-    <div>Objectives</div>
+    <div>page</div>
   )
 }

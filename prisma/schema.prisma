@@ -172,6 +172,15 @@ model Queries {
   createdAt        DateTime @default(now())
 }
 
+model ERM {
+  id          String   @id
+  priority    String
+  riskType    String
+  description String
+  riskOwner   String
+  createdAt   DateTime @default(now())
+}
+
 enum BookStatus {
   Issued
   Handed_In
