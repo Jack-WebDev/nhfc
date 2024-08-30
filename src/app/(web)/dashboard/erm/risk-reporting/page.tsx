@@ -75,7 +75,7 @@ export type RiskReports = {
   pages: string;
 };
 
-export const columns: ColumnDef<RiskReports>[] = [
+const columns: ColumnDef<RiskReports>[] = [
   {
     accessorKey: "name",
     header: "Name",
