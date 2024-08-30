@@ -132,49 +132,20 @@ export function TabComponent(data: any) {
       <TabsContent value="implement">
         <Card>
           <CardHeader>
-            <CardTitle>Implement Partners</CardTitle>
+            <CardTitle>Existing Controls</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <ul className="list-disc ">
-              <li>
-                National Housing Finance Corporation (NHFC) - Project Owner
-              </li>
-              <li>Calgro M3 - Developer</li>
-              <li>City of Johannesburg - Municipal Partner</li>
-              <li>
-                Gauteng Department of Human Settlements - Provincial Partner
-              </li>
-              <li>
-                Department of Water and Sanitation - Infrastructure Support
-              </li>
-              <li>Eskom - Electricity Provider</li>
-              <li>Johannesburg Water - Water and Sanitation</li>
-              <li>Johannesburg Roads Agency - Road Infrastructure</li>
-              <li>Local Community Organizations - Community Engagement</li>
-            </ul>
+            <h1>Risks</h1>
           </CardContent>
         </Card>
       </TabsContent>
       <TabsContent value="risk">
         <Card>
           <CardHeader>
-            <CardTitle>Risk and Assumption</CardTitle>
+            <CardTitle>Treatment Activities</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <ul className="list-disc list-inside">
-              <h2>Risks</h2>
-              <li>Delays in construction due to unforeseen circumstances</li>
-              <li>Budget overruns</li>
-              <li>Community resistance or conflicts</li>
-              <li>Changes in government policies or regulations</li>
-              <li>Environmental challenges</li>
-              <h2>Assumptions</h2>
-              <li>Continued government support and funding</li>
-              <li>Stable economic conditions</li>
-              <li>Availability of skilled labor</li>
-              <li>Timely delivery of materials and resources</li>
-              <li>Positive community engagement and acceptance</li>
-            </ul>
+            <h1>Treatment Activities</h1>
           </CardContent>
         </Card>
       </TabsContent>

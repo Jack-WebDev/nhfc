@@ -178,6 +178,10 @@ model ERM {
   riskType    String
   description String
   riskOwner   String
+  startDate   String
+  endDate     String
+  progress    String
+  budget      String
   createdAt   DateTime @default(now())
 }
 
