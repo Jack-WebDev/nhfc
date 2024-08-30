@@ -19,14 +19,27 @@ function riskPriority() {
   return riskPriority[Math.floor(Math.random() * riskPriority.length)];
 }
 
+function randomNumber() {
+  const number = Math.floor(Math.random() * 100);
+  return `${number}%`;
+}
+function randomAmount() {
+  const amount = Math.floor(Math.random() * 1000000);
+  return `R${amount}`;
+}
+
 async function insertData() {
   const riskRegister = Array.from({ length: 20 }).map(() => {
     return {
       id: generateUniqueId(),
       priority: riskPriority(),
       riskType: faker.commerce.productName(),
-      description: faker.lorem.sentences(5),
+      description: faker.lorem.sentences(1),
       riskOwner: faker.person.fullName(),
+      startDate: "2023-06-12",
+      endDate: "2024-09-22",
+      progress: randomNumber(),
+      budget: randomAmount(),
     };
   });
 
