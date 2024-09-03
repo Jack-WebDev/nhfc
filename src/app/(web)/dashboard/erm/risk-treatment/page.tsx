@@ -13,8 +13,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-
-
 import {
   Table,
   TableBody,
@@ -50,9 +48,8 @@ type RegisterRiskSChema = {
   budget: string;
 };
 
-
-import { TrendingUp } from "lucide-react"
-import { Pie, PieChart } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { Pie, PieChart } from "recharts";
 import {
   Card,
   CardContent,
@@ -60,7 +57,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -68,40 +65,30 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
+import CommentsSection from "../_components/CommentsSection";
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "red" },
-  { browser: "safari", visitors: 200, fill: "orange" },
-  { browser: "firefox", visitors: 187, fill: "green" },
-  { browser: "edge", visitors: 173, fill: "green" },
-  { browser: "other", visitors: 90, fill: "red" },
-]
+  { browser: "investments", visitors: 275, fill: "red" },
+  { browser: "homeLoans", visitors: 200, fill: "orange" },
+  { browser: "equity", visitors: 187, fill: "green" },
+];
 const chartConfig = {
   visitors: {
     label: "Visitors",
   },
-  chrome: {
-    label: "Chrome",
+  investments: {
+    label: "investments",
     color: "hsl(var(--chart-1))",
   },
-  safari: {
-    label: "Safari",
+  homeLoans: {
+    label: "homeLoans",
     color: "hsl(var(--chart-2))",
   },
-  firefox: {
-    label: "Firefox",
+  equity: {
+    label: "equity",
     color: "hsl(var(--chart-3))",
   },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
-  },
-} satisfies ChartConfig
-
+} satisfies ChartConfig;
 
 export default function RegsiterRisk() {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -110,7 +97,6 @@ export default function RegsiterRisk() {
   const [rowSelection, setRowSelection] = useState({});
   const [data, setData] = useState<RegisterRiskSChema[]>([]);
   const router = useRouter();
-
 
   useEffect(() => {
     const fetchRiskRegister = async () => {
@@ -122,9 +108,9 @@ export default function RegsiterRisk() {
     fetchRiskRegister();
   }, []);
 
-  const handleRegisterRisk = (risk: RegisterRiskSChema) => {
-    router.push(`/dashboard/erm/register-risk/${risk.id}`);
-  };
+  // const handleRegisterRisk = (risk: RegisterRiskSChema) => {
+  //   router.push(`/dashboard/erm/register-risk/${risk.id}`);
+  // };
 
   const columns: ColumnDef<RegisterRiskSChema>[] = [
     {
@@ -205,8 +191,6 @@ export default function RegsiterRisk() {
         <div className="capitalize">{row.getValue("budget")}</div>
       ),
     },
-
-
   ];
 
   const [pagination, setPagination] = useState({
@@ -235,8 +219,6 @@ export default function RegsiterRisk() {
     },
   });
 
-
-
   return (
     <div>
       <div className="risk_overview flex justify-evenly items-center w-full">
@@ -250,103 +232,98 @@ export default function RegsiterRisk() {
           <h3 className="text-5xl font-semibold">78%</h3>
         </div>
         <Card className="flex flex-col bg-transparent border-none">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Treatment by Dvision</CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
-        >
-          <PieChart>
-            <ChartTooltip
-              content={<ChartTooltipContent nameKey="visitors" hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="visitors"
-              labelLine={false}
-              label={({ payload, ...props }) => {
-                return (
-                  <text
-                    cx={props.cx}
-                    cy={props.cy}
-                    x={props.x}
-                    y={props.y}
-                    textAnchor={props.textAnchor}
-                    dominantBaseline={props.dominantBaseline}
-                    fill="hsla(var(--foreground))"
-                  >
-                    {payload.visitors}
-                  </text>
-                )
-              }}
-              nameKey="browser"
-            />
-          </PieChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 1.2%  <TrendingUp className="h-4 w-4" />
-        </div>
+          <CardHeader className="items-center pb-0">
+            <CardTitle>Treatment by Dvision</CardTitle>
+          </CardHeader>
+          <CardContent className="flex-1 pb-0">
+            <ChartContainer
+              config={chartConfig}
+              className="mx-auto aspect-square max-h-[250px]"
+            >
+              <PieChart>
+                <ChartTooltip
+                  content={<ChartTooltipContent nameKey="visitors" hideLabel />}
+                />
+                <Pie
+                  data={chartData}
+                  dataKey="visitors"
+                  labelLine={false}
+                  label={({ payload, ...props }) => {
+                    return (
+                      <text
+                        cx={props.cx}
+                        cy={props.cy}
+                        x={props.x}
+                        y={props.y}
+                        textAnchor={props.textAnchor}
+                        dominantBaseline={props.dominantBaseline}
+                        fill="hsla(var(--foreground))"
+                      >
+                        {payload.visitors}
+                      </text>
+                    );
+                  }}
+                  nameKey="browser"
+                />
+              </PieChart>
+            </ChartContainer>
+          </CardContent>
+          <CardFooter className="flex-col gap-2 text-sm">
+            <div className="flex items-center gap-2 font-medium leading-none">
+              Trending up by 1.2% <TrendingUp className="h-4 w-4" />
+            </div>
+          </CardFooter>
+        </Card>
 
-      </CardFooter>
-    </Card>
+        <Card className="flex flex-col bg-transparent border-none">
+          <CardHeader className="items-center pb-0">
+            <CardTitle>Treatment by Status</CardTitle>
+          </CardHeader>
+          <CardContent className="flex-1 pb-0">
+            <ChartContainer
+              config={chartConfig}
+              className="mx-auto aspect-square max-h-[300px]"
+            >
+              <PieChart>
+                <Pie data={chartData} dataKey="visitors" />
+                <ChartLegend
+                  content={<ChartLegendContent nameKey="browser" />}
+                  className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+                />
+              </PieChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
 
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Treatment by Status</CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[300px]"
-        >
-          <PieChart>
-            <Pie data={chartData} dataKey="visitors" />
-            <ChartLegend
-              content={<ChartLegendContent nameKey="browser" />}
-              className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
-            />
-          </PieChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
-
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Treatment by Budget</CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
-              innerRadius={60}
-            />
-          </PieChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
-    </Card>
-
+        <Card className="flex flex-col bg-transparent border-none">
+          <CardHeader className="items-center pb-0">
+            <CardTitle>Treatment by Budget</CardTitle>
+          </CardHeader>
+          <CardContent className="flex-1 pb-0">
+            <ChartContainer
+              config={chartConfig}
+              className="mx-auto aspect-square max-h-[250px]"
+            >
+              <PieChart>
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
+                <Pie
+                  data={chartData}
+                  dataKey="visitors"
+                  nameKey="browser"
+                  innerRadius={60}
+                />
+              </PieChart>
+            </ChartContainer>
+          </CardContent>
+          <CardFooter className="flex-col gap-2 text-sm">
+            <div className="flex items-center gap-2 font-medium leading-none">
+              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+            </div>
+          </CardFooter>
+        </Card>
       </div>
 
       <div className="rounded-xl border">
@@ -418,6 +395,8 @@ export default function RegsiterRisk() {
           </Button>
         </div>
       </div>
+
+      <CommentsSection />
     </div>
   );
 }

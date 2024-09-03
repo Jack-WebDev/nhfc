@@ -15,6 +15,9 @@ import { DataTable } from "./TableData";
 import { useState } from "react";
 import { InternalAudit } from "./InternalAudit";
 import { CardComponent } from "./Cards";
+import CommentsSection from "./CommentsSection";
+import ExistingControls from "./controls";
+import TreatmentTable from "./treatments";
 
 type RegisterRiskSChema = {
   id: string;
@@ -121,11 +124,10 @@ export function TabComponent(data: any) {
                 <DataTable title="Consequences" />
                 <DataTable title="Risk Causes" />
               </div>
-
             </div>
-              <div>
-                <h2 className="text-5xl text-center my-8">ADD A COMMENTS SECTION</h2>
-              </div>
+            <div>
+              <CommentsSection />
+            </div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -135,7 +137,32 @@ export function TabComponent(data: any) {
             <CardTitle>Existing Controls</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <h1>Risks</h1>
+            <div className="grid">
+
+            <div className="grid gap-y-8">
+            <ExistingControls />
+            <div className="flex justify-start items-stretch gap-x-8">
+              <CardComponent
+                title="Risk Rating"
+                label="Likelihood"
+                label2="Impact"
+                inputValue={inputValue}
+                inputValue2={inputValue2}
+                onInputChange={handleInputChange}
+              />
+              <CardComponent
+                title="Risk Exposure"
+                label="Risk Impact"
+                label2="Risk Exposure"
+                inputValue={inputValue}
+                inputValue2={inputValue2}
+                onInputChange={handleInputChange}
+              />
+            </div>
+            </div>
+            <CommentsSection />
+            </div>
+
           </CardContent>
         </Card>
       </TabsContent>
@@ -145,7 +172,10 @@ export function TabComponent(data: any) {
             <CardTitle>Treatment Activities</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <h1>Treatment Activities</h1>
+            <TreatmentTable />
+            <div>
+              <CommentsSection />
+            </div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -156,15 +186,45 @@ export function TabComponent(data: any) {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-4">
-              <InternalAudit heading="Control Evalutions" title1="Name" title2="Control Type" title3="Design" />
-              <InternalAudit heading="Treatment Evaluations" title1="Name" title2="Design and Implementation" title3="Level of Risk" />
-              <InternalAudit heading="Findings on Controls" title1="Name" title2="Findings" title3="Recommendations" />
-              <InternalAudit heading="Findings on Treatments" title1="Name" title2="Findings" title3="Recommendations" />
-              <InternalAudit heading="Action Plan and Monitoring for Controls" title1="Status" title2="Name" title3="Progress (%)" />
-              <InternalAudit heading="Action Plan and Monitoring for Treatments" title1="Status" title2="Name" title3="Progress (%)" />
+              <InternalAudit
+                heading="Control Evalutions"
+                title1="Name"
+                title2="Control Type"
+                title3="Design"
+              />
+              <InternalAudit
+                heading="Treatment Evaluations"
+                title1="Name"
+                title2="Design and Implementation"
+                title3="Level of Risk"
+              />
+              <InternalAudit
+                heading="Findings on Controls"
+                title1="Name"
+                title2="Findings"
+                title3="Recommendations"
+              />
+              <InternalAudit
+                heading="Findings on Treatments"
+                title1="Name"
+                title2="Findings"
+                title3="Recommendations"
+              />
+              <InternalAudit
+                heading="Action Plan and Monitoring for Controls"
+                title1="Status"
+                title2="Name"
+                title3="Progress (%)"
+              />
+              <InternalAudit
+                heading="Action Plan and Monitoring for Treatments"
+                title1="Status"
+                title2="Name"
+                title3="Progress (%)"
+              />
             </div>
             <div>
-              <h2 className="text-5xl text-center my-8">ADD A COMMENTS SECTION</h2>
+              <CommentsSection />
             </div>
           </CardContent>
         </Card>
@@ -175,14 +235,52 @@ export function TabComponent(data: any) {
             <CardTitle>Reports</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <div className="grid grid-cols-2 gap-8">
-              <input type="file" />
-              <input type="file" />
-              <input type="file" />
-              <input type="file" />
-              <input type="file" />
-              <input type="file" />
-
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 p-4">
+              <label className="block">
+                <span className="sr-only">Choose file</span>
+                <input
+                  type="file"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </label>
+              <label className="block">
+                <span className="sr-only">Choose file</span>
+                <input
+                  type="file"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </label>
+              <label className="block">
+                <span className="sr-only">Choose file</span>
+                <input
+                  type="file"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </label>
+              <label className="block">
+                <span className="sr-only">Choose file</span>
+                <input
+                  type="file"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </label>
+              <label className="block">
+                <span className="sr-only">Choose file</span>
+                <input
+                  type="file"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </label>
+              <label className="block">
+                <span className="sr-only">Choose file</span>
+                <input
+                  type="file"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                />
+              </label>
+            </div>
+            <div>
+              <CommentsSection />
             </div>
           </CardContent>
         </Card>

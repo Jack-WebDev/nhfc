@@ -18,7 +18,7 @@ interface FormValues {
 }
 
 type DataTableProps = {
-    heading: string;
+  heading: string;
   title1: string;
   title2: string;
   title3: string;
@@ -76,13 +76,13 @@ export const InternalAudit = ({ heading, title1, title2, title3 }: DataTableProp
         Cell: ({ row }: any) => (
           <div className="flex space-x-2">
             <button
-              className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+              className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors"
               onClick={() => handleEdit(row.original.id)}
             >
               Edit
             </button>
             <button
-              className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-colors"
               onClick={() => handleDelete(row.original.id)}
             >
               Delete
@@ -129,6 +129,7 @@ export const InternalAudit = ({ heading, title1, title2, title3 }: DataTableProp
       };
       setData([...data, newData]);
     }
+    setIsOpen(false);
     reset();
   };
 
@@ -138,66 +139,62 @@ export const InternalAudit = ({ heading, title1, title2, title3 }: DataTableProp
     tableInstance;
 
   return (
-    <div className="p-6  border border-gray-200 rounded-xl shadow-xl">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-semibold">{heading}</h1>
+    <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-xl max-w-5xl mx-auto">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-semibold text-gray-800">{heading}</h1>
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+          onClick={handleOpenForm}
+        >
+          {editingId ? "Update" : "Add New"}
+        </button>
+      </div>
 
-        {isOpen ? (
-          <>
-            <form
-              onSubmit={handleSubmit(handleAddOrEdit)}
-              className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-6"
-            >
-              <input
-                {...register("header1", { required: true })}
-                placeholder="Name"
-                className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-
-              <input
-                {...register("header2", { required: true })}
-                placeholder="Description"
-                className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                {...register("header3", { required: true })}
-                placeholder="Description"
-                className="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="submit"
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                onClick={() => setIsOpen(true)}
-              >
-                {editingId ? "Update" : "Add"}
-              </button>
-            </form>
-          </>
-        ) : (
-          <>
+      {isOpen && (
+        <form
+          onSubmit={handleSubmit(handleAddOrEdit)}
+          className="bg-gray-50 p-6 rounded-lg shadow-md mb-6"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <input
+              {...register("header1", { required: true })}
+              placeholder="Enter Header 1"
+              className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              {...register("header2", { required: true })}
+              placeholder="Enter Header 2"
+              className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              {...register("header3", { required: true })}
+              placeholder="Enter Header 3"
+              className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex justify-end mt-4">
             <button
               type="submit"
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-              onClick={handleOpenForm}
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
             >
               {editingId ? "Update" : "Add"}
             </button>
-          </>
-        )}
-      </div>
+          </div>
+        </form>
+      )}
 
       <table
         {...getTableProps()}
-        className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-lg"
+        className="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg"
       >
-        <thead className="bg-gray-200">
+        <thead className="bg-gray-200 text-gray-600">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps()}
                   key={column.id}
-                  className="text-left p-4 font-semibold text-gray-600"
+                  className="p-4 font-medium text-left"
                 >
                   {column.render("Header")}
                 </th>
@@ -205,20 +202,20 @@ export const InternalAudit = ({ heading, title1, title2, title3 }: DataTableProp
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
+        <tbody {...getTableBodyProps()} className="text-gray-700">
           {rows.map((row) => {
             prepareRow(row);
             return (
               <tr
                 {...row.getRowProps()}
                 key={row.id}
-                className="border-t border-gray-200 hover:bg-gray-100"
+                className="border-t border-gray-200 hover:bg-gray-100 transition-colors"
               >
                 {row.cells.map((cell) => (
                   <td
                     {...cell.getCellProps()}
                     key={cell.column.id}
-                    className="p-4 text-gray-700"
+                    className="p-4"
                   >
                     {cell.render("Cell")}
                   </td>
