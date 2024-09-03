@@ -8,36 +8,38 @@ import Link from "next/link";
 
 export default function ERM() {
   return (
-    <div className="flex flex-col justify-center items-center h-full">
-      <div className="grid grid-cols-2 gap-4">
+    <div className="flex justify-center items-center h-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         <Link
           href={"/dashboard/erm/register-risk"}
-          className="border-2 border-gray-300 rounded-xl grid justify-items-center gap-y-2 p-4 bg-white hover:border-blue-500"
+          className="transform transition-transform hover:-translate-y-2 hover:shadow-xl border-2 border-gray-200 rounded-xl grid justify-items-center gap-y-4 p-6 bg-white hover:border-blue-500 shadow-md"
         >
-          <BookOpenCheck size={40} />
-          <h2 className="text-2xl font-medium">Risk Register</h2>
+          <BookOpenCheck size={50} className="text-blue-600" />
+          <h2 className="text-xl font-semibold text-gray-800">Risk Register</h2>
         </Link>
 
         <Link
           href={"/dashboard/erm/objectives"}
-          className="border-2 border-gray-300 rounded-xl grid justify-items-center gap-y-2 p-4 bg-white hover:border-blue-500"
+          className="transform transition-transform hover:-translate-y-2 hover:shadow-xl border-2 border-gray-200 rounded-xl grid justify-items-center gap-y-4 p-6 bg-white hover:border-blue-500 shadow-md"
         >
-          <MountainSnow size={40} />{" "}
-          <h2 className="text-2xl font-medium">Objectives</h2>
+          <MountainSnow size={50} className="text-blue-600" />
+          <h2 className="text-xl font-semibold text-gray-800">Objectives</h2>
         </Link>
+
         <Link
           href={"/dashboard/erm/risk-treatment"}
-          className="border-2 border-gray-300 rounded-xl grid justify-items-center gap-y-2 p-4 bg-white hover:border-blue-500"
+          className="transform transition-transform hover:-translate-y-2 hover:shadow-xl border-2 border-gray-200 rounded-xl grid justify-items-center gap-y-4 p-6 bg-white hover:border-blue-500 shadow-md"
         >
-          <ShieldCheck size={40} />
-          <h2 className="text-2xl font-medium">Risk Treatments</h2>
+          <ShieldCheck size={50} className="text-blue-600" />
+          <h2 className="text-xl font-semibold text-gray-800">Risk Treatments</h2>
         </Link>
+
         <Link
           href={"/dashboard/erm/risk-reporting"}
-          className="border-2 border-gray-300 rounded-xl grid justify-items-center gap-y-2 p-4 bg-white hover:border-blue-500"
+          className="transform transition-transform hover:-translate-y-2 hover:shadow-xl border-2 border-gray-200 rounded-xl grid justify-items-center gap-y-4 p-6 bg-white hover:border-blue-500 shadow-md"
         >
-          <FileBarChart size={40} />
-          <h2 className="text-2xl font-medium">Risk Reporting</h2>
+          <FileBarChart size={50} className="text-blue-600" />
+          <h2 className="text-xl font-semibold text-gray-800">Risk Reporting</h2>
         </Link>
       </div>
     </div>
