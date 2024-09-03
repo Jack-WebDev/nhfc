@@ -64,15 +64,15 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "red" },
-  { browser: "safari", visitors: 200, fill: "orange" },
-  { browser: "firefox", visitors: 187, fill: "green" },
-  { browser: "edge", visitors: 173, fill: "green" },
-  { browser: "other", visitors: 90, fill: "red" },
+  { browser: "chrome", risks: 27, fill: "red" },
+  { browser: "safari", risks: 20, fill: "orange" },
+  { browser: "firefox", risks: 18, fill: "green" },
+  { browser: "edge", risks: 13, fill: "green" },
+  { browser: "other", risks: 9, fill: "red" },
 ]
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  risks: {
+    label: "risks",
   },
   chrome: {
     label: "Chrome",
@@ -245,7 +245,7 @@ export default function RegsiterRisk() {
           <h2>Treatment Progress</h2>
           <h3 className="text-5xl font-semibold">51%</h3>
         </div>
-        <Card className="flex flex-col bg-transparent border-none">
+        <Card className="flex flex-col bg-transparent border-none w-[20%]">
       <CardHeader className="items-center pb-0">
         <CardTitle>Inherent Risks</CardTitle>
       </CardHeader>
@@ -256,11 +256,11 @@ export default function RegsiterRisk() {
         >
           <PieChart>
             <ChartTooltip
-              content={<ChartTooltipContent nameKey="visitors" hideLabel />}
+              content={<ChartTooltipContent nameKey="risks" hideLabel />}
             />
             <Pie
               data={chartData}
-              dataKey="visitors"
+              dataKey="risks"
               labelLine={false}
               label={({ payload, ...props }) => {
                 return (
@@ -273,7 +273,7 @@ export default function RegsiterRisk() {
                     dominantBaseline={props.dominantBaseline}
                     fill="hsla(var(--foreground))"
                   >
-                    {payload.visitors}
+                    {payload.risks}
                   </text>
                 )
               }}
@@ -292,7 +292,7 @@ export default function RegsiterRisk() {
 
       </div>
 
-      <div className="rounded-xl border p-2 px-4">
+      <div className="rounded-xl border border-blue-400 p-2 px-4">
         <h1 className="text-2xl font-medium mb-8">Risks</h1>
         <Table className="bg-white rounded-xl">
           <TableHeader>
