@@ -1,5 +1,7 @@
 import db from "@/utils/connect";
 import { NextResponse } from "next/server";
+export const revalidate = 0;
+
 
 export async function GET() {
   try {
