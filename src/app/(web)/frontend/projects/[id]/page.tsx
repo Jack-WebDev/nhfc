@@ -295,24 +295,99 @@ const TabsComponent = () => {
         )}
         {activeTab === "risks" && (
           <div>
-            <h4 className="text-xl font-semibold mb-4">
-              Risks and Assumptions
-            </h4>
-            <h5 className="font-semibold">Risks:</h5>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>Delays in construction due to unforeseen circumstances</li>
-              <li>Budget overruns</li>
-              <li>Community resistance or conflicts</li>
-              <li>Changes in government policies or regulations</li>
-              <li>Environmental challenges</li>
-            </ul>
-            <h5 className="font-semibold mt-4">Assumptions:</h5>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>Continued government support and funding</li>
-              <li>Stable economic conditions</li>
-              <li>Availability of skilled labor</li>
-              <li>Timely delivery of materials and resources</li>
-              <li>Positive community engagement and acceptance</li>
+            <ul className="list-disc list-inside space-y-4">
+              <li>
+                <div className="font-bold text-lg">Market Risk</div>
+                <p className="text-gray-700">
+                  The housing market can fluctuate due to economic changes,
+                  leading to lower-than-expected demand or price drops.
+                </p>
+                <ul className="list-disc list-inside ml-6">
+                  <li>Diversify project locations across various markets.</li>
+                  <li>
+                    Perform comprehensive market research before launching
+                    projects.
+                  </li>
+                  <li>
+                    Offer flexible pricing models or phased sales strategies.
+                  </li>
+                  <li>
+                    Build mixed-use developments to reduce reliance on a single
+                    type of buyer or tenant.
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <div className="font-bold text-lg">Construction Risk</div>
+                <p className="text-gray-700">
+                  Delays, cost overruns, or substandard construction quality due
+                  to contractor or supply chain issues.
+                </p>
+                <ul className="list-disc list-inside ml-6">
+                  <li>Use fixed-price contracts with contractors.</li>
+                  <li>
+                    Prequalify contractors based on their track record and
+                    experience.
+                  </li>
+                  <li>
+                    Implement a strong project management framework with regular
+                    progress reviews.
+                  </li>
+                  <li>Maintain a contingency fund for unexpected costs.</li>
+                </ul>
+              </li>
+
+              <li>
+                <div className="font-bold text-lg">Regulatory Risk</div>
+                <p className="text-gray-700">
+                  Changes in zoning laws, building codes, or regulatory
+                  requirements can delay or stop the project.
+                </p>
+                <ul className="list-disc list-inside ml-6">
+                  <li>
+                    Maintain relationships with local authorities to stay
+                    updated on potential changes.
+                  </li>
+                  <li>
+                    Engage legal advisors early in the project to ensure
+                    compliance with all regulations.
+                  </li>
+                  <li>
+                    Allocate time and resources for handling regulatory
+                    approvals.
+                  </li>
+                  <li>
+                    Prepare for regulatory changes by maintaining flexible
+                    project plans.
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <div className="font-bold text-lg">Environmental Risk</div>
+                <p className="text-gray-700">
+                  Natural disasters, environmental contamination, or unforeseen
+                  site conditions can increase project costs.
+                </p>
+                <ul className="list-disc list-inside ml-6">
+                  <li>
+                    Conduct thorough environmental and geotechnical surveys
+                    before project initiation.
+                  </li>
+                  <li>
+                    Obtain comprehensive insurance coverage for environmental
+                    hazards and natural disasters.
+                  </li>
+                  <li>
+                    Incorporate sustainable design practices to mitigate
+                    environmental impact.
+                  </li>
+                  <li>
+                    Maintain an emergency response plan for on-site incidents.
+                  </li>
+                </ul>
+              </li>
             </ul>
           </div>
         )}

@@ -329,15 +329,16 @@ export default function Applications() {
         <div className="flex justify-between items-baseline mb-8">
           <PageHeader Icon={FileText} title="My Applications" />
           {/* <h2>Applications List</h2> */}
+          <Button
+            className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg hover:bg-blue-700"
+            onClick={() => router.push("/frontend/apply")}
+          >
+            <Plus /> Start New Application
+          </Button>
 
-          <Dialog>
+          {/* <Dialog>
             <DialogTrigger asChild>
-              <Button
-                className="flex items-center gap-x-2 bg-blue-500 text-white py-2 px-8 rounded-lg hover:bg-blue-700"
-                onClick={() => router.push("/frontend/apply")}
-              >
-                <Plus /> Start New Application
-              </Button>
+
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -352,7 +353,7 @@ export default function Applications() {
                 </Link>
               </div>
             </DialogContent>
-          </Dialog>
+          </Dialog> */}
         </div>
         <div className="rounded-xl border">
           <Table className="bg-white rounded-xl">
