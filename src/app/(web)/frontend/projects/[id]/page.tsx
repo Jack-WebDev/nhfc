@@ -294,101 +294,138 @@ const TabsComponent = () => {
           </div>
         )}
         {activeTab === "risks" && (
-          <div>
-            <ul className="list-disc list-inside space-y-4">
-              <li>
-                <div className="font-bold text-lg">Market Risk</div>
-                <p className="text-gray-700">
-                  The housing market can fluctuate due to economic changes,
-                  leading to lower-than-expected demand or price drops.
-                </p>
-                <ul className="list-disc list-inside ml-6">
-                  <li>Diversify project locations across various markets.</li>
-                  <li>
-                    Perform comprehensive market research before launching
-                    projects.
-                  </li>
-                  <li>
-                    Offer flexible pricing models or phased sales strategies.
-                  </li>
-                  <li>
-                    Build mixed-use developments to reduce reliance on a single
-                    type of buyer or tenant.
-                  </li>
-                </ul>
-              </li>
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-3xl font-extrabold text-gray-900">
+                Key Risks and Mitigation Strategies in Real Estate Development
+              </h2>
+            </div>
 
-              <li>
-                <div className="font-bold text-lg">Construction Risk</div>
-                <p className="text-gray-700">
-                  Delays, cost overruns, or substandard construction quality due
-                  to contractor or supply chain issues.
-                </p>
-                <ul className="list-disc list-inside ml-6">
-                  <li>Use fixed-price contracts with contractors.</li>
-                  <li>
-                    Prequalify contractors based on their track record and
-                    experience.
-                  </li>
-                  <li>
-                    Implement a strong project management framework with regular
-                    progress reviews.
-                  </li>
-                  <li>Maintain a contingency fund for unexpected costs.</li>
-                </ul>
-              </li>
+            {/* Market Risk */}
+            <div>
+              <h3 className="font-bold text-xl text-gray-900">Market Risk</h3>
+              <p className="text-gray-600">
+                The risk of fluctuations in the housing market due to economic
+                changes, which can lead to lower demand or price drops.
+              </p>
+              <h4 className="text-lg font-semibold text-blue-600 mt-4">
+                Mitigation Strategies:
+              </h4>
+              <ul className="list-disc list-inside ml-6 text-gray-700 space-y-2">
+                <li>
+                  Diversify project locations across various markets to spread
+                  the risk.
+                </li>
+                <li>
+                  Conduct thorough market research before launching projects to
+                  ensure demand.
+                </li>
+                <li>
+                  Implement flexible pricing models or phased sales strategies
+                  to adapt to market conditions.
+                </li>
+                <li>
+                  Develop mixed-use projects to reduce reliance on a single type
+                  of buyer or tenant.
+                </li>
+              </ul>
+            </div>
 
-              <li>
-                <div className="font-bold text-lg">Regulatory Risk</div>
-                <p className="text-gray-700">
-                  Changes in zoning laws, building codes, or regulatory
-                  requirements can delay or stop the project.
-                </p>
-                <ul className="list-disc list-inside ml-6">
-                  <li>
-                    Maintain relationships with local authorities to stay
-                    updated on potential changes.
-                  </li>
-                  <li>
-                    Engage legal advisors early in the project to ensure
-                    compliance with all regulations.
-                  </li>
-                  <li>
-                    Allocate time and resources for handling regulatory
-                    approvals.
-                  </li>
-                  <li>
-                    Prepare for regulatory changes by maintaining flexible
-                    project plans.
-                  </li>
-                </ul>
-              </li>
+            {/* Construction Risk */}
+            <div>
+              <h3 className="font-bold text-xl text-gray-900">
+                Construction Risk
+              </h3>
+              <p className="text-gray-600">
+                The risk of project delays, cost overruns, or substandard
+                quality due to contractor issues or supply chain disruptions.
+              </p>
+              <h4 className="text-lg font-semibold text-blue-600 mt-4">
+                Mitigation Strategies:
+              </h4>
+              <ul className="list-disc list-inside ml-6 text-gray-700 space-y-2">
+                <li>
+                  Use fixed-price contracts with contractors to minimize
+                  financial surprises.
+                </li>
+                <li>
+                  Prequalify contractors based on their proven track record and
+                  experience.
+                </li>
+                <li>
+                  Apply strong project management techniques, including regular
+                  progress reviews to catch issues early.
+                </li>
+                <li>
+                  Maintain a contingency fund to cover unexpected costs or
+                  delays.
+                </li>
+              </ul>
+            </div>
 
-              <li>
-                <div className="font-bold text-lg">Environmental Risk</div>
-                <p className="text-gray-700">
-                  Natural disasters, environmental contamination, or unforeseen
-                  site conditions can increase project costs.
-                </p>
-                <ul className="list-disc list-inside ml-6">
-                  <li>
-                    Conduct thorough environmental and geotechnical surveys
-                    before project initiation.
-                  </li>
-                  <li>
-                    Obtain comprehensive insurance coverage for environmental
-                    hazards and natural disasters.
-                  </li>
-                  <li>
-                    Incorporate sustainable design practices to mitigate
-                    environmental impact.
-                  </li>
-                  <li>
-                    Maintain an emergency response plan for on-site incidents.
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            {/* Regulatory Risk */}
+            <div>
+              <h3 className="font-bold text-xl text-gray-900">
+                Regulatory Risk
+              </h3>
+              <p className="text-gray-600">
+                The risk of delays or project stoppage due to changes in zoning
+                laws, building codes, or regulatory requirements.
+              </p>
+              <h4 className="text-lg font-semibold text-blue-600 mt-4">
+                Mitigation Strategies:
+              </h4>
+              <ul className="list-disc list-inside ml-6 text-gray-700 space-y-2">
+                <li>
+                  Build relationships with local authorities to stay informed of
+                  potential regulatory changes.
+                </li>
+                <li>
+                  Engage legal advisors early to ensure all regulatory
+                  compliance.
+                </li>
+                <li>
+                  Allocate time and resources for managing approvals and
+                  permits.
+                </li>
+                <li>
+                  Design flexible project plans that can accommodate potential
+                  regulatory changes.
+                </li>
+              </ul>
+            </div>
+
+            {/* Environmental Risk */}
+            <div>
+              <h3 className="font-bold text-xl text-gray-900">
+                Environmental Risk
+              </h3>
+              <p className="text-gray-600">
+                The risk of increased costs due to natural disasters,
+                environmental contamination, or unforeseen site conditions.
+              </p>
+              <h4 className="text-lg font-semibold text-blue-600 mt-4">
+                Mitigation Strategies:
+              </h4>
+              <ul className="list-disc list-inside ml-6 text-gray-700 space-y-2">
+                <li>
+                  Conduct comprehensive environmental surveys and geotechnical
+                  assessments before starting a project.
+                </li>
+                <li>
+                  Secure insurance coverage for environmental hazards and
+                  natural disasters.
+                </li>
+                <li>
+                  Adopt sustainable design practices to reduce environmental
+                  impact.
+                </li>
+                <li>
+                  Prepare an emergency response plan for on-site incidents to
+                  ensure quick action if needed.
+                </li>
+              </ul>
+            </div>
           </div>
         )}
         {activeTab === "financing" && (
